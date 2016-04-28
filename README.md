@@ -37,10 +37,10 @@
          > $ sudo pip install --upgrade virtualenv
 3. Dossier.label
 
-    Brief introduction
+    - Brief introduction
 
     -  Mac OS X
-         >$ sudo pip install --upgrade dossier.label
+         > $ sudo pip install --upgrade dossier.label
 
 
 ##### Optional:
@@ -48,9 +48,9 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
   - Download the Lemur/Indri software package indri-5.0.tar.gz from https://sourceforge.net/projects/lemur/files/lemur/indri-5.0/. Or, you can use the one provided in our package.
    - Unpack the Lemur/Indri software package
    - Assume you put Lemur/Indri into a directory named /yourhomedirectory/indri-5.0/, install it by the following commands. Note you will need to enable the --with-lemur option.
-	> cd indri-5.0
-	> mkdir install
-	> chmod +x ./configure
+        > cd indri-5.0
+        > mkdir install
+        > chmod +x ./configure
         > ./configure --prefix=/yourhomedirectory/indri-5.0/install/ --with-lemur=/yourhomedirectory/indri-5.0/install/
         > make
         > make install
@@ -70,18 +70,18 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
 ### Installation steps:
 - Download trec_dd.tar.gz and unpack it.
 - Move the unpacked directory under the lemur(or your trec-dd system) directory, that is,
-    > mv trec_dd_2015_release /yourhomedirectory/indri-5.0/
+        > mv trec_dd_2015_release /yourhomedirectory/indri-5.0/
 - Go to the trec_dd_2015_release directory
-    > cd  /yourhomedirectory/indri-5.0/trec_dd_2015_release
+        > cd  /yourhomedirectory/indri-5.0/trec_dd_2015_release
 - Download your topics (with ground truth)  from the TREC Active Participants Home Page. Copy it and put it under
-    > ./trec_dd_2015_release/topics/
+        > ./trec_dd_2015_release/topics/
 - Setup a sqlite database in ./trec_dd_2015_release/jig/truth.db
-	> sh config.sh --topics yourtopicfile.xml
+        > sh config.sh --topics yourtopicfile.xml
 - (Optional) Install the lemur/indri sample DD system. If you make any changes to the sample system, you will need to run this install.sh again to see the effects
-    > 	sh install.sh
+        > sh install.sh
 - You will see a bin directory in /yourhomedirectory/indri-5.0/trec_dd_2015_release.
 Test the sample DD system:
-    > sh run_lemur_dd.sh
+        > sh run_lemur_dd.sh
 -  Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
 
  Congratulations for a successful installation!!
