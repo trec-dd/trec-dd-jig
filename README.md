@@ -1,13 +1,13 @@
 # trec-dd-jig
+
+##### This is the readme file of  the user simulator (jig) package for the TREC 2016 Dynamic Domain (DD) Track.
+##### The package is for research use only.
+
+##### For technical questions, please submit your request to google group https://groups.google.com/forum/#!forum/trec-dd
+
 **************************************************************************
-#### This is the readme file of  the user simulator (jig) package for the TREC 2016 Dynamic Domain (DD) Track.
-#### The package is for research use only.
 
-#### For technical questions, please submit your request to google group https://groups.google.com/forum/#!forum/trec-dd
-
-**************************************************************************
-
-### What is inside this package:
+### What are inside this package:
 
 * a user simulator (jig),
 * a sample search system (built on top of Lemur) interacting with the jig,
@@ -22,25 +22,25 @@
     Install pip (or pip3 for python3) if it is not already installed:
 
     - Ubuntu/Linux 64-bit
-        + > $ sudo apt-get install python-pip python-dev
+         > $ sudo apt-get install python-pip python-dev
 
     - Mac OS X
-         + >$ sudo easy_install pip
+          >$ sudo easy_install pip
 
  2. Virtualenv
 
      A Virtual Environment is a tool to keep the dependencies required by different projects in separate places, by creating virtual Python environments for them.
     - Ubuntu/Linux 64-bit
-        + > $ sudo apt-get install python-dev python-virtualenv
+         > $ sudo apt-get install python-dev python-virtualenv
 
     - Mac OS X
-        + > $ sudo pip install --upgrade virtualenv
+         > $ sudo pip install --upgrade virtualenv
 3. Dossier.label
 
     Brief introduction
 
     -  Mac OS X
-        + >$ sudo pip install --upgrade dossier.label
+         >$ sudo pip install --upgrade dossier.label
 
 
 ##### Optional:
@@ -81,7 +81,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
     > 	sh install.sh
 - You will see a bin directory in /yourhomedirectory/indri-5.0/trec_dd_2015_release.
 Test the sample DD system:
-	> sh run_lemur_dd.sh
+    > sh run_lemur_dd.sh
 -  Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
 
  Congratulations for a successful installation!!
