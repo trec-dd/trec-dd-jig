@@ -37,10 +37,10 @@
          > $ sudo pip install --upgrade virtualenv
 3. Dossier.label
 
-    - Brief introduction
+        - Brief introduction
 
-    -  Mac OS X
-         > $ sudo pip install --upgrade dossier.label
+        -  Mac OS X
+             > $ sudo pip install --upgrade dossier.label
 
 
 ##### Optional:

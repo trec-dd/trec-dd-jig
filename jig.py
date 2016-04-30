@@ -75,13 +75,12 @@ class Harness(object):
                 feedback = feedback + '1' + '\t'
                 for r in rs:
                     sid, rating = r
-                    feedback += str(topic_id) + '-' + str(sid) + ':' + str(rating) + '|'
+                    feedback += str(sid) + ':' + str(rating) + '|'
                 feedback = feedback[:-1]
             else:
                 feedback += '0'
             rlist.append(feedback)
         return rlist
-
 
 
 # should be modified
