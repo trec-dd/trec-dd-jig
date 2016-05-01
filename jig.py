@@ -64,13 +64,14 @@ class Harness(object):
 
         rlist = []
         ranking_score = '50' # remain to be changed
-        for result in results:
+        for result_pair in results:
             #cur.execute('SELECT docno, subtopic_id, text, rating FROM passage WHERE topic_id=? AND docno=?',
             #            [str(topic_id), result])
             #rlist.append(cur.fetchall())
-            cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?',[str(topic_id), result])
+            result = result_pair.split(':')
+            cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?',[str(topic_id), result[0]])
             rs = cur.fetchall()
-            feedback = str(topic_id) + '\t' + result + '\t' + ranking_score + '\t'
+            feedback = str(topic_id) + '\t' + result[0] + '\t' + result[1] + '\t'
             if rs:
                 feedback = feedback + '1' + '\t'
                 for r in rs:
@@ -118,7 +119,6 @@ def main():
     kvl = kvlayer.client()
     label_store = LabelStore(kvl)
     config = yakonfig.get_global_config('harness')
-
     harness = Harness(config, kvl, label_store)
 
     parts = args.args

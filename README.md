@@ -130,7 +130,7 @@ Inside this directory is a sample ground truth from TREC-DD 2015
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
 
   ``` shell
-    >$ python jig.py -c config_file topic_id docno1 docno2 docno3 docno4 docno5
+    >$ python jig.py -c config_file topic_id docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
 
     where:
@@ -151,7 +151,7 @@ Inside this directory is a sample ground truth from TREC-DD 2015
 - An intermediate step:
     + Give jig the topic id and 5 document id:
         ``` shell
-        > python jig.py -c jig/config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 1322509200-f67659162ce908cc510881a6b6eabc8b 1321860780-f9c69177db43b0f810ce03c822576c5c 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 1321379940-4227a3d1f425b32f9f8595739ef2b8c3
+        > python jig.py -c config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
         ```
 
     + The jig return feedback:
