@@ -34,38 +34,50 @@
     Install pip (or pip3 for python3) if it is not already installed:
 
     - Ubuntu/Linux 64-bit
+      ``` shell
          > $ sudo apt-get install python-pip python-dev
+      ```
 
     - Mac OS X
+      ``` shell
           >$ sudo easy_install pip
+      ```
 
  2. Virtualenv
 
      A Virtual Environment is a tool to keep the dependencies required by different projects in separate places, by creating virtual Python environments for them.
     - Ubuntu/Linux 64-bit
+      ``` shell
          > $ sudo apt-get install python-dev python-virtualenv
+      ```
 
     - Mac OS X
+      ``` shell
          > $ sudo pip install --upgrade virtualenv
-3. Dossier.label
+      ```
+    - Dossier.label
 
-        - Brief introduction
+       - Brief introduction
 
-        -  Mac OS X
-             > $ sudo pip install --upgrade dossier.label
-
+       - Mac OS X
+          ``` shell
+           > $ sudo pip install --upgrade dossier.label
+          ```
 
 ##### Optional:
 lemur/Indri (You can use lemur as a sample search system to interact with jig).
   - Download the Lemur/Indri software package indri-5.0.tar.gz from https://sourceforge.net/projects/lemur/files/lemur/indri-5.0/. Or, you can use the one provided in our package.
-   - Unpack the Lemur/Indri software package
-   - Assume you put Lemur/Indri into a directory named /yourhomedirectory/indri-5.0/, install it by the following commands. Note you will need to enable the --with-lemur option.
-        > cd indri-5.0
-        > mkdir install
-        > chmod +x ./configure
-        > ./configure --prefix=/yourhomedirectory/indri-5.0/install/ --with-lemur=/yourhomedirectory/indri-5.0/install/
-        > make
-        > make install
+    - Unpack the Lemur/Indri software package
+    - Assume you put Lemur/Indri into a directory named /yourhomedirectory/indri-5.0/, install it by the following commands. Note you will need to enable the --with-lemur option.
+
+    ``` shell
+        >$ cd indri-5.0
+        >$ mkdir install
+        >$ chmod +x ./configure
+        >$ ./configure --prefix=/yourhomedirectory/indri-5.0/install/ --with-lemur=/yourhomedirectory/indri-5.0/install/
+        >$ make
+        >$ make install
+  ```
 
 ### System requirement for installing the jig:
 - Works best under Python 2.7.
@@ -84,12 +96,34 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
 - Move the unpacked directory under the lemur(or your trec-dd system) directory, that is,
         > mv trec-dd-jig /yourhomedirectory/indri-5.0/
 - Go to the trec-jig directory
-        > cd  /yourhomedirectory/indri-5.0/trec-jig
+        > cd  /yourhomedirectory/indri-5.0/trec-dd-jig
+
+  ``` shell
+    >$ mv trec-dd-jig /yourhomedirectory/indri-5.0/
+  ```
+
+- Go to the trec_dd_2015_release directory
+
+  ``` shell
+    >$ cd  /yourhomedirectory/indri-5.0/trec-dd-jig
+  ```
+
 - Download your topics (with ground truth)  from the TREC Active Participants Home Page. Copy it and put it under
         > ./trec-dd-jig/topics/
         Inside this directory is a sample ground truth from TREC-DD 2015
 - Setup a sqlite database in ./trec-dd-jig/jig/truth.db
         > sh config.sh --topics yourtopicfile.xml
+
+  ``` shell
+    >$ ./trec-dd-jig/topics/
+  ```
+
+- Setup a sqlite database in ./trec-dd-jig/jig/truth.db
+
+  ``` shell
+    >$ sh config.sh --topics yourtopicfile.xml
+  ```
+
 - (Optional) Install the lemur/indri sample DD system. If you make any changes to the sample system, you will need to run this install.sh again to see the effects
         > sh install.sh
 - You will see a bin directory in /yourhomedirectory/indri-5.0/trec-dd-jig.
@@ -97,12 +131,28 @@ Test the sample DD system:
         > sh run_lemur_dd.sh
 -  Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
 
+  ``` shell
+    >$ sh install.sh
+  ```
+
+- You will see a bin directory in /yourhomedirectory/indri-5.0/trec_dd_2015_release.
+  Test the sample DD system:
+
+  ``` shell
+    >$ sh run_lemur_dd.sh
+  ```
+
+- Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
+
  Congratulations for a successful installation!!
 
 **************************************************************************
 ### Running Jig
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
-    > python jig/jig.py -c config_file step topic_id docno1 docno2 docno3 docno4 docno5
+
+  ``` shell
+    >$ python jig/jig.py -c config_file step topic_id docno1 docno2 docno3 docno4 docno5
+  ```
 
     where:
     + config_file: the path of the configuration file, default is ./trec_dd_2015_release/topics/config.yaml.
@@ -121,9 +171,13 @@ Test the sample DD system:
 ### A Sample Step
 - An intermediate step:
     + Give jig the topic id and 5 document id:
+        ``` shell
         > python jig/jig.py -c jig/config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 1322509200-f67659162ce908cc510881a6b6eabc8b 1321860780-f9c69177db43b0f810ce03c822576c5c 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 1321379940-4227a3d1f425b32f9f8595739ef2b8c3
+        ```
 
     + The jig return feedback:
+
+    ``` shell
         > DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 50 1 DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
 
         > DD15-1 1322509200-f67659162ce908cc510881a6b6eabc8b 50	1 DD15-1.1:3
@@ -133,22 +187,37 @@ Test the sample DD system:
         > DD15-1 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 50	1 DD15-1.3:2|DD15-1.1:2
 
         > DD15-1 1321379940-4227a3d1f425b32f9f8595739ef2b8c3 50 0
-
+    ```
 **************************************************************************
 
 ### Metrics
 - We support five metrics as follows, the scripts for these metrics can be found under the ./scorer directory. :
     + Average Cube Test
-        > perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
+
+      ``` shell
+        >$ perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
+      ```
 
     + Cube Test
-        >perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
+
+      ``` shell
+        >$ perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
+      ```
 
     + Alpha-nDCG per iteration
-        > ./ndeval  /path/to/truth/file /path/to/run/file
+
+      ``` shell
+        >$ ./ndeval  /path/to/truth/file /path/to/run/file
+      ```
 
     + Nerr-ia per iteration
-        > ./ndeval  /path/to/truth/file /path/to/run/file 50
+
+      ``` shell
+        >$ ./ndeval  /path/to/truth/file /path/to/run/file 50
+      ```
 
     + SnDCG per iteration
-        > perl nSDCG_per_iteration.pl  /path/to/truth/file /path/to/run/file 5
+
+      ``` shell
+        >$ perl nSDCG_per_iteration.pl  /path/to/truth/file /path/to/run/file 5
+      ```
