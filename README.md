@@ -115,7 +115,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
         Inside this directory is a sample ground truth from TREC-DD 2015
 
 
-- Setup a sqlite database in ./trec-dd-jig/jig/truth.db
+- Setup a sqlite database in ./trec-dd-jig/truth.db
 
   ``` shell
     >$ sh config.sh --topics yourtopicfile.xml
@@ -143,7 +143,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
 
   ``` shell
-    >$ python jig/jig.py -c config_file step topic_id docno1 docno2 docno3 docno4 docno5
+    >$ python jig.py -c config_file step topic_id docno1 docno2 docno3 docno4 docno5
   ```
 
     where:

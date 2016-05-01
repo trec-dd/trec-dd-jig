@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 def main():
-    dbname = 'jig/truth.db'
+    dbname = 'truth.db'
     tables = [
         '''
             domain(
@@ -60,11 +60,11 @@ def main():
         cur.execute('INSERT INTO domain VALUES(?, ?)', [did, domain_node.get('name')])
         topic_nodes = domain_node.findall('./topic')
         for topic_node in topic_nodes:
-            tid = int(topic_node.get('id'))
+            tid = str(topic_node.get('id'))
             cur.execute('INSERT INTO topic VALUES(?, ?, ?)', [tid, topic_node.get('name'), did])
             subtopic_nodes = topic_node.findall('./subtopic')
             for subtopic_node in subtopic_nodes:
-                sid = int(subtopic_node.get('id'))
+                sid = str(subtopic_node.get('id'))
                 cur.execute('INSERT INTO subtopic VALUES(?, ?, ?)', [sid, subtopic_node.get('name'), tid])
                 passages = subtopic_node.findall('./passage')
                 for passage in passages:
