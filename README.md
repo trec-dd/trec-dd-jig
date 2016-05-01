@@ -127,7 +127,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
     >$ sh install.sh
   ```
 
-- You will see a bin directory in /yourhomedirectory/indri-5.0/trec_dd_2015_release.
+- You will see a bin directory in /yourhomedirectory/indri-5.9/trec-dd-jig.
   Test the sample DD system:
 
   ``` shell
