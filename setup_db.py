@@ -15,7 +15,7 @@ def main():
 
         '''
             topic(
-                topic_id  INTEGER PRIMARY KEY,
+                topic_id  TEXT,
                 topic_name TEXT,
                 domain_id INTEGER
             )
@@ -23,7 +23,7 @@ def main():
 
         '''
             subtopic(
-                subtopic_id INTEGER PRIMARY KEY,
+                subtopic_id TEXT,
                 subtopic_name TEXT,
                 topic_id INTEGER
             )
