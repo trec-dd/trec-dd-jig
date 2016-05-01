@@ -16,6 +16,18 @@
 **************************************************************************
 
 ### Packages needs to installed before using the jig:
+
+##### Quick Install:
+    - Install pip (or pip3 for python3) if it is not already installed:
+
+        - Ubuntu/Linux 64-bit
+             > $ sudo apt-get install python-pip python-dev
+
+        - Mac OS X
+              >$ sudo easy_install pip
+    - Install all the packages needed:
+        > pip install -r requirements.txt
+
 ##### Required:
  1. Pip
 
@@ -63,23 +75,24 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
 - Topics (ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
 
 ### Outputs:
-- Intermedia feedback
+- Feedback format
     + See http://trec-dd.org/guideline.html#run_format
-    + Final output (not decided yet, could be the same as above). (http://trec-dd.org/guideline.html#run_format)
+    + Final output (http://trec-dd.org/guideline.html#run_format)
 
 ### Installation steps:
-- Download trec_dd.tar.gz and unpack it.
+- Download trec-dd-jig.zip from here and unpack it.
 - Move the unpacked directory under the lemur(or your trec-dd system) directory, that is,
-        > mv trec_dd_2015_release /yourhomedirectory/indri-5.0/
-- Go to the trec_dd_2015_release directory
-        > cd  /yourhomedirectory/indri-5.0/trec_dd_2015_release
+        > mv trec-dd-jig /yourhomedirectory/indri-5.0/
+- Go to the trec-jig directory
+        > cd  /yourhomedirectory/indri-5.0/trec-jig
 - Download your topics (with ground truth)  from the TREC Active Participants Home Page. Copy it and put it under
-        > ./trec_dd_2015_release/topics/
-- Setup a sqlite database in ./trec_dd_2015_release/jig/truth.db
+        > ./trec-dd-jig/topics/
+        Inside this directory is a sample ground truth from TREC-DD 2015
+- Setup a sqlite database in ./trec-dd-jig/jig/truth.db
         > sh config.sh --topics yourtopicfile.xml
 - (Optional) Install the lemur/indri sample DD system. If you make any changes to the sample system, you will need to run this install.sh again to see the effects
         > sh install.sh
-- You will see a bin directory in /yourhomedirectory/indri-5.0/trec_dd_2015_release.
+- You will see a bin directory in /yourhomedirectory/indri-5.0/trec-dd-jig.
 Test the sample DD system:
         > sh run_lemur_dd.sh
 -  Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
@@ -105,19 +118,21 @@ Test the sample DD system:
 - Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
 
 **************************************************************************
-### A Sample Use
+### A Sample Step
 - An intermediate step:
     + Give jig the topic id and 5 document id:
-        > python jig/jig.py -c jig/config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 1322509200-f67659162ce908cc510881a6b6eabc8b 1321860780-f9c69177db43b0f810ce03c822576c5c 1327908780-d9ad76f0947e2acd79cba3acd5f449f7
+        > python jig/jig.py -c jig/config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 1322509200-f67659162ce908cc510881a6b6eabc8b 1321860780-f9c69177db43b0f810ce03c822576c5c 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 1321379940-4227a3d1f425b32f9f8595739ef2b8c3
 
     + The jig return feedback:
-        > DD15-1	1322120460-d6783cba6ad386f4444dcc2679637e0b	50	1	DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
+        > DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 50 1 DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
 
-        > DD15-1	1322509200-f67659162ce908cc510881a6b6eabc8b	50	1	DD15-1.1:3
+        > DD15-1 1322509200-f67659162ce908cc510881a6b6eabc8b 50	1 DD15-1.1:3
 
-        > DD15-1	1321860780-f9c69177db43b0f810ce03c822576c5c	50	1	DD15-1.1:3
+        > DD15-1 1321860780-f9c69177db43b0f810ce03c822576c5c 50	1 DD15-1.1:3
 
-        > DD15-1	1327908780-d9ad76f0947e2acd79cba3acd5f449f7	50	1	DD15-1.3:2|DD15-1.1:2
+        > DD15-1 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 50	1 DD15-1.3:2|DD15-1.1:2
+
+        > DD15-1 1321379940-4227a3d1f425b32f9f8595739ef2b8c3 50 0
 
 **************************************************************************
 
