@@ -1,2 +1,2 @@
 harness:
-  truth_data_path: jig/truth.db
+  truth_data_path: truth.db

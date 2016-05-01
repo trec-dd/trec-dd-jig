@@ -96,7 +96,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
   ``` shell
     > git clone https://github.com/trec-dd/trec-dd-jig
   ```
-- Move the unpacked directory under the lemur(or your trec-dd system) directory, that is,
+- Move the unpacked directory under the lemur/ your trec-dd system directory, use lemur as an example, that is,
   ``` shell
         > mv trec-dd-jig /yourhomedirectory/indri-5.9/
   ```
@@ -121,19 +121,6 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
     >$ sh config.sh --topics yourtopicfile.xml
   ```
 
-- (Optional) Install the lemur/indri sample DD system. If you make any changes to the sample system, you will need to run this install.sh again to see the effects
-
-  ``` shell
-    >$ sh install.sh
-  ```
-
-- You will see a bin directory in /yourhomedirectory/indri-5.9/trec-dd-jig.
-  Test the sample DD system:
-
-  ``` shell
-    >$ sh run_lemur_dd.sh
-  ```
-
 - Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
 
  Congratulations for a successful installation!!
@@ -143,7 +130,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
 
   ``` shell
-    >$ python jig.py -c config_file step topic_id docno1 docno2 docno3 docno4 docno5
+    >$ python jig.py -c config_file topic_id docno1 docno2 docno3 docno4 docno5
   ```
 
     where:
@@ -164,7 +151,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
 - An intermediate step:
     + Give jig the topic id and 5 document id:
         ``` shell
-        > python jig/jig.py -c jig/config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 1322509200-f67659162ce908cc510881a6b6eabc8b 1321860780-f9c69177db43b0f810ce03c822576c5c 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 1321379940-4227a3d1f425b32f9f8595739ef2b8c3
+        > python jig.py -c jig/config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 1322509200-f67659162ce908cc510881a6b6eabc8b 1321860780-f9c69177db43b0f810ce03c822576c5c 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 1321379940-4227a3d1f425b32f9f8595739ef2b8c3
         ```
 
     + The jig return feedback:
@@ -183,32 +170,24 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
 **************************************************************************
 
 ### Metrics
-- We support five metrics as follows, the scripts for these metrics can be found under the ./scorer directory. :
-    + Average Cube Test
+- We support five metrics as follows, the scripts for these metrics can be found under the ./scorer directory.
+- Sample truth file and run file can be found under the ./sample/directory
+    + qrel.txt: a sample ground truth
+    + runfile: a sample run
+- Sample use of the metrics
+    + Cube Test and Average Cube Test (results printing to screen)
 
       ``` shell
         >$ perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
       ```
 
-    + Cube Test
-
-      ``` shell
-        >$ perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
-      ```
-
-    + Alpha-nDCG per iteration
+    + Alpha-nDCG per iteration and Nerr-ia per iteration (results written in local files)
 
       ``` shell
         >$ ./ndeval  /path/to/truth/file /path/to/run/file
       ```
 
-    + Nerr-ia per iteration
-
-      ``` shell
-        >$ ./ndeval  /path/to/truth/file /path/to/run/file 50
-      ```
-
-    + SnDCG per iteration
+    + SnDCG per iteration (results written in local files)
 
       ``` shell
         >$ perl nSDCG_per_iteration.pl  /path/to/truth/file /path/to/run/file 5

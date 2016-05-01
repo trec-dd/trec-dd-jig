@@ -63,14 +63,14 @@ class Harness(object):
         cur = con.cursor()
 
         rlist = []
-        confidence = '50' # remain to be changed
+        ranking_score = '50' # remain to be changed
         for result in results:
             #cur.execute('SELECT docno, subtopic_id, text, rating FROM passage WHERE topic_id=? AND docno=?',
             #            [str(topic_id), result])
             #rlist.append(cur.fetchall())
             cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?',[str(topic_id), result])
             rs = cur.fetchall()
-            feedback = str(topic_id) + '\t' + result + '\t' + confidence + '\t'
+            feedback = str(topic_id) + '\t' + result + '\t' + ranking_score + '\t'
             if rs:
                 feedback = feedback + '1' + '\t'
                 for r in rs:
@@ -89,11 +89,11 @@ by issuing queries to your system, and providing feedback (truth data)
 for the results produced by your system. 
 
 The harness is run via command:
-    > python jig/jig.py -c config_file topic_id doc1 doc2 doc3 ... doc5
+    > python jig.py -c config_file topic_id doc1 doc2 doc3 ... doc5
 
 Every invocation  must include the  -c argument  with a
 path   to    a   valid    config.yaml   file,   as    illustrated   in
-jig/config.yaml. 
+config.yaml.
 
 Each of the five commands returns a JSON dictionary which your system
 can read using a JSON library.  The harness always provides feedback
