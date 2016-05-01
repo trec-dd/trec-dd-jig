@@ -106,15 +106,34 @@ Test the sample DD system:
 
 **************************************************************************
 ### A Sample Use
--- Remain to be added. --
+- An intermediate step:
+    + Give jig the topic id and 5 document id:
+        > python jig/jig.py -c jig/config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 1322509200-f67659162ce908cc510881a6b6eabc8b 1321860780-f9c69177db43b0f810ce03c822576c5c 1327908780-d9ad76f0947e2acd79cba3acd5f449f7
+
+    + The jig return feedback:
+        > DD15-1	1322120460-d6783cba6ad386f4444dcc2679637e0b	50	1	DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
+
+        > DD15-1	1322509200-f67659162ce908cc510881a6b6eabc8b	50	1	DD15-1.1:3
+
+        > DD15-1	1321860780-f9c69177db43b0f810ce03c822576c5c	50	1	DD15-1.1:3
+
+        > DD15-1	1327908780-d9ad76f0947e2acd79cba3acd5f449f7	50	1	DD15-1.3:2|DD15-1.1:2
 
 **************************************************************************
 
 ### Metrics
-- We support five metrics as follows:
-    + Cube Test
-    + Stage-aware Cube Test
-    + Alpha-nDCG per iteration
-    + Nerr-ia per iteration
-    + SnDCG per iteration
+- We support five metrics as follows, the scripts for these metrics can be found under the ./scorer directory. :
+    + Average Cube Test
+        > perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
 
+    + Cube Test
+        >perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
+
+    + Alpha-nDCG per iteration
+        > ./ndeval  /path/to/truth/file /path/to/run/file
+
+    + Nerr-ia per iteration
+        > ./ndeval  /path/to/truth/file /path/to/run/file 50
+
+    + SnDCG per iteration
+        > perl nSDCG_per_iteration.pl  /path/to/truth/file /path/to/run/file 5
