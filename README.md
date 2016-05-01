@@ -57,14 +57,15 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
   - Download the Lemur/Indri software package indri-5.0.tar.gz from https://sourceforge.net/projects/lemur/files/lemur/indri-5.0/. Or, you can use the one provided in our package.
     - Unpack the Lemur/Indri software package
     - Assume you put Lemur/Indri into a directory named /yourhomedirectory/indri-5.0/, install it by the following commands. Note you will need to enable the --with-lemur option.
-      ``` shell
+    
+    ``` shell
         >$ cd indri-5.0
         >$ mkdir install
         >$ chmod +x ./configure
         >$ ./configure --prefix=/yourhomedirectory/indri-5.0/install/ --with-lemur=/yourhomedirectory/indri-5.0/install/
         >$ make
         >$ make install
-      ```
+  ```
 
 ### System requirement for installing the jig:
 - Works best under Python 2.7.
