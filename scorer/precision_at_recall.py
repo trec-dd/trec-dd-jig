@@ -13,7 +13,7 @@ from operator import attrgetter
 
 #from numpy import mean
 
-from trec_dd.utils import get_all_subtopics, get_best_subtopics
+from utils import get_all_subtopics, get_best_subtopics
 
 def mean(l):
     if len(l) == 0:
