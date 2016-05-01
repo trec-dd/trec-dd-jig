@@ -112,7 +112,7 @@ lemur/Indri (You can use lemur as a sample search system to interact with jig).
         > ./trec-dd-jig/topics/
   ```
 
-        Inside this directory is a sample ground truth from TREC-DD 2015
+Inside this directory is a sample ground truth from TREC-DD 2015
 
 
 - Setup a sqlite database in ./trec-dd-jig/truth.db
