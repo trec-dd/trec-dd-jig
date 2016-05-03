@@ -1,24 +1,17 @@
-'''trec_dd.harness.run provides an evaluation jig for TREC Dynamic Domain systems
+'''trec_dd_stage_aware_jig provides an evaluation jig for TREC Dynamic Domain systems
 
-..This software is released under an MIT/X11 open source license. Copyright 2015 @ Diffeo Inc and Georgetown University
+..This software is released under an MIT/X11 open source license. Copyright 2016 @ Georgetown University
 
 '''
 
 from __future__ import absolute_import, print_function
 import argparse
-from collections import defaultdict
-from dossier.label import LabelStore, Label, CorefValue
-import json
-import itertools
 import kvlayer
 import logging
 import os
-import sys
-import time
 import yakonfig
 import sqlite3
 
-# from trec_dd.harness.truth_data import parse_truth_data
 
 logger = logging.getLogger(__name__)
 
@@ -34,18 +27,15 @@ def topic_id_to_query(topic_id):
 TOPIC_IDS = 'trec_dd_harness_topic_ids'
 EXPECTING_STOP = 'trec_dd_harness_expecting_stop'
 SEEN_DOCS = 'trec_dd_harness_seen_docs'
-run_file_path = ''
 
 
-class Harness(object):
+class Jig(object):
     tables = {
         TOPIC_IDS: (str,),
         EXPECTING_STOP: (str,),
     }
 
-    def __init__(self, config, kvl, label_store):
-        self.kvl = kvl
-        self.label_store = label_store
+    def __init__(self, config):
         self.truth_data_path = config.get('truth_data_path')
         self.run_file_path = config.get('run_file_path')
         self.topic_ids = set(config.get('topic_ids', []))
@@ -63,11 +53,7 @@ class Harness(object):
         cur = con.cursor()
 
         rlist = []
-        ranking_score = '50' # remain to be changed
         for result_pair in results:
-            #cur.execute('SELECT docno, subtopic_id, text, rating FROM passage WHERE topic_id=? AND docno=?',
-            #            [str(topic_id), result])
-            #rlist.append(cur.fetchall())
             result = result_pair.split(':')
             cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?',[str(topic_id), result[0]])
             rs = cur.fetchall()
@@ -84,46 +70,23 @@ class Harness(object):
         return rlist
 
 
-# should be modified
-usage = '''The purpose of this harness is to interact with your TREC DD system
-by issuing queries to your system, and providing feedback (truth data)
-for the results produced by your system. 
-
-The harness is run via command:
-    > python jig.py -c config_file topic_id doc1 doc2 doc3 ... doc5
-
-Every invocation  must include the  -c argument  with a
-path   to    a   valid    config.yaml   file,   as    illustrated   in
-config.yaml.
-
-Each of the five commands returns a JSON dictionary which your system
-can read using a JSON library.  The harness always provides feedback
-for every result, even if the feedback is that the system has no truth
-data for that result.
-
-'''
-
-
 def main():
     parser = argparse.ArgumentParser(
         'Command line interface to the office TREC DD jig.',
-        usage=usage,
         conflict_handler='resolve')
     parser.add_argument('args', help='input for given command',
                         nargs=argparse.REMAINDER)
-    modules = [yakonfig, kvlayer, Harness]
+    modules = [yakonfig, kvlayer, Jig]
     args = yakonfig.parse_args(parser, modules)
 
     logging.basicConfig(level=logging.DEBUG)
 
-    kvl = kvlayer.client()
-    label_store = LabelStore(kvl)
     config = yakonfig.get_global_config('harness')
-    harness = Harness(config, kvl, label_store)
+    jig = Jig(config)
 
     parts = args.args
     topic_id = parts.pop(0)
-    feedback = harness.step(topic_id, parts)
+    feedback = jig.step(topic_id, parts)
     for f in feedback:
         print(f)
 

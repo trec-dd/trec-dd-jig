@@ -11,6 +11,7 @@ import logging
 import os
 import yakonfig
 import sqlite3
+import click
 
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,8 @@ def topic_id_to_query(topic_id):
 TOPIC_IDS = 'trec_dd_harness_topic_ids'
 EXPECTING_STOP = 'trec_dd_harness_expecting_stop'
 SEEN_DOCS = 'trec_dd_harness_seen_docs'
+steps = 3
+subtopic_sequence = {}  # :topic_id:subtopic_list
 
 
 class Jig(object):
@@ -55,7 +58,7 @@ class Jig(object):
         rlist = []
         for result_pair in results:
             result = result_pair.split(':')
-            cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?',[str(topic_id), result[0]])
+            cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
             rs = cur.fetchall()
             feedback = str(topic_id) + '\t' + result[0] + '\t' + result[1] + '\t'
             if rs:
@@ -68,7 +71,6 @@ class Jig(object):
                 feedback += '0'
             rlist.append(feedback)
         return rlist
-
 
 def main():
     parser = argparse.ArgumentParser(

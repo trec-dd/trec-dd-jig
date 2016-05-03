@@ -15,69 +15,10 @@
 
 **************************************************************************
 
-### Packages needs to installed before using the jig:
+### Quick install packages needed:
 
-##### Quick Install:
-    - Install pip (or pip3 for python3) if it is not already installed:
-
-        - Ubuntu/Linux 64-bit
-             > $ sudo apt-get install python-pip python-dev
-
-        - Mac OS X
-              >$ sudo easy_install pip
-    - Install all the packages needed:
         > pip install -r requirements.txt
 
-##### Required:
- 1. Pip
-
-    Install pip (or pip3 for python3) if it is not already installed:
-
-    - Ubuntu/Linux 64-bit
-      ``` shell
-         > $ sudo apt-get install python-pip python-dev
-      ```
-
-    - Mac OS X
-      ``` shell
-          >$ sudo easy_install pip
-      ```
-
- 2. Virtualenv
-
-     A Virtual Environment is a tool to keep the dependencies required by different projects in separate places, by creating virtual Python environments for them.
-    - Ubuntu/Linux 64-bit
-      ``` shell
-         > $ sudo apt-get install python-dev python-virtualenv
-      ```
-
-    - Mac OS X
-      ``` shell
-         > $ sudo pip install --upgrade virtualenv
-      ```
-    - Dossier.label
-
-       - Brief introduction
-
-       - Mac OS X
-          ``` shell
-           > $ sudo pip install --upgrade dossier.label
-          ```
-
-##### Optional:
-lemur/Indri (You can use lemur as a sample search system to interact with jig).
-  - Download the Lemur/Indri software package indri-5.9.tar.gz from https://sourceforge.net/projects/lemur/files/lemur/indri-5.9/. Or, you can use the one provided in our package.
-    - Unpack the Lemur/Indri software package
-    - Assume you put Lemur/Indri into a directory named /yourhomedirectory/indri-5.9/, install it by the following commands. Note you will need to enable the --with-lemur option.
-
-    ``` shell
-        >$ cd indri-5.9
-        >$ mkdir install
-        >$ chmod +x ./configure
-        >$ ./configure --prefix=/yourhomedirectory/indri-5.9/install/ --with-lemur=/yourhomedirectory/indri-5.9/install/
-        >$ make
-        >$ make install
-  ```
 
 ### System requirement for installing the jig:
 - Works best under Python 2.7.

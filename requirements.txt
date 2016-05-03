@@ -5,7 +5,6 @@ bdist-mpkg==0.5.0
 bonjour-py==0.3
 click==6.6
 decorator==4.0.4
-Django==1.9
 functools32==3.2.3.post2
 gnureadline==6.3.3
 ipython==4.0.1
@@ -70,7 +69,6 @@ six==1.4.1
 SQLAlchemy==1.0.9
 supervisor==3.2.0
 traitlets==4.0.0
-virtualenv==13.1.2
 watchdog==0.8.3
 xattr==0.6.4
 zope.interface==4.1.1
