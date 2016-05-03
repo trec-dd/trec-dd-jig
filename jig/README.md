@@ -10,51 +10,43 @@
 ### What are inside this package:
 
 * a user simulator (jig),
-* a sample search system (built on top of Lemur) interacting with the jig,
-* a scorer outputs the cubetest scores,
+* a stage aware user simulator (jig_stage_aware),
+* several scorer outputs the scores with regards to different metrics.
 
 **************************************************************************
+
+### System requirement for installing the jig:
+- Works best under Python 2.7.
+
 
 ### Quick install packages needed:
 
         > pip install -r requirements.txt
 
-
-### System requirement for installing the jig:
-- Works best under Python 2.7.
-
-### Input:
+### Download the ground truth:
 
 - Topics (ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
 
-### Outputs:
-- Feedback format
-    + See http://trec-dd.org/guideline.html#run_format
-    + Final output (http://trec-dd.org/guideline.html#run_format)
+### Feedback format:
++ See http://trec-dd.org/guideline.html#run_format
 
-### Installation steps:
-- Download the jig:
+#### Use the jig
+##### 1. Download:
+
   ``` shell
     > git clone https://github.com/trec-dd/trec-dd-jig
   ```
+
+##### 2. Configuration and set up
 - Move the unpacked directory under the lemur/ your trec-dd system directory, use lemur as an example, that is,
   ``` shell
         > mv trec-dd-jig /yourhomedirectory/indri-5.9/
   ```
 
-- Go to the trec-dd-jig directory
-
+- Go to the trec-dd-jig directory and put your downloaded topics (with ground truth)  from the TREC Active Participants Home Page under
   ``` shell
-    >$ cd  /yourhomedirectory/indri-5.0/trec-dd-jig
+        > ./trec-dd-jig/jig/topics/
   ```
-
-- Download your topics (with ground truth)  from the TREC Active Participants Home Page. Copy it and put it under
-  ``` shell
-        > ./trec-dd-jig/topics/
-  ```
-
-Inside this directory is a sample ground truth from TREC-DD 2015
-
 
 - Setup a sqlite database in ./trec-dd-jig/truth.db
 
@@ -71,28 +63,29 @@ Inside this directory is a sample ground truth from TREC-DD 2015
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
 
   ``` shell
-    >$ python jig.py -c config_file topic_id docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
+    >$ python jig.py -r runid topic_id docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
 
     where:
-    + config_file: the path of the configuration file, default is ./trec_dd_2015_release/topics/config.yaml.
+    + runid: An identifier used to declare run
     + topic_id: the id of the topic you are working on
     + docno1, docno2 ...: the five document ids that your system returned. It needs to be the document ids in TREC DD datasets.
+    + ranking score: the ranking score of each document given from your sysetm
 
 - Each feedback is a tuple of (docid, subtopic_id, passage_text, rating) for a document, where:
     + docid: the id of a returned document
     + subtopic_id: the id of a relevant subtopic that your returned document covers
     + passage_text: the content of a relevant passage that your returned document covers
     + rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
-
+    + ranking score: the ranking score of each document given from your sysetm
 - Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
 
 **************************************************************************
-### A Sample Step
+### A Sample Input and Output
 - An intermediate step:
-    + Give jig the topic id and 5 document id:
+    + Give jig the topic id and 5 document id with their ranking score:
         ``` shell
-        > python jig.py -c config.yaml DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
+        > python jig.py -r gu_1 DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
         ```
 
     + The jig return feedback:

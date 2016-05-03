@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 import sys
 
 def main():
-    dbname = 'truth.db'
+    dbname = 'jig/truth.db'
     tables = [
         '''
             domain(
