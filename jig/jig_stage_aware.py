@@ -28,9 +28,14 @@ def step(topic_id, results):
     cur = con.cursor()
 
     rlist = []
+    current_subtopic = 'DD15-1.1'
+
     for result_pair in results:
         result = result_pair.split(':')
-        cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
+        if current_subtopic == "all":
+            cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
+        else:
+            cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=? AND subtopic_id=?', [str(topic_id), result[0], current_subtopic])
         rs = cur.fetchall()
         feedback = str(topic_id) + '\t' + result[0] + '\t' + result[1] + '\t'
         if rs:
