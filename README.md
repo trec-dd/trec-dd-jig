@@ -51,7 +51,7 @@
 - Setup a sqlite database in ./trec-dd-jig/truth.db
 
   ``` shell
-    >$ sh config.sh --topics yourtopicfile.xml
+    >$ sh jig/config.sh --topics yourtopicfile.xml
   ```
 
 - Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
@@ -63,7 +63,11 @@
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
 
   ``` shell
-    >$ python jig.py -r runid topic_id docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
+    >$ python jig/jig.py -r runid topic_id docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
+  ```
+- For stage aware jig:
+  ``` shell
+    >$ python jig/jig_stage_aware.py -r runid topic_id docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
 
     where:
