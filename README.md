@@ -88,7 +88,7 @@
         > python jig.py -r gu_1 DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
         ```
 
-    + The jig return feedback:
+    + The jig return feedback (text content of passage are not shown here):
 
     ``` shell
         > DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 833.00 1 DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
