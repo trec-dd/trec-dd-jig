@@ -9,28 +9,28 @@
 
 ### What are inside this package:
 
-* a user simulator (jig),
-* a stage aware user simulator (jig_stage_aware),
+* a user simulator (jig/jig.py),
+* a stage aware user simulator (jig/jig_stage_aware.py),
 * several scorer outputs the scores with regards to different metrics.
 
 **************************************************************************
 
-### System requirement for installing the jig:
+### Requirements
+
+#### 1. System requirement
 - Works best under Python 2.7.
 
 
-### Quick install packages needed:
+#### 2. Quick install packages needed:
 
-        > pip install -r requirements.txt
+    > pip install -r requirements.txt
 
-### Download the ground truth:
+#### 4. Ground truth:
 
 - Topics (ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
 
-### Feedback format:
-+ See http://trec-dd.org/guideline.html#run_format
 
-#### Use the jig
+### Use the jig
 ##### 1. Download:
 
   ``` shell

@@ -1,5 +1,5 @@
 '''
-    trec_dd_stage_aware_jig provides an evaluation jig for TREC Dynamic Domain systems
+    trec_dd_jig provides an evaluation jig for TREC Dynamic Domain systems
 
     This software is released under an MIT/X11 open source license. Copyright 2016 @ Georgetown University
 '''
@@ -11,6 +11,7 @@ import logging
 import os
 import sqlite3
 import click
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -27,19 +28,20 @@ def step(topic_id, results):
 
     rlist = []
     for result_pair in results:
-        result = result_pair.split(':')
-        cur.execute('SELECT subtopic_id, rating FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
+        result = result_pair.split(':') # result[0]: docno, result[1]: ranking score
+        cur.execute('SELECT subtopic_id, rating, text FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
         rs = cur.fetchall()
-        feedback = str(topic_id) + '\t' + result[0] + '\t' + result[1] + '\t'
+        feedback = [str(topic_id), result[0], result[1]]
         if rs:
-            feedback = feedback + '1' + '\t'
+            feedback.append('1')
             for r in rs:
-                sid, rating = r
-                feedback += str(sid) + ':' + str(rating) + '|'
-            feedback = feedback[:-1]
+                sid, rating, text = r
+                full_feedback = feedback + [str(sid), str(rating), text]
+                rlist.append(full_feedback)
         else:
             feedback += '0'
-        rlist.append(feedback)
+            rlist.append(feedback)
+
     return rlist
 
 
@@ -52,7 +54,7 @@ def main(runid, topic, docs):
     feedback = step(topic, docs)
     print(runid)
     for f in feedback:
-        print(f)
+        print(json.dumps(f))
 
 
 if __name__ == '__main__':
