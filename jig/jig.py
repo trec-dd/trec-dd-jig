@@ -16,7 +16,7 @@ import json
 logger = logging.getLogger(__name__)
 
 
-truth_data_path = 'truth.db'
+truth_data_path = 'jig/stage_truth.db'
 
 
 def step(topic_id, results):

@@ -2,7 +2,8 @@
 
 if [ "$1" = "--topics" ]
 then
-    python setup_db.py $2
+    #python setup_db.py $2
+    python setup_stage_db.py $2
     #python scorer/generate_qrel.py $2 > scorer/qrel.txt
 else
     echo "Usage: sh ./config.sh --topics <yourtopicfile.xml>"
