@@ -1,0 +1,1 @@
+This directory should contain the ground truth & topics file.
