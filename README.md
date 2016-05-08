@@ -77,12 +77,30 @@
     + docno1, docno2 ...: the five document ids that your system returned. It needs to be the document ids in TREC DD datasets.
     + ranking score: the ranking score of each document given from your sysetm
 
-- Each feedback is a tuple of (docid, subtopic_id, passage_text, rating) for a document, where:
-    + docid: the id of a returned document
-    + subtopic_id: the id of a relevant subtopic that your returned document covers
-    + passage_text: the content of a relevant passage that your returned document covers
-    + rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
-    + ranking score: the ranking score of each document given from your sysetm
+- Each feedback is a json format for each document in the following a document
+    > [
+      > {
+          > "topic_id": "DD15-1"
+          > "confidence": 0.987,
+          > "on_topic": 1,
+          > "stream_id": "1335424206-b5476b1b8bf25b179bcf92cfda23d975",
+          > "subtopics": [
+           >    {
+            >       "passage_text": "this is a passage of relevant text from the document 'stream_id', relevant to the 'subtopic_id' below with the 'rating' below",
+             >      "rating": 3,
+              >     "subtopic_id": "DD15-1.4",
+               >    "subtopic_name": "a label for this subtopic"
+             >  }
+         >  ],
+     >  },
+      > { ... }
+     > ]
+    where:
+        + docid: the id of a returned document
+        + subtopic_id: the id of a relevant subtopic that your returned document covers
+        + passage_text: the content of a relevant passage that your returned document covers
+        + rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
+        + ranking score: the ranking score of each document given from your sysetm
 - Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
 
 **************************************************************************
