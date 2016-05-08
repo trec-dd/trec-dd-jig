@@ -78,23 +78,23 @@
     + ranking score: the ranking score of each document given from your sysetm
 
 - Each feedback is a json format for each document in the following a document
-    > [
-      > {
-          > "topic_id": "DD15-1"
-          > "confidence": 0.987,
-          > "on_topic": 1,
-          > "stream_id": "1335424206-b5476b1b8bf25b179bcf92cfda23d975",
-          > "subtopics": [
-           >    {
-            >       "passage_text": "this is a passage of relevant text from the document 'stream_id', relevant to the 'subtopic_id' below with the 'rating' below",
-             >      "rating": 3,
-              >     "subtopic_id": "DD15-1.4",
-               >    "subtopic_name": "a label for this subtopic"
-             >  }
-         >  ],
-     >  },
-      > { ... }
-     > ]
+    [
+     {
+         "topic_id": "DD15-1"
+         "confidence": 0.987,
+         "on_topic": 1,
+         "stream_id": "1335424206-b5476b1b8bf25b179bcf92cfda23d975",
+         "subtopics": [
+             {
+                 "passage_text": "this is a passage of relevant text from the document 'stream_id', relevant to the 'subtopic_id' below with the 'rating' below",
+                 "rating": 3,
+                 "subtopic_id": "DD15-1.4",
+                 "subtopic_name": "a label for this subtopic"
+             }
+         ],
+     },
+     { ... }
+    ]
     where:
         + docid: the id of a returned document
         + subtopic_id: the id of a relevant subtopic that your returned document covers
