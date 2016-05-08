@@ -58,15 +58,17 @@ def step_stage(runid, topic_id, results):
                         [topic_id, result[0], current_subtopic])
 
         rs = cur.fetchall()
-        feedback = [str(topic_id), result[0], result[1]]
+        feedback = {'topic_id': topic_id, 'doc_id': result[0], 'ranking_score': result[1]}
         if rs:
-            feedback.append('1')
+            feedback['on_topic'] = '1'
+            feedback['subtopics'] = []
             for r in rs:
                 sid, rating, text = r
-                full_feedback = feedback + [str(sid), str(rating), text]
-                rlist.append(full_feedback)
+                subtopic = {'subtopic_id': sid, 'rating': rating, 'passage_text': text}
+                feedback['subtopics'].append(subtopic)
+            rlist.append(feedback)
         else:
-            feedback += '0'
+            feedback.update({'on_topic': '0'})
             rlist.append(feedback)
 
     cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=?', [ct+1, str(runid)])
@@ -83,21 +85,22 @@ def step(topic_id, results):
 
     rlist = []
     for result_pair in results:
-        result = result_pair.split(':') # result[0]: docno, result[1]: ranking score
+        result = result_pair.split(':')  # result[0]: docno, result[1]: ranking score
         cur.execute('SELECT subtopic_id, rating, text FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
         rs = cur.fetchall()
-        print(len(rs))
-        feedback = [str(topic_id), result[0], result[1]]
+        feedback = {'topic_id': topic_id, 'doc_id': result[0], 'ranking_score': result[1]}
         if rs:
-            feedback.append('1')
+            feedback['on_topic'] = '1'
+            feedback['subtopics'] = []
             for r in rs:
                 sid, rating, text = r
-                full_feedback = feedback + [str(sid), str(rating), text]
-                rlist.append(full_feedback)
-        else:
-            feedback += '0'
+                subtopic = {'subtopic_id': sid, 'rating': rating, 'passage_text': text}
+                feedback['subtopics'].append(subtopic)
             rlist.append(feedback)
-
+        else:
+            feedback.update({'on_topic': '0'})
+            rlist.append(feedback)
+    # print(rlist)
     return rlist
 
 
@@ -115,9 +118,9 @@ def main(runid, topic, stage, docs):
     else:
         print('Please choose the correct type of jig! See https://github.com/trec-dd/trec-dd-jig')
         return
-    # print(runid)
-    # for f in feedback:
-    #     print(json.dumps(f))
+    print(runid)
+    for f in feedback:
+        print(json.dumps(f))
 
 
 if __name__ == '__main__':
