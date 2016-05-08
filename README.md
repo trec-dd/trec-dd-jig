@@ -78,6 +78,7 @@
     + ranking score: the ranking score of each document given from your sysetm
 
 - Each feedback is a json format for each document in the following a document
+    '''
     [
      {
          "topic_id": "DD15-1"
@@ -95,6 +96,7 @@
      },
      { ... }
     ]
+    '''
     where:
         + docid: the id of a returned document
         + subtopic_id: the id of a relevant subtopic that your returned document covers
