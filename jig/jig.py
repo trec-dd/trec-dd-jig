@@ -43,7 +43,7 @@ def step_stage(runid, topic_id, results):
         ct = 0
     else:
         ct, = tmp
-
+    f = open(runid+'.txt', 'a')
     for result_pair in results:
         result = result_pair.split(':') # result[0]: docno, result[1]: ranking score
         if (ct+1) % (step_size+1) == 0:
@@ -59,48 +59,76 @@ def step_stage(runid, topic_id, results):
 
         rs = cur.fetchall()
         feedback = {'topic_id': topic_id, 'doc_id': result[0], 'ranking_score': result[1]}
+        wline = topic_id + '\t' + str(ct) + '\t' + result[0] + '\t' + result[1] + '\t'
         if rs:
+            wline += '1' + '\t'
             feedback['on_topic'] = '1'
             feedback['subtopics'] = []
             for r in rs:
                 sid, rating, text = r
                 subtopic = {'subtopic_id': sid, 'rating': rating, 'passage_text': text}
                 feedback['subtopics'].append(subtopic)
+                wline += str(sid) + ':' + str(rating) + '|'
             rlist.append(feedback)
+            wline = wline[:-1]
         else:
             feedback.update({'on_topic': '0'})
+            wline += '0' + '\t'
             rlist.append(feedback)
+        f.write(wline)
+        f.write('\n')
 
     cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=?', [ct+1, str(runid)])
     con.commit()
     return rlist
 
 
-def step(topic_id, results):
+def step(runid, topic_id, results):
     if not os.path.exists(truth_data_path):
         return {'error': 'Please run config.sh first'}
 
     con = sqlite3.connect(truth_data_path)
     cur = con.cursor()
 
+    # iteration count for this run_id
+    cur.execute('SELECT iteration_ct FROM topic_status WHERE run_id=?', [str(runid)])
+    tmp = cur.fetchone()
+    if not tmp:
+        cur.execute('INSERT INTO topic_status VALUES(?, ?, ?)', [topic_id, runid, 0])
+        con.commit()
+        ct = 0
+    else:
+        ct, = tmp
+
     rlist = []
+    f = open(runid+'.txt', 'a')
     for result_pair in results:
         result = result_pair.split(':')  # result[0]: docno, result[1]: ranking score
         cur.execute('SELECT subtopic_id, rating, text FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
         rs = cur.fetchall()
         feedback = {'topic_id': topic_id, 'doc_id': result[0], 'ranking_score': result[1]}
+        wline = topic_id + '\t' + str(ct) + '\t' + result[0] + '\t' + result[1] + '\t'
         if rs:
             feedback['on_topic'] = '1'
             feedback['subtopics'] = []
+            wline += '1' + '\t'
             for r in rs:
                 sid, rating, text = r
                 subtopic = {'subtopic_id': sid, 'rating': rating, 'passage_text': text}
                 feedback['subtopics'].append(subtopic)
+                wline += str(sid) + ':' + str(rating) + '|'
             rlist.append(feedback)
+            wline = wline[:-1]
         else:
             feedback.update({'on_topic': '0'})
             rlist.append(feedback)
+            wline += '0'
+        f.write(wline)
+        f.write('\n')
     # print(rlist)
+    cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=?', [ct+1, str(runid)])
+    con.commit()
+
     return rlist
 
 
@@ -114,13 +142,13 @@ def main(runid, topic, stage, docs):
     if stage == 'stage':
         feedback = step_stage(runid, topic, docs)
     elif stage == 'normal':
-        feedback = step(topic, docs)
+        feedback = step(runid, topic, docs)
     else:
         print('Please choose the correct type of jig! See https://github.com/trec-dd/trec-dd-jig')
         return
     print(runid)
     for f in feedback:
-        print(json.dumps(f))
+        print(json.dumps(f, indent=4, separators=(',', ': ')))
 
 
 if __name__ == '__main__':
