@@ -96,7 +96,7 @@
      { ... }
     ]
     ```
-    where:
+        + where:
         + docid: the id of a returned document
         + subtopic_id: the id of a relevant subtopic that your returned document covers
         + passage_text: the content of a relevant passage that your returned document covers
