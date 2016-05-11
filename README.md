@@ -82,15 +82,14 @@
     [
      {
          "topic_id": "DD15-1"
-         "confidence": 0.987,
-         "on_topic": 1,
-         "stream_id": "1335424206-b5476b1b8bf25b179bcf92cfda23d975",
+         "ranking_score": "123",
+         "on_topic": "1",
+         "doc_id": "1335424206-b5476b1b8bf25b179bcf92cfda23d975",
          "subtopics": [
              {
                  "passage_text": "this is a passage of relevant text from the document 'stream_id', relevant to the 'subtopic_id' below with the 'rating' below",
                  "rating": 3,
                  "subtopic_id": "DD15-1.4",
-                 "subtopic_name": "a label for this subtopic"
              }
          ],
      },

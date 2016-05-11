@@ -13,12 +13,12 @@ def run_all():
 
 def cubetest(truth, run):
     print 'Calling cubetest'
-    call(["perl", "cubeTest_dd.pl", truth, run, '50', '>>', 'cubetest.eval'])
+    call(["perl", "cubeTest_dd.pl", truth, run, '50', '>', 'cubetest.eval'])
 
 
 def stage_aware_cubetest(truth, run):
     print 'Calling stage aware cubetest'
-    call(["perl", "cubeTest_dd_s.pl", truth, run, '50', '>>', 'stage_aware_cubetest.eval'])
+    call(["perl", "cubeTest_dd_s.pl", truth, run, '50', '>', 'stage_aware_cubetest.eval'])
 
 
 def nDCG(truth, run):
@@ -31,12 +31,16 @@ def snDCG(truth, run):
     print 'Calling snDCG'
     call(["perl", "nSDCG_per_iteration.pl", truth, run, '5'])
 
+def pr(truth, run):
+    print 'Calling P@R'
+    call(["perl", "cubeTest_dd.pl", truth, run, '50', '>', 'PR.eval'])
 
 choice = {
     'cubetest': cubetest,
-    'stage_aware_cubetest': stage_aware_cubetest,
-    'nDCG': nDCG,
-    'snDCG': snDCG,
+    # 'stage_aware_cubetest': stage_aware_cubetest,
+    # 'nDCG': nDCG,
+    # 'snDCG': snDCG,
+    'PR': pr,
 }
 
 
