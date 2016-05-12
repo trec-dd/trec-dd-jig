@@ -1,58 +1,43 @@
-'''trec_dd.scorer.precision_at_recall provides the
-   precision at full recall score for TREC DD
+from collections import defaultdict
 
-   This assumes binary relevance, but can be easily upgraded.
+def loadGroundTruth(ground_truth, qrel):
 
-.. This software is released under an MIT/X11 open source license.
-   Copyright 2015 Diffeo, Inc.
+    for line in qrel:
+        elements = line.split()
+        ground_truth[elements[0]].add(elements[2])
 
-'''
+def computePrecisionAtRecall(ground_truth, runfile, iteration=-1):
 
-from __future__ import division
-from operator import attrgetter
+    last_topic_id = None
+    on_topic = 0
+    precision_at_recall = {}
 
-#from numpy import mean
+    for line in runfile:
+        elements = line.split()
 
-from utils import get_all_subtopics, get_best_subtopics
+        if elements[0] != last_topic_id: # first line of the topic
+            if last_topic_id:
+                precision_at_recall[last_topic_id] = on_topic / float(dcount)
+                #print last_topic_id, on_topic, dcount
+            last_topic_id = elements[0]
+            dcount = 1
+            on_topic = 0
+        else:
+            dcount += 1
 
-def mean(l):
-    if len(l) == 0:
-        return 0.0
+        if elements[2] in ground_truth[elements[0]]: on_topic += 1
 
-    s = sum(l)
-    return s / len(l)
+    return sum(precision_at_recall.values()) / len(precision_at_recall)
+    #return precision_at_recall
 
 
-def precision_at_recall(run, label_store):
+def main():
+    qrel = open('qrel.txt','r')
+    runfile = open('ul_combi_roc.2', 'r')
+    ground_truth = defaultdict(set)
 
-    scores_by_topic = dict()
+    loadGroundTruth(ground_truth, qrel)
 
-    ## score for each topic
-    for topic_id, results in run['results'].items():
-        ## get all subtopics for the topic
-        subtopic_ids = set(get_all_subtopics(label_store, topic_id))
+    print computePrecisionAtRecall(ground_truth, runfile)
 
-        seen_subtopics = set()
-        relevant_docs = 0
-
-        for idx, result in enumerate(results):
-            assert idx == result['rank'] - 1
-
-            result_subtopics = \
-                {subtopic for subtopic, conf in get_best_subtopics(result['subtopics'])}
-
-            if result['on_topic']:
-                relevant_docs += 1
-
-            seen_subtopics.update(result_subtopics)
-            if len(seen_subtopics) == len(subtopic_ids):
-                break
-
-        ## precision is number of documents relevant at stopping point
-        p = relevant_docs/(idx + 1)
-        scores_by_topic[topic_id] = p
-
-    ## macro average over all the topics
-    macro_avg = mean(scores_by_topic.values())
-    run['scores']['precision_at_recall'] = \
-        {'scores_by_topic': scores_by_topic, 'macro_average': macro_avg}
+main()
