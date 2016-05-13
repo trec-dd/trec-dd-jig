@@ -1,13 +1,29 @@
 from collections import defaultdict
+import click
+
+def preProcess(run, ct):
+    runfile = open(run)
+    output = open(run + '_' + str(ct), 'w')
+    while 1:
+        line = runfile.readline()
+        if not line:
+            break
+        else:
+            result = line.split('\t')
+            if int(result[1]) <= int(ct):
+                output.write(line)
+    return str(run + '_' + str(ct))
+
+
 
 def loadGroundTruth(ground_truth, qrel):
-
     for line in qrel:
         elements = line.split()
         ground_truth[elements[0]].add(elements[2])
 
-def computePrecisionAtRecall(ground_truth, runfile, iteration=-1):
 
+def computePrecisionAtRecall(ground_truth, runfile,):
+    runfile = open(runfile, 'r')
     last_topic_id = None
     on_topic = 0
     precision_at_recall = {}
@@ -30,14 +46,17 @@ def computePrecisionAtRecall(ground_truth, runfile, iteration=-1):
     return sum(precision_at_recall.values()) / len(precision_at_recall)
     #return precision_at_recall
 
-
-def main():
-    qrel = open('qrel.txt','r')
-    runfile = open('ul_combi_roc.2', 'r')
+@click.command()
+@click.option('-qrel', type=click.Path(exists=True))
+@click.option('-run', type=click.Path(exists=True))
+@click.option('-ct', type=click.INT)
+def main(qrel, run, ct):
+    qrel = open(qrel,'r')
+    runfile = open(run, 'r')
     ground_truth = defaultdict(set)
 
     loadGroundTruth(ground_truth, qrel)
 
-    print computePrecisionAtRecall(ground_truth, runfile)
+    print computePrecisionAtRecall(ground_truth, preProcess(run, ct))
 
 main()

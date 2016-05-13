@@ -40,7 +40,7 @@ choice = {
     # 'stage_aware_cubetest': stage_aware_cubetest,
     # 'nDCG': nDCG,
     # 'snDCG': snDCG,
-    'PR': pr,
+    # 'PR': pr,
 }
 
 
