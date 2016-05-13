@@ -3,7 +3,8 @@ import click
 
 def preProcess(run, ct):
     runfile = open(run)
-    output = open(run + '_' + str(ct), 'w')
+    output_path = run + '_' + str(ct)
+    output = open(output_path, 'w')
     while 1:
         line = runfile.readline()
         if not line:
@@ -12,7 +13,7 @@ def preProcess(run, ct):
             result = line.split('\t')
             if int(result[1]) <= int(ct):
                 output.write(line)
-    return str(run + '_' + str(ct))
+    return output_path
 
 
 
