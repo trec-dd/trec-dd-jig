@@ -152,3 +152,8 @@
       ``` shell
         >$ perl nSDCG_per_iteration.pl  /path/to/truth/file /path/to/run/file 5
       ```
+    + Precision at recall (results print to screen)
+
+      ``` shell
+        >$ python precision_at_recall.py -qrel /path/to/truth/file -run /path/to/run/file
+      ```
