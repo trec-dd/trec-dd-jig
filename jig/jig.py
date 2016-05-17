@@ -1,20 +1,16 @@
 '''
     trec_dd_jig provides an evaluation jig for TREC Dynamic Domain systems
 
-    This software is released under an MIT/X11 open source license. Copyright 2016 @ Georgetown University
+    Copyright 2016 @ Georgetown University
 '''
 
 
 from __future__ import absolute_import, print_function
 
-import logging
 import os
 import sqlite3
 import click
 import json
-
-logger = logging.getLogger(__name__)
-
 
 truth_data_path = 'jig/stage_truth.db'
 step_size = 3
