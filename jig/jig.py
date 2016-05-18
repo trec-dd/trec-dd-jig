@@ -39,6 +39,7 @@ def step_stage(runid, topic_id, results):
         ct = 0
     else:
         ct, = tmp
+    # The file that records results with feedback into file named after runid
     f = open(runid+'.txt', 'a')
     for result_pair in results:
         result = result_pair.split(':') # result[0]: docno, result[1]: ranking score
@@ -54,10 +55,14 @@ def step_stage(runid, topic_id, results):
                         [topic_id, result[0], current_subtopic])
 
         rs = cur.fetchall()
+        # feedback: Immediate feedback that will be printed to screen.
         feedback = {'topic_id': topic_id, 'doc_id': result[0], 'ranking_score': result[1]}
+        # Each line represent a feedback for one document
         wline = topic_id + '\t' + str(ct) + '\t' + result[0] + '\t' + result[1] + '\t'
+        # topic id, iteration id, doc no, doc ranking score given by participating system
         if rs:
             wline += '1' + '\t'
+            # 1: on topic
             feedback['on_topic'] = '1'
             feedback['subtopics'] = []
             for r in rs:
@@ -65,15 +70,19 @@ def step_stage(runid, topic_id, results):
                 subtopic = {'subtopic_id': sid, 'rating': rating, 'passage_text': text}
                 feedback['subtopics'].append(subtopic)
                 wline += str(sid) + ':' + str(rating) + '|'
+                # subtopic is and the relevance score for this subtopic
             rlist.append(feedback)
             wline = wline[:-1]
+            # get rid of the '|'
         else:
+            # off topic
             feedback.update({'on_topic': '0'})
             wline += '0' + '\t'
             rlist.append(feedback)
         f.write(wline)
         f.write('\n')
 
+    # Update the iteration count for current run_id in the database, only needed in stage aware jig
     cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=?', [ct+1, str(runid)])
     con.commit()
     return rlist
