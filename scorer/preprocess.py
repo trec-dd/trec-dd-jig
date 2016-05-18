@@ -1,4 +1,6 @@
 from collections import defaultdict
+# used to extract results before (including) certain iteration from a complete run file.
+# sample usage: python preprocess.py -run gu_1.txt -ct 3
 import click
 
 def preProcess(run, ct):
