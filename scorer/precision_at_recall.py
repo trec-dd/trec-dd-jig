@@ -47,17 +47,22 @@ def computePrecisionAtRecall(ground_truth, runfile,):
     return sum(precision_at_recall.values()) / len(precision_at_recall)
     #return precision_at_recall
 
+
 @click.command()
 @click.option('-qrel', type=click.Path(exists=True))
 @click.option('-run', type=click.Path(exists=True))
 @click.option('-ct', type=click.INT)
 def main(qrel, run, ct):
     qrel = open(qrel,'r')
-    runfile = open(run, 'r')
     ground_truth = defaultdict(set)
 
     loadGroundTruth(ground_truth, qrel)
 
-    print computePrecisionAtRecall(ground_truth, preProcess(run, ct))
+    # get scores for all iterations
+    print computePrecisionAtRecall(ground_truth, run)
 
-main()
+    # If need to get P@R score before (including) certain iteration
+    # print computePrecisionAtRecall(ground_truth, preProcess(run, ct))
+
+if __name__ == '__main__':
+    main()
