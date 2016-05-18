@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# Run all the scorer in one trial
 from subprocess import call
 import click
 
@@ -13,34 +13,39 @@ def run_all():
 
 def cubetest(truth, run):
     print 'Calling cubetest'
-    call(["perl", "cubeTest_dd.pl", truth, run, '50', '>', 'cubetest.eval'])
+    # results print to screen
+    call(["perl", "cubeTest_dd.pl", truth, run, '50', '>'])
 
 
 def stage_aware_cubetest(truth, run):
     print 'Calling stage aware cubetest'
-    call(["perl", "cubeTest_dd_s.pl", truth, run, '50', '>', 'stage_aware_cubetest.eval'])
+    # results print to screen
+    call(["perl", "cubeTest_dd_s.pl", truth, run, '50'])
 
 
 def nDCG(truth, run):
     print 'Calling nDCG'
+    # results written into file
     call(["./ndeval", truth, run])
     # ndeval [options] qrels run (-help for full usage information)
 
 
 def snDCG(truth, run):
     print 'Calling snDCG'
+    # results written into file
     call(["perl", "nSDCG_per_iteration.pl", truth, run, '5'])
 
 def pr(truth, run):
     print 'Calling P@R'
-    call(["perl", "cubeTest_dd.pl", truth, run, '50', '>', 'PR.eval'])
+    # results print to screen
+    call(["perl", "cubeTest_dd.pl", truth, run, '50'])
 
 choice = {
     'cubetest': cubetest,
-    # 'stage_aware_cubetest': stage_aware_cubetest,
-    # 'nDCG': nDCG,
-    # 'snDCG': snDCG,
-    # 'PR': pr,
+    'stage_aware_cubetest': stage_aware_cubetest,
+    'nDCG': nDCG,
+    'snDCG': snDCG,
+    'PR': pr,
 }
 
 
@@ -55,16 +60,6 @@ choice = {
 def score(truth, run):
     for key, func in choice.iteritems():
         func(truth, run)
-
-        # print truth
-        # print run
-        # print config
-        # if config == 'all':
-        #     for key, func in choice.iteritems():
-        #         func()
-        # else:
-        #     func = choice[config]
-        #     func()
 
 
 if __name__ == '__main__':
