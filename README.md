@@ -161,7 +161,7 @@
       ``` shell
         >$ perl cubeTest_dd.pl  ../sample_run/qrels.txt ../sample_run/runfile 50
       ```
-        - Note that 50 is the value for cutoff: the number of iterations where you run cubetest over your results.
+        - where 50 is the default cutoff value of the number of iterations where you run cubetest over your results. You should try different cutoff values.
 
     + Alpha-nDCG per iteration and nERR-IA per iteration
 
@@ -175,7 +175,7 @@
         >$ perl snDCG_per_iteration.pl  ../sample_run/qrels.txt ../sample_run/runfile 5
       ```
 
-    + Precision
+    + Precision (up to the current iteration)
 
       ``` shell
         >$ python precision.py -qrel ../sample_run/qrels.txt -run ../sample_run/runfile
