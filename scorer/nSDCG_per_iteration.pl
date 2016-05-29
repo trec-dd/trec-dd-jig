@@ -220,7 +220,8 @@ if ($topics > 0) {
 
 
 close($fh);
-
+#print($dest);
+system('cat', $dest);
 
 exit 0;
 

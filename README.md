@@ -155,14 +155,15 @@
     + qrels.txt: a sample qrels file
     + runfile: a sample run file
 - How to run the scorers
-    + Average Cube Test (ACT) and Cube Test (CT) (results printed to screen)
+
+    + Average Cube Test (ACT) and Cube Test (CT)
 
       ``` shell
         >$ perl cubeTest_dd.pl  ../sample_run/qrels.txt ../sample_run/runfile 50
       ```
         - Note that 50 is the value for cutoff: the number of iterations where you run cubetest over your results.
 
-    + Alpha-nDCG per iteration and nERR-IA per iteration (results written into local files, in this case, it can be found as runfile.ndeval under sample_run/ directory)
+    + Alpha-nDCG per iteration and nERR-IA per iteration
 
       ``` shell
         >$ ./ndeval  ../sample_run/qrels.txt ../sample_run/runfile
@@ -173,8 +174,10 @@
       ``` shell
         >$ perl nSDCG_per_iteration.pl  ../sample_run/qrels.txt ../sample_run/runfile 5
       ```
+
     + Precision (results print to screen)
 
       ``` shell
         >$ python precision.py -qrel ../sample_run/qrels.txt -run ../sample_run/runfile
       ```
+    + Note that all the result will be print to screen

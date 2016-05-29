@@ -1657,9 +1657,19 @@ main (int argc, char **argv)
          outputMeasures (rrl, rTopics, actualTopics, file_path, aFlag, fptr);
 
 	       fclose(fptr);
+        //   printf(dest_file_path);
+         char call[256];
+         strcat(call, "cat ");
+         strcat(call, dest_file_path);
+   //      printf(call);
+          system(call);
 
          free(dest_file_path);
-         free(file_path); 
+         free(file_path);
+
+
+
+
 
   return 0;
 
