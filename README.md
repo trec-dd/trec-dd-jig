@@ -172,7 +172,7 @@
     + snDCG per iteration (results written into local files, in this case, it can be found as runfile.eval under sample_run/ directory)
 
       ``` shell
-        >$ perl nSDCG_per_iteration.pl  ../sample_run/qrels.txt ../sample_run/runfile 5
+        >$ perl snDCG_per_iteration.pl  ../sample_run/qrels.txt ../sample_run/runfile 5
       ```
 
     + Precision (results print to screen)

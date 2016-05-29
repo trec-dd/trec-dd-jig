@@ -33,7 +33,7 @@ def nDCG(truth, run):
 def snDCG(truth, run):
     print 'Calling snDCG'
     # results written into file
-    call(["perl", "nSDCG_per_iteration.pl", truth, run, '5'])
+    call(["perl", "snDCG_per_iteration.pl", truth, run, '5'])
 
 def pr(truth, run):
     print 'Calling P@R'
