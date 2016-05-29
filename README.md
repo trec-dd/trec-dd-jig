@@ -169,15 +169,14 @@
         >$ ./ndeval  ../sample_run/qrels.txt ../sample_run/runfile
       ```
 
-    + snDCG per iteration (results written into local files, in this case, it can be found as runfile.eval under sample_run/ directory)
+    + snDCG per iteration
 
       ``` shell
         >$ perl snDCG_per_iteration.pl  ../sample_run/qrels.txt ../sample_run/runfile 5
       ```
 
-    + Precision (results print to screen)
+    + Precision
 
       ``` shell
         >$ python precision.py -qrel ../sample_run/qrels.txt -run ../sample_run/runfile
       ```
-    + Note that all the result will be print to screen
