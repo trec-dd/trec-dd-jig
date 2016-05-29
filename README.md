@@ -152,29 +152,29 @@
 ### Metrics
 - We support a few metrics. The scripts for these metrics can be found at the ./scorer directory.
 - You will need the actual qrels from NIST to evaluate your runs. Here we demonstrate how to use the scorers using a sample qrels file and a sample run file. Both files can be found at the ./sample/ directory.
-    + qrel.txt: a sample qrels file
+    + qrels.txt: a sample qrels file
     + runfile: a sample run file
 - How to run the scorers
     + Average Cube Test (ACT) and Cube Test (CT) (results printed to screen)
 
       ``` shell
-        >$ perl cubeTest_dd.pl  ../sample_run/qrel.txt ../sample_run/runfile 50
+        >$ perl cubeTest_dd.pl  ../sample_run/qrels.txt ../sample_run/runfile 50
       ```
         - Note that 50 is the value for cutoff: the number of iterations where you run cubetest over your results.
 
     + Alpha-nDCG per iteration and nERR-IA per iteration (results written into local files, in this case, it can be found as runfile.ndeval under sample_run/ directory)
 
       ``` shell
-        >$ ./ndeval  /path/to/truth/file /path/to/run/file
+        >$ ./ndeval  ../sample_run/qrels.txt ../sample_run/runfile
       ```
 
     + snDCG per iteration (results written into local files, in this case, it can be found as runfile.eval under sample_run/ directory)
 
       ``` shell
-        >$ perl nSDCG_per_iteration.pl  /path/to/truth/file /path/to/run/file 5
+        >$ perl nSDCG_per_iteration.pl  ../sample_run/qrels.txt ../sample_run/runfile 5
       ```
     + Precision (results print to screen)
 
       ``` shell
-        >$ python precision.py -qrel /path/to/truth/file -run /path/to/run/file
+        >$ python precision.py -qrel ../sample_run/qrels.txt -run ../sample_run/runfile
       ```
