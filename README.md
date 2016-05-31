@@ -131,13 +131,13 @@
 
 **************************************************************************
 ### Run the Jig with Sample Inputs and Outputs
-    + Suppose your run id is 'testrun'. Call the jig with the topic id, the run id, the ids of the 5 documents that your system retrieved together with their ranking scores:
+-  Suppose your run id is 'testrun'. Call the jig with the topic id, the run id, the ids of the 5 documents that your system retrieved together with their ranking scores:
 
         ``` shell
         > python jig/jig.py -runid testrun -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
         ```
 
-    + The jig will provide the feedback on the screen:
+- The jig will provide the feedback on the screen:
 
     ``` shell
     [
@@ -161,7 +161,7 @@
 
     ```
 
-    + A run file will be automatically generated at the current directory with the runid as its name. This will be the run file that you submit to NIST later.
+- A run file will be automatically generated at the current directory with the runid as its name. This will be the run file that you submit to NIST later.
 
     ``` shell
         > cat ./testrun.txt
