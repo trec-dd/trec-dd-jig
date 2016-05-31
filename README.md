@@ -90,20 +90,22 @@
         > python jig/jig.py -runid testrun -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
     ```
 
-- Each feedback is a json dumped string
+- Each feedback is a json dumped string, the jig will provide the feedback on the screen:
     ``` shell
     [
      {
          "topic_id": "DD15-1"
-         "ranking_score": "123",
+         "ranking_score": "833",
          "on_topic": "1",
-         "doc_id": "1335424206-b5476b1b8bf25b179bcf92cfda23d975",
+         "doc_id": "1322120460-d6783cba6ad386f4444dcc2679637e0b",
          "subtopics": [
              {
-                 "passage_text": "this is a passage of relevant text from the document 'stream_id', relevant to the 'subtopic_id' below with the 'rating' below",
+                 "passage_text": "Federal judge Redden taking himself off the salmon case",
                  "rating": 3,
-                 "subtopic_id": "DD15-1.4",
-             }
+                 "subtopic_id": "DD15-1.1",
+             },
+
+             { ... }
          ],
      },
      { ... }
