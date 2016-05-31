@@ -90,7 +90,7 @@
         > python jig/jig.py -runid testrun -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
     ```
 
-- Each feedback is a json dumped string, the jig will provide the feedback on the screen:
+- The jig will print the feedback on the screen. Each feedback is a json dumped string.
 
     ``` shell
     [
@@ -114,63 +114,13 @@
 
     ```
     + where:
-        - docid: the id of a returned document
-        - subtopic_id: the id of a relevant subtopic that your returned document covers
-        - passage_text: the content of a relevant passage that your returned document covers
-        - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
-        - ranking score: the ranking score of each document given from your system
+        - docid: the id of a document
+        - subtopic_id: the id of a relevant subtopic that the document covers
+        - passage_text: the content of a relevant passage that the document covers
+        - rating: the graded relevance judgments provided by NIST assessors. less than 2: marginally relevant, 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of the passage to a subtopic.
+        - ranking score: the ranking score of a document provided by your system
 
-- Each run will generate a run file under the current directory, format as follows. A sample run can be found under the sample_run directory.
-    ``` shell
-        DD15-19	0	1321539720-bda73abbdc0976a22fdcf2867bcba50c	369.000000	1	DD15-19.2:2|DD15-19.3:3|DD15-19.1:2
-        DD15-19	0	1321528320-95095422b0dca9302b91f9366080a465	997.000000	1	DD15-19.1:3|DD15-19.1:2|DD15-19.1:1
-        DD15-19	0	1321606560-c48d386baef428bb7b8b0ec657ca8259	643.000000	1	DD15-19.1:3|DD15-19.1:2|DD15-19.1:1
-        DD15-19	0	1333190700-2395ddd7ef04f4e0346e107673709d64	754.000000	0	NULL
-        DD15-19	0	1321626300-f3db383ecdaf70b993c6b16e50e40244	965.000000	1	DD15-19.1:3
-    ```
-
-    + where:
-        - docid: the id of a returned document
-        - subtopic_id: the id of a relevant subtopic that your returned document covers
-        - passage_text: the content of a relevant passage that your returned document covers
-        - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
-        - ranking score: the ranking score of each document given from your system
-
-- Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
-
-**************************************************************************
-### Run the Jig with Sample Inputs and Outputs
--  Suppose your run id is 'testrun'. Call the jig with the topic id, the run id, the ids of the 5 documents that your system retrieved together with their ranking scores:
-
-    ``` shell
-        > python jig/jig.py -runid testrun -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
-    ```
-
-- The jig will provide the feedback on the screen:
-
-    ``` shell
-    [
-     {
-         "topic_id": "DD15-1"
-         "ranking_score": "833",
-         "on_topic": "1",
-         "doc_id": "1322120460-d6783cba6ad386f4444dcc2679637e0b",
-         "subtopics": [
-             {
-                 "passage_text": "Federal judge Redden taking himself off the salmon case",
-                 "rating": 3,
-                 "subtopic_id": "DD15-1.1",
-             },
-
-             { ... }
-         ],
-     },
-     { ... }
-    ]
-
-    ```
-
-- A run file will be automatically generated at the current directory with the runid as its name. This will be the run file that you submit to NIST later.
+- A run file will be automatically generated at the current directory with the runid as its name. This will be the run file that you submit to NIST later. A sample run can be found under the sample_run directory.
 
     ``` shell
         > cat ./testrun.txt
@@ -185,6 +135,16 @@
 
         > DD15-1 1321379940-4227a3d1f425b32f9f8595739ef2b8c3 5.00 0
     ```
+
+    + where:
+        - docid: the id of a returned document
+        - subtopic_id: the id of a relevant subtopic that your returned document covers
+        - passage_text: the content of a relevant passage that your returned document covers
+        - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
+        - ranking score: the ranking score of each document given from your system
+
+- Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
+
 **************************************************************************
 
 ### Metrics
