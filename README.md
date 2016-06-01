@@ -120,7 +120,7 @@
         - rating: the graded relevance judgments provided by NIST assessors. less than 2: marginally relevant, 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of the passage to a subtopic.
         - ranking score: the ranking score of a document provided by your system
 
-- A run file will be automatically generated at the current directory with the runid as its name. This will be the run file that you submit to NIST later. A sample run can be found under the sample_run directory.
+- A run file will be automatically generated at the current directory with the runid as its name. This will be the run file that you submit to NIST later.
 
     ``` shell
         > cat ./testrun.txt
@@ -145,6 +145,7 @@
         - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
 
 - Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
+- Everytime when you run 'jig/jig.py' for the same topic id, the run file will be automatically appended and the number of interaction iterations will increase by one. 
 
 **************************************************************************
 
