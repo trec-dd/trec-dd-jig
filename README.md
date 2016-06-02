@@ -108,6 +108,7 @@
         DD15-19	0	1333190700-2395ddd7ef04f4e0346e107673709d64	754.000000	0	NULL
         DD15-19	0	1321626300-f3db383ecdaf70b993c6b16e50e40244	965.000000	1	DD15-19.1:3
     ```
+
     where:
         + docid: the id of a returned document
         + subtopic_id: the id of a relevant subtopic that your returned document covers
