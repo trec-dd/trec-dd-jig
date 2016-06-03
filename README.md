@@ -68,8 +68,8 @@
 
     where:
 
-        + runid: An identifier used to declare run
-        + topic_id: the id of the topic you are working on
+        - runid: An identifier used to declare run
+        - topic_id: the id of the topic you are working on
         + docno1, docno2 ...: the five document ids that your system returned. It needs to be the document ids in TREC DD datasets.
         + ranking score: the ranking score of each document given from your sysetm
 
