@@ -66,12 +66,12 @@
     >$ python jig/jig.py -r runid -topic topic_id -docs docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
 
-    where:
+    + where:
 
         - runid: An identifier used to declare run
         - topic_id: the id of the topic you are working on
-        + docno1, docno2 ...: the five document ids that your system returned. It needs to be the document ids in TREC DD datasets.
-        + ranking score: the ranking score of each document given from your sysetm
+        - docno1, docno2 ...: the five document ids that your system returned. It needs to be the document ids in TREC DD datasets.
+        - ranking score: the ranking score of each document given from your sysetm
 
 - Each feedback is a json format for each document in the following a document
     ``` shell
