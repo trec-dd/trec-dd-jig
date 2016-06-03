@@ -29,7 +29,7 @@
 
 ### Installation
 
-##### 1. Download the jig package:
+#### 1. Download the jig package:
 
   ``` shell
     > git clone https://github.com/trec-dd/trec-dd-jig
