@@ -93,12 +93,12 @@
     ]
 
     ```
-    where:
-        + docid: the id of a returned document
-        + subtopic_id: the id of a relevant subtopic that your returned document covers
-        + passage_text: the content of a relevant passage that your returned document covers
-        + rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
-        + ranking score: the ranking score of each document given from your system
+    + where:
+        - docid: the id of a returned document
+        - subtopic_id: the id of a relevant subtopic that your returned document covers
+        - passage_text: the content of a relevant passage that your returned document covers
+        - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
+        - ranking score: the ranking score of each document given from your system
 
 - Each run will generate a run file, format as follows. A sample run can be found under the sample_run directory.
     ``` shell
@@ -109,12 +109,12 @@
         DD15-19	0	1321626300-f3db383ecdaf70b993c6b16e50e40244	965.000000	1	DD15-19.1:3
     ```
 
-    where:
-        + docid: the id of a returned document
-        + subtopic_id: the id of a relevant subtopic that your returned document covers
-        + passage_text: the content of a relevant passage that your returned document covers
-        + rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
-        + ranking score: the ranking score of each document given from your system
+    + where:
+        - docid: the id of a returned document
+        - subtopic_id: the id of a relevant subtopic that your returned document covers
+        - passage_text: the content of a relevant passage that your returned document covers
+        - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
+        - ranking score: the ranking score of each document given from your system
 
 - Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
 
