@@ -19,7 +19,6 @@ pbr==1.8.1
 pexpect==4.0.1
 pickleshare==0.7.2
 ptyprocess==0.5.1
-public==0.0.0
 py==1.4.31
 pyaccumulo==1.5.0.8
 pyparsing==2.1.1

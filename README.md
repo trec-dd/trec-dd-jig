@@ -36,7 +36,7 @@
   ```
 
 #### 2. Quick install all the python packages needed:
-    ``` shell
+    ```
         > cd ~/trec-dd-jig
         > sudo easy_install pip
         > pip install -r requirements.txt
