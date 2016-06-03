@@ -29,18 +29,17 @@
 
 ### Installation
 
-#### 0. Quick install all the python packages needed:
-
-    > pip install -r requirements.txt
-
-
 ##### 1. Download the jig package:
 
   ``` shell
     > git clone https://github.com/trec-dd/trec-dd-jig
   ```
 
-##### 2. Configuration and set up
+#### 2. Quick install all the python packages needed:
+
+    > pip install -r requirements.txt
+
+#### 3. Configuration and set up
 - Move the directory under the your trec-dd system directory, that is,
   ``` shell
         > mv trec-dd-jig /yourhomedirectory/your_dd_directory/
