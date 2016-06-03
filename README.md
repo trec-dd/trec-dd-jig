@@ -37,11 +37,10 @@
 
 #### 2. Quick install all the python packages needed:
 
-    ``` shell
         > cd ~/trec-dd-jig
         > sudo easy_install pip
         > pip install -r requirements.txt
-    ```
+
 
 #### 3. Configuration and set up
 - Move the directory under the your trec-dd system directory, that is,
