@@ -19,12 +19,12 @@
 
 #### 1. System requirements
 - Works under Mac OS, Windows, and Linux.
-- Python. Works best under Python 2.7.
+- Python environment. (Works the best under Python 2.7)
 
 
 #### 2. Download the TREC DD Topics:
 
-- Topics (ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
+- Topics (with ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
 
 
 ### Installation
@@ -35,28 +35,33 @@
     > git clone https://github.com/trec-dd/trec-dd-jig
   ```
 
-#### 2. Quick install all the python packages needed:
+#### 2. Quick install Python packages needed:
 
         > cd ~/trec-dd-jig
         > sudo easy_install pip
-        > pip install -r requirements.txt
+        > sudo pip install -r requirements.txt
 
 
-#### 3. Configuration and set up
-- Move the directory under the your trec-dd system directory, that is,
+#### 3. Configuration and Setup
+- Create your own directory to hold your trec-dd search system.
+``` shell
+        > mkdir -p ~/your_dd_directory
+```
+
+- Put the jig package under your_dd_directory, that is,
   ``` shell
-        > mv trec-dd-jig /yourhomedirectory/your_dd_directory/
+        > mv trec-dd-jig ~/your_dd_directory/.
   ```
 
-- Put your downloaded topics (with ground truth) from the TREC Active Participants Home Page under
+- Put the topics (with ground truth) file that you downloaded from NIST, under ~/your_dd_directory/trec-dd-jig/jig/topics/
   ``` shell
-        > mv topic_file.xml ./trec-dd-jig/jig/topics/
+        > mv dd_topic_file.xml ~/your_dd_directory/trec-dd-jig/jig/topics/
   ```
 
-- Setup a topic database
+- Setup a database
 
   ``` shell
-    >$ sh jig/config.sh --topics topic_file.xml
+        > sh jig/config.sh --topics topic_file.xml
   ```
   This will set up a sqlite database at ./trec-dd-jig/jig/truth.db
 
