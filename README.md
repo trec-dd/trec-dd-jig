@@ -25,12 +25,12 @@
 
     > pip install -r requirements.txt
 
-#### 4. Ground truth:
+#### 3. Topics:
 
 - Topics (ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
 
 
-### Use the jig
+### Install the jig
 ##### 1. Download:
 
   ``` shell
@@ -38,31 +38,30 @@
   ```
 
 ##### 2. Configuration and set up
-- Move the unpacked directory under the lemur/ your trec-dd system directory, use lemur as an example, that is,
+- Move the unpacked directory under the your trec-dd system directory, that is,
   ``` shell
-        > mv trec-dd-jig /yourhomedirectory/indri-5.9/
+        > mv trec-dd-jig /yourhomedirectory/your_dd_directory/
   ```
 
-- Go to the trec-dd-jig directory and put your downloaded topics (with ground truth) from the TREC Active Participants Home Page under
+- Put your downloaded topics (with ground truth) from the TREC Active Participants Home Page under
   ``` shell
-        > ./trec-dd-jig/jig/topics/
+        > mv topic_file.xml ./trec-dd-jig/jig/topics/
   ```
 
-- Setup a sqlite database in ./trec-dd-jig/jig/truth.db
+- Setup a topic database
 
   ``` shell
     >$ sh jig/config.sh --topics yourtopicfile.xml
   ```
-
-- Please remember to change this shell script so that it contains the correct paths to your topic file and to your index/indices
+  This will set up a sqlite database at ./trec-dd-jig/jig/truth.db
 
  Congratulations for a successful installation!!
 
 **************************************************************************
-### Running Jig
+### Run the Jig
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
 
-- Running  jig
+- Call the Jig
   ``` shell
     >$ python jig/jig.py -r runid -topic topic_id -docs docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
