@@ -51,7 +51,7 @@
 - Setup a topic database
 
   ``` shell
-    >$ sh jig/config.sh --topics yourtopicfile.xml
+    >$ sh jig/config.sh --topics topic_file.xml
   ```
   This will set up a sqlite database at ./trec-dd-jig/jig/truth.db
 
@@ -67,10 +67,11 @@
   ```
 
     where:
-    + runid: An identifier used to declare run
-    + topic_id: the id of the topic you are working on
-    + docno1, docno2 ...: the five document ids that your system returned. It needs to be the document ids in TREC DD datasets.
-    + ranking score: the ranking score of each document given from your sysetm
+
+        + runid: An identifier used to declare run
+        + topic_id: the id of the topic you are working on
+        + docno1, docno2 ...: the five document ids that your system returned. It needs to be the document ids in TREC DD datasets.
+        + ranking score: the ranking score of each document given from your sysetm
 
 - Each feedback is a json format for each document in the following a document
     ``` shell
