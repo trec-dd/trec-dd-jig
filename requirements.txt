@@ -2,11 +2,7 @@ click==6.6
 cycler==0.10.0
 decorator==4.0.9
 enum34==1.1.4
-Flask==0.10.1
 gnureadline==6.3.3
-httplib2==0.9.2
-ipython==4.1.2
-ipython-genutils==0.1.0
 Jinja2==2.8
 MarkupSafe==0.23
 numpy==1.10.1
@@ -24,10 +20,7 @@ python-dateutil==2.4.2
 python-magic==0.4.10
 pytz==2016.3
 PyYAML==3.11
-rauth==0.7.1
 redis==2.10.5
-s3cmd==1.6.1
-scipy==0.17.0
 self==0.0.5
 simplegeneric==0.8.1
 simplejson==3.8.2
@@ -36,4 +29,3 @@ stevedore==1.12.0
 thrift==0.9.3
 total-ordering==0.1.0
 traitlets==4.2.1
-Werkzeug==0.11.2
