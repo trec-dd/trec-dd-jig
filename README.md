@@ -153,7 +153,7 @@
         >$ perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
       ```
 
-    + Alpha-nDCG per iteration and Nerr-ia per iteration (results written in local files)
+    + Alpha-nDCG per iteration and nERR-IA per iteration (results written in local files)
 
       ``` shell
         >$ ./ndeval  /path/to/truth/file /path/to/run/file
