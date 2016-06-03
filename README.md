@@ -3,42 +3,44 @@
 ##### This is the readme file of  the user simulator (jig) package for the TREC 2016 Dynamic Domain (DD) Track.
 ##### The package is for research use only.
 
-##### For technical questions, please submit your request to google group https://groups.google.com/forum/#!forum/trec-dd
+##### For technical questions, please send your request to google group https://groups.google.com/forum/#!forum/trec-dd
 
 **************************************************************************
 
-### What are inside this package:
+### What's inside the package:
 
-* a user simulator (jig/jig.py),
-* a stage aware user simulator (jig/jig_stage_aware.py),
-* several scorer outputs the scores with regards to different metrics.
-
+* the jig (jig/jig.py)
+* task measure scripts
+* sample run files
 **************************************************************************
 
 ### Requirements
 
-#### 1. System requirement
-- Works best under Python 2.7.
+#### 1. System requirements
+- Works under Mac OS, Windows, and Linux.
+- Python. Works best under Python 2.7.
 
 
-#### 2. Quick install packages needed:
-
-    > pip install -r requirements.txt
-
-#### 3. Topics:
+#### 2. Download the TREC DD Topics:
 
 - Topics (ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
 
 
-### Install the jig
-##### 1. Download:
+### Installation
+
+#### 0. Quick install all the python packages needed:
+
+    > pip install -r requirements.txt
+
+
+##### 1. Download the jig package:
 
   ``` shell
     > git clone https://github.com/trec-dd/trec-dd-jig
   ```
 
 ##### 2. Configuration and set up
-- Move the unpacked directory under the your trec-dd system directory, that is,
+- Move the directory under the your trec-dd system directory, that is,
   ``` shell
         > mv trec-dd-jig /yourhomedirectory/your_dd_directory/
   ```
