@@ -23,18 +23,18 @@ def loadGroundTruth(ground_truth, qrel):
         ground_truth[elements[0]].add(elements[2])
 
 
-def computePrecisionAtRecall(ground_truth, runfile,):
+def computePrecision(ground_truth, runfile,):
     runfile = open(runfile, 'r')
     last_topic_id = None
     on_topic = 0
-    precision_at_recall = {}
+    precision = {}
 
     for line in runfile:
         elements = line.split()
 
         if elements[0] != last_topic_id: # first line of the topic
             if last_topic_id:
-                precision_at_recall[last_topic_id] = on_topic / float(dcount)
+                precision[last_topic_id] = on_topic / float(dcount)
                 #print last_topic_id, on_topic, dcount
             last_topic_id = elements[0]
             dcount = 1
@@ -44,7 +44,7 @@ def computePrecisionAtRecall(ground_truth, runfile,):
 
         if elements[2] in ground_truth[elements[0]]: on_topic += 1
 
-    return sum(precision_at_recall.values()) / len(precision_at_recall)
+    return sum(precision.values()) / len(precision)
     #return precision_at_recall
 
 
@@ -59,7 +59,7 @@ def main(qrel, run, ct):
     loadGroundTruth(ground_truth, qrel)
 
     # get scores for all iterations
-    print computePrecisionAtRecall(ground_truth, run)
+    print computePrecision(ground_truth, run)
 
     # If need to get P@R score before (including) certain iteration
     # print computePrecisionAtRecall(ground_truth, preProcess(run, ct))
