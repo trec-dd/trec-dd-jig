@@ -37,7 +37,7 @@
 
 #### 2. Quick install Python packages needed:
 
-        > cd ~/trec-dd-jig
+        > cd trec-dd-jig
         > sudo easy_install pip
         > sudo pip install -r requirements.txt
 
@@ -45,17 +45,17 @@
 #### 3. Configuration and Setup
 - Create your own directory to hold your trec-dd search system.
 ``` shell
-        > mkdir -p ~/your_dd_directory
+        > mkdir -p your_dd_directory
 ```
 
 - Put the jig package under your_dd_directory, that is,
   ``` shell
-        > mv trec-dd-jig ~/your_dd_directory/.
+        > mv trec-dd-jig your_dd_directory/.
   ```
 
 - Put the topics (with ground truth) file that you downloaded from NIST, under ~/your_dd_directory/trec-dd-jig/jig/topics/
   ``` shell
-        > mv dd_topic_file.xml ~/your_dd_directory/trec-dd-jig/jig/topics/
+        > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/jig/topics/
   ```
 
 - Setup a database
