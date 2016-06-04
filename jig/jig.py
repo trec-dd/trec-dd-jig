@@ -12,7 +12,7 @@ import sqlite3
 import click
 import json
 
-truth_data_path = 'jig/stage_truth.db'
+truth_data_path = 'jig/truth.db'
 
 
 def step(runid, topic_id, results):

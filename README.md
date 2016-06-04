@@ -63,7 +63,7 @@
 
   ``` shell
         > cd trec-dd-jig
-        > sh jig/config.sh --topics topic_file.xml
+        > sh jig/config.sh --topics topics/topic_file.xml
   ```
   This will set up a sqlite database at ./trec-dd-jig/jig/truth.db
 

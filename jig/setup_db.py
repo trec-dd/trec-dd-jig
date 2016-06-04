@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    dbname = 'jig/stage_truth.db'
+    dbname = 'jig/truth.db'
     tables = [
         '''
             domain(
