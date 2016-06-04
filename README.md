@@ -74,7 +74,7 @@
 - Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
 
   ``` shell
-    >$ python jig/jig.py -r runid -topic topic_id -docs docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
+    > python jig/jig.py -r runid -topic topic_id -docs docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
 
     + where:
@@ -134,8 +134,30 @@
 - An intermediate step:
     + Give jig the topic id and 5 document id with their ranking score:
         ``` shell
-        > python jig.py -runid gu_1 -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
+        > python jig/jig.py -runid gu_1 -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
         ```
+
+    + The jig will print the following feedback to screen:
+
+    ``` shell
+    [
+     {
+         "topic_id": "DD15-1"
+         "ranking_score": "833",
+         "on_topic": "1",
+         "doc_id": "1322120460-d6783cba6ad386f4444dcc2679637e0b",
+         "subtopics": [
+             {
+                 "passage_text": "Federal judge Redden taking himself off the salmon case",
+                 "rating": 3,
+                 "subtopic_id": "DD15-1.1",
+             }
+         ],
+     },
+     { ... }
+    ]
+
+    ```
 
     + The run file generated (text content of passage are not shown in the run file):
 
