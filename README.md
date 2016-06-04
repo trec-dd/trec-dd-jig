@@ -53,14 +53,16 @@
         > mv trec-dd-jig your_dd_directory/.
   ```
 
-- Put the topics (with ground truth) file that you downloaded from NIST, under ~/your_dd_directory/trec-dd-jig/jig/topics/
+- Unzip and put the topics (with ground truth) file that you downloaded from NIST, under ~/your_dd_directory/trec-dd-jig/jig/topics/
   ``` shell
+        > gunzip dd_topic_file.xml.gz
         > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/jig/topics/
   ```
 
-- Setup a database
+- Setup database
 
   ``` shell
+        > cd trec-dd-jig
         > sh jig/config.sh --topics topic_file.xml
   ```
   This will set up a sqlite database at ./trec-dd-jig/jig/truth.db
