@@ -27,7 +27,7 @@
 - Topics (with ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
 
 
-### Installation
+### Install the Jig
 
 #### 1. Download the jig package:
 
@@ -71,9 +71,8 @@
 
 **************************************************************************
 ### Run the Jig
-- Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The program outputs a json dumped string. It provides feedback to your returned documents. Only positive feedback will be shown be shown.  Use the following command:
+- Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
 
-- Call the Jig
   ``` shell
     >$ python jig/jig.py -r runid -topic topic_id -docs docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
