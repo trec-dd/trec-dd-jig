@@ -111,7 +111,7 @@
         - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
         - ranking score: the ranking score of each document given from your system
 
-- Each run will generate a run file, format as follows. A sample run can be found under the sample_run directory.
+- Each run will generate a run file under the current directory, format as follows. A sample run can be found under the sample_run directory.
     ``` shell
         DD15-19	0	1321539720-bda73abbdc0976a22fdcf2867bcba50c	369.000000	1	DD15-19.2:2|DD15-19.3:3|DD15-19.1:2
         DD15-19	0	1321528320-95095422b0dca9302b91f9366080a465	997.000000	1	DD15-19.1:3|DD15-19.1:2|DD15-19.1:1
@@ -130,14 +130,13 @@
 - Note that subtopic_ids are global ids, i.e., a certain topic might contains subtopic with id 12, 45, 101, 103...
 
 **************************************************************************
-### A Sample Input and Output
-- An intermediate step:
-    + Give jig the topic id and 5 document id with their ranking score:
+### Run the Jig with Sample Inputs and Outputs
+    + Suppose your run id is 'testrun'. Call the jig with the topic id, the run id, the ids of the 5 documents that your system retrieved together with their ranking scores:
         ``` shell
-        > python jig/jig.py -runid gu_1 -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
+        > python jig/jig.py -runid testrun -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
         ```
 
-    + The jig will print the following feedback to screen:
+    + The jig will provide the feedback on the screen:
 
     ``` shell
     [
@@ -151,7 +150,9 @@
                  "passage_text": "Federal judge Redden taking himself off the salmon case",
                  "rating": 3,
                  "subtopic_id": "DD15-1.1",
-             }
+             },
+
+             { ... }
          ],
      },
      { ... }
@@ -159,9 +160,11 @@
 
     ```
 
-    + The run file generated (text content of passage are not shown in the run file):
+    + A run file will be automatically generated at the current directory with the runid as its name. This will be the run file that you submit to NIST later. 
 
     ``` shell
+        > cat ./testrun.txt
+
         > DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 833.00 1 DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
 
         > DD15-1 1322509200-f67659162ce908cc510881a6b6eabc8b 500.00 1 DD15-1.1:3
