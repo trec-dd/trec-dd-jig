@@ -150,24 +150,25 @@
 **************************************************************************
 
 ### Metrics
-- We support five metrics as follows, the scripts for these metrics can be found under the ./scorer directory.
-- Sample truth file and run file can be found under the ./sample/directory
-    + qrel.txt: a sample ground truth
-    + runfile: a sample run
-- Sample use of the metrics
-    + Cube Test and Average Cube Test (results printing to screen)
+- We support a few metrics. The scripts for these metrics can be found at the ./scorer directory.
+- You will need the actual qrels from NIST to evaluate your runs. Here we demonstrate how to use the scorers using a sample qrels file and a sample run file. Both files can be found at the ./sample/ directory.
+    + qrel.txt: a sample qrels file
+    + runfile: a sample run file
+- How to run the scorers
+    + Average Cube Test (ACT) and Cube Test (CT) (results printed to screen)
 
       ``` shell
-        >$ perl cubeTest_dd.pl  /path/to/truth/file /path/to/run/file 50
+        >$ perl cubeTest_dd.pl  ../sample_run/qrel.txt ../sample_run/runfile 50
       ```
+        - Note that 50 is the value for cutoff: the number of iterations where you run cubetest over your results.
 
-    + Alpha-nDCG per iteration and nERR-IA per iteration (results written in local files)
+    + Alpha-nDCG per iteration and nERR-IA per iteration (results written into local files, in this case, it can be found as runfile.ndeval under sample_run/ directory)
 
       ``` shell
         >$ ./ndeval  /path/to/truth/file /path/to/run/file
       ```
 
-    + SnDCG per iteration (results written in local files)
+    + snDCG per iteration (results written into local files, in this case, it can be found as runfile.eval under sample_run/ directory)
 
       ``` shell
         >$ perl nSDCG_per_iteration.pl  /path/to/truth/file /path/to/run/file 5
