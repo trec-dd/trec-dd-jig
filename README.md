@@ -44,9 +44,9 @@
 
 #### 3. Configuration and Setup
 - Create your own directory to hold your trec-dd search system.
-``` shell
-        > mkdir -p your_dd_directory
-```
+    ``` shell
+        > mkdir your_dd_directory
+    ```
 
 - Put the jig package under your_dd_directory, that is,
   ``` shell
