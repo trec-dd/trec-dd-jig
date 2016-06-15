@@ -56,7 +56,7 @@
 - Unzip and put the topics (with ground truth) file that you downloaded from NIST, under ~/your_dd_directory/trec-dd-jig/jig/topics/
   ``` shell
         > gunzip dd_topic_file.xml.gz
-        > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/jig/topics/
+        > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
 - Setup database
@@ -87,7 +87,7 @@
 -  Suppose your run id is 'testrun'. Call the jig with the topic id, the run id, the ids of the 5 documents that your system retrieved together with their ranking scores:
 
     ``` shell
-        > python jig/jig.py -runid testrun -topic DD15-1 -docs 1322120460-d6783cba6ad386f4444dcc2679637e0b:833.00 1322509200-f67659162ce908cc510881a6b6eabc8b:500.00 1321860780-f9c69177db43b0f810ce03c822576c5c:123.00 1327908780-d9ad76f0947e2acd79cba3acd5f449f7:34.00 1321379940-4227a3d1f425b32f9f8595739ef2b8c3:5.00
+        > python jig/jig.py -runid testrun -topic DD16-1 -docs ebola-45b78e7ce50b94276a8d46cfe23e0abbcbed606a2841d1ac6e44e263eaf94a93:833.00 ebola-012d04f7dc6af9d1d712df833abc67cd1395c8fe53f3fcfa7082ac4e5614eac6:500.00 ebola-20d0e40dbc6f60c35f581f4025076a4400bd46fa01fa0bc8164de05b286e04f8:123.00 ebola-da1e8bbbb0c543df9be4d59b37558927ed5ee4238c861ce1205ed7b41140ad3a:34.00 ebola-9e501dddd03039fff5c2465896d39fd6913fd8476f23416373a88bc0f32e793c:5.00
     ```
 
 - The jig will print the feedback on the screen. Each feedback is a json dumped string.
@@ -129,12 +129,12 @@
 
         > DD15-1 1322509200-f67659162ce908cc510881a6b6eabc8b 500.00 1 DD15-1.1:3
 
-        > DD15-1 1321860780-f9c69177db43b0f810ce03c822576c5c 123.00	1 DD15-1.1:3
+        > DD15-1 1321860780-f9c69177db43b0f810ce03c822576c5c 123.00 1 DD15-1.1:3
 
         > DD15-1 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 34.00 1 DD15-1.3:2|DD15-1.1:2
 
         > DD15-1 1321379940-4227a3d1f425b32f9f8595739ef2b8c3 5.00 0
-    ```
+        ```
 
     + where:
         - topic id: the id of the topic you are working on
