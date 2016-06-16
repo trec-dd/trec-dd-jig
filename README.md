@@ -136,6 +136,7 @@
         > DD15-1 1321379940-4227a3d1f425b32f9f8595739ef2b8c3 5.00 0
         ```
 
+
     + where:
         - topic id: the id of the topic you are working on
         - docid: the id of a document
