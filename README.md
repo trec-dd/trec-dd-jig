@@ -147,7 +147,9 @@
 - Note that subtopic_ids are global ids, i.e., a certain topic might contain subtopic with id 12, 45, 101, 103...
 - Everytime when you run 'jig/jig.py' for the same topic id, the run file will be automatically appended and the number of interaction iterations will increase by one. 
 
+
 **************************************************************************
+
 
 ### Metrics
 - We support a few metrics. The scripts for these metrics can be found at the ./scorer directory.
