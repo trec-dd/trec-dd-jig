@@ -58,7 +58,7 @@ def step(runid, topic_id, results):
         f.write(wline)
         f.write('\n')
     # print(rlist)
-    cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=?', [ct+1, str(runid)])
+    cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=? AND topic_id=?', [ct+1, str(runid),str(topic_id)])
     con.commit()
 
     return rlist
