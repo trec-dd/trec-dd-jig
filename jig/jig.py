@@ -23,7 +23,7 @@ def step(runid, topic_id, results):
     cur = con.cursor()
 
     # iteration count for this run_id
-    cur.execute('SELECT iteration_ct FROM topic_status WHERE run_id=?', [str(runid)])
+    cur.execute('SELECT iteration_ct FROM topic_status WHERE run_id=? AND topic_id=?', [str(runid),str(topic_id)])
     tmp = cur.fetchone()
     if not tmp:
         cur.execute('INSERT INTO topic_status VALUES(?, ?, ?)', [topic_id, runid, 0])
