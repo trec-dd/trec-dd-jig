@@ -163,9 +163,9 @@ while (<RUN>) {
   s/[\r\n]//g;
   ($topic, $iteration, $docno, $score, $rel, $subtopics) = split ('\s+');
   #($topic, $Q0, $docno, $rank, $score, $runid, $iteration) = split ('\s+');
-  if($RUN !~ /GU_RUN/){
+  #if($RUN !~ /GU_RUN/){
      $iteration += 1;
-  }
+  #}
   if($maxIteration < $iteration){
 	$maxIteration = $iteration;
   }

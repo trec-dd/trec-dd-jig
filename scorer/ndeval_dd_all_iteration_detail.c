@@ -1,8 +1,8 @@
 char *usageText = 
-  "Usage: %s [options] qrels run (-help for full usage information)\n";
+  "Usage: %s [options] qrels run output_file (-help for full usage information)\n";
 
 char *helpText =
-"ndeval [options] qrels run \n"
+"ndeval [options] qrels run output_file \n"
 "  Compute novelty and diversity evaluation measures for TREC Web tasks.\n"
 "  Evalution measures are written to standard output as a CSV file.\n"
 "\n"
@@ -55,7 +55,7 @@ char *helpText =
 #define DEPTH 10000  /* max depth for computing alpha-ndcg, precision-ia, etc. Sufficiently large so it has no impact any more*/
 #define ALPHA 0.5 /* default alpha value for alpha-nDCG and NRBP */
 #define BETA  0.5 /* default beta value for NRBP */
-#define TOPIC_PRE  "DD15-" /* default topic prefix */
+#define TOPIC_PRE  "DD16-" /* default topic prefix */
 
 static char *version = "version 4.4 (Thu 14 Oct 2010 18:34:50 EDT)";
 
@@ -230,19 +230,19 @@ naturalNumber (char *s)
 */
 static int parseTopic(char *s)
 {
-  if (*s >= '0' && *s <= '9')
+  /*if (*s >= '0' && *s <= '9')
     return naturalNumber (s);
-
+  */
   for (;*s && *s != '-'; s++)
     ;
-    
+
   return naturalNumber (s + 1);
 }
 
 
 /* parseSubTopic:
      subtopic numbers in run files may be prefaced by a string indicating the task and the topic;
-     remove this string (e.g., "DD15-1.") and extract the subtopic number;
+     remove this string (e.g., "DD16-1.") and extract the subtopic number;
      we assume the string ends with a "." character;
 */
 static int parseSubTopic(char *s)
@@ -252,7 +252,7 @@ static int parseSubTopic(char *s)
 
   for (;*s && *s != '.'; s++)
     ;
-    
+
   return naturalNumber (s + 1);
 }
 
@@ -382,7 +382,7 @@ idealResult (struct rList *rl)
   for (rank = 1; rank <= rl->results; rank++)
     {
       int where = -1;
-      double maxScore = 0.0; 
+      double maxScore = 0.0;
 
       for (i = 0; i < rl->results; i++)
 	if (rl->list[i].rank == 0)
@@ -499,7 +499,7 @@ resultSortByScore (struct result *list, int results)
      also computes standard MAP by assuming that a document relevant to any
      subtopic is relevant to the topic as a whole.
 */
-static void    
+static void
 computeMAP (struct rList *rl)
 {
   int i,j;
@@ -598,7 +598,7 @@ discount (int rank)
 	    cache[top] = log(2.0)/log(top + 2.0);
 	    top++;
 	  }
-	while (rank >= top); 
+	while (rank >= top);
 	return cache[rank];
       }
     else
@@ -1034,7 +1034,7 @@ processQrels (char *fileName, int *topics)
 	split (line, a, 5) != 5
 	|| (topic = parseTopic(a[0])) < 0
 	|| (subtopic = parseSubTopic(a[1])) < 0
-	|| (judgment = naturalNumber (a[4])) < 0
+	|| (judgment = naturalNumber(a[4])) < 0
       )
 	error (
 	  "syntax error in qrel file \"%s\" at line %d\n", fileName, i + 1
@@ -1046,6 +1046,9 @@ processQrels (char *fileName, int *topics)
 	  if (judgment >= 0) judgment = 1; /* binary assessment only */
 	  q[i].judgment = judgment;
 	  q[i].docno = localStrdup (a[2]);
+
+          //printf("topic %d subtopic %d judment %d  docno %s \n" , topic, subtopic, judgment, q[i].docno);
+
 	  i++;
 	}
     }
@@ -1195,12 +1198,14 @@ processRun (char *fileName, int *topics, char **runid)
       char *a[6];
       int topic, iteration;
 
+      int test = split (line, a, 6);
       if (
-	split (line, a, 6) != 6
+	(test != 6 && test != 5)
 	|| (topic = parseTopic (a[0])) < 0
 	|| (iteration = naturalNumber (a[1])) < 0
       )
-	error ("syntax error in run file \"%s\" at line %d\n", fileName, i + 1);
+	//error ("syntax error in run file \"%s\" at line %d topic %s  iteration %s  test %d \n", fileName, i + 1, a[0], a[1], test);
+	error ("syntax error in run file  at topic  %d   \n",    topic);
       else
 	{
 	  needRunid = 0; //no run_id no rank available in DD submissions
@@ -1211,6 +1216,7 @@ processRun (char *fileName, int *topics, char **runid)
 	    }
 	  r[i].docno = localStrdup (a[2]);
 	  r[i].topic = topic;
+          //printf("run file  topic %d  iteration %d  docno %s \n", topic, iteration , r[i].docno);
 
           if(topic != current_topic){
              current_topic = topic;
@@ -1221,6 +1227,7 @@ processRun (char *fileName, int *topics, char **runid)
           r[i].iteration = iteration;
 	  r[i].rel = (int *) 0;
 	  sscanf (a[4],"%lf", &(r[i].score));
+
 	  i++;
 	}
   }
@@ -1271,7 +1278,7 @@ applyJudgments (struct result *q, int qResults, struct result *r, int rResults)
   while (i < qResults && j < rResults)
     {
       int cmp = strcmp (q[i].docno, r[j].docno);
-      
+
       if (cmp < 0)
 	  i++;
       else if (cmp > 0)
@@ -1376,7 +1383,7 @@ outputMeasures (
   int itCT = 0;
   for (i = 0; i < topics; i++)
     {
-      int per_iteration = -1; 
+      int per_iteration = -1;
 
       int iteration_ct = 0;
       int j = 0;
@@ -1400,17 +1407,17 @@ outputMeasures (
       for(x = 0; x < DEPTH && x < rl[i].results; x++)
       {
          printf("%.6f ", rl[i].ndcg[x]);
-      } 
+      }
       printf("\n");
       for(x = 0; x < DEPTH && x < rl[i].results; x++)
       {
          printf("%.6f ", rl[i].err[x]);
-      } 
+      }
       printf("\n");
       for(x = 0; x < DEPTH && x < rl[i].results; x++)
       {
          printf("%.6f ", rl[i].nerr[x]);
-      } 
+      }
       printf("\n");*/
 
       //print doc list
@@ -1429,7 +1436,7 @@ outputMeasures (
              topic_avg_alpha_NDCG += rl[i].ndcg[j-1];
              topic_avg_nerr_ia += rl[i].nerr[j-1];
              /*printf (
-               "%s,DD15-%d,iteration_%d"
+               "%s,DD16-%d,iteration_%d"
                ",%.6f,%.6f\n",
                runid, rl[i].topic, ++iteration_ct,
                rl[i].ndcg[j-1], rl[i].nerr[j-1]
@@ -1439,7 +1446,7 @@ outputMeasures (
 
       if(rl[i].results>0){
         /*printf (
-           "%s,DD15-%d,iteration_%d"
+           "%s,DD16-%d,iteration_%d"
            ",%.6f,%.6f\n",
            runid, rl[i].topic, ++iteration_ct,
            rl[i].ndcg[j-1], rl[i].nerr[j-1]
@@ -1455,7 +1462,7 @@ outputMeasures (
         topic_avg_nerr_ia /= itCT;
 
 	fprintf(fptr,
-        "%s,DD15-%d"
+        "%s,DD16-%d"
            ",%.6f,%.6f,%.6f,%.6f\n",
            runid, rl[i].topic,
            rl[i].ndcg[j-1], rl[i].nerr[j-1], topic_avg_alpha_NDCG, topic_avg_nerr_ia
@@ -1537,7 +1544,7 @@ outputMeasures (
     totalDCG5/actualTopics, totalDCG10/actualTopics, totalDCG20/actualTopics,
     totalnDCG5/actualTopics, totalnDCG10/actualTopics, totalnDCG20/actualTopics,
     totalNRBP/actualTopics, totalnNRBP/actualTopics,
-    totalMAPIA/actualTopics, 
+    totalMAPIA/actualTopics,
     totalP5/actualTopics, totalP10/actualTopics, totalP20/actualTopics,
     totalSTRec5/actualTopics,totalSTRec10/actualTopics,totalSTRec20/actualTopics
   );*/
@@ -1569,7 +1576,7 @@ main (int argc, char **argv)
 
   setProgramName (argv[0]);
 
-  while (argc != 3)
+  while (argc != 4)
     if (argc >= 2 && strcmp ("-version", argv[1]) == 0)
       {
 	printf ("%s: %s\n", programName, version);
@@ -1635,10 +1642,10 @@ main (int argc, char **argv)
   qrl = processQrels (argv[1], &qTopics); //qrel. : 3 1 EP-1114846-A2 1 (topic_id subtopic_id doc_id relevance_grade)
 
   //printf ("runid,topic,iteration,alpha-nDCG,nERR-IA\n");
-  
-  
-         char * file_path = concat(argv[2], ""); 
-         char * dest_file_path = concat(argv[2], ".ndeval");
+
+
+         char * file_path = concat(argv[2], "");
+         char * dest_file_path = concat(argv[3], "");
 
          FILE *fptr;
          fptr=fopen(dest_file_path,"w");

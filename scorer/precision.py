@@ -44,6 +44,12 @@ def computePrecision(ground_truth, runfile,):
 
         if elements[2] in ground_truth[elements[0]]: on_topic += 1
 
+    if last_topic_id:
+        precision[last_topic_id] = on_topic / float(dcount)
+
+    for key in precision.keys():
+        print  key, "\t" , precision[key]
+
     return sum(precision.values()) / len(precision)
     #return precision_at_recall
 
@@ -59,7 +65,8 @@ def main(qrel, run, ct):
     loadGroundTruth(ground_truth, qrel)
 
     # get scores for all iterations
-    print computePrecision(ground_truth, run)
+    p = computePrecision(ground_truth, run)
+    print "mean	\t", p
 
     # If need to get P@R score before (including) certain iteration
     # print computePrecisionAtRecall(ground_truth, preProcess(run, ct))

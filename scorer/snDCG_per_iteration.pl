@@ -11,7 +11,7 @@
 $usage = "usage: $0 qrels run_file iteration-capacity [discounter(BQ)]";
 $version = "version 1.2 (Tue Oct 12 15:58:46 EDT 2010)";
 
-$MAX_JUDGMENT = 4; # Maximum gain value allowed in qrels file.
+#$MAX_JUDGMENT = 4; # Maximum gain value allowed in qrels file.
 $K = 10000;        # Reporting depth for results. suficiantly large
 $BQ = 2;           # 2 is no patiant scan, 10 is patient scan
 
@@ -80,7 +80,7 @@ foreach my $tmpTopicKey (keys %tmpQrel){
            $final_qrel += $element / $discount;
         }
 
-        $subTWeigt = 1;
+        #$subTWeigt = 1;
         $qrels{$tmpTopicKey}{$tmpDoc}{$tmpSubtopic}=$final_qrel;
 	if(!exists $qrelDoc{$tmpTopicKey}{$tmpDoc}){
 	   $qrelDoc{$tmpTopicKey}{$tmpDoc} = $final_qrel;
@@ -101,7 +101,7 @@ foreach my $tmpTopicKey (keys %qrelDoc){
   foreach my $tmpDoc (keys %documents){
      $qrelDoc{$tmpTopicKey}{$tmpDoc} /= ($#subtopics + 1);
      $relevance[$index] = $qrelDoc{$tmpTopicKey}{$tmpDoc};
-     $index++; 
+     $index++;
   }
   my @sortedRel = sort {$b <=> $a} @relevance;
   #if($tmpTopicKey eq "DD15-1") {print "sorted rel : @sortedRel \n";}
@@ -115,11 +115,11 @@ foreach my $tmpTopicKey (keys %qrelDoc){
 
      my $discount = log($rank+1)/log(2);
      $score +=  (2**$rel - 1) / $discount / (1 + log($itCT)/log($BQ));
-     $idealDCG{$tmpTopicKey}[$index - 1] = $score; 
+     $idealDCG{$tmpTopicKey}[$index - 1] = $score;
 
      if($index%$CAPACITY == 0){
         $rank = 0;
-        $itCT ++; 
+        $itCT ++;
      }
   }
 
@@ -144,7 +144,7 @@ foreach my $tmpTopicKey (keys %qrelDoc){
 #}
 
 
-    my $dest = $inputRun.".eval";
+    #my $dest = $inputRun.".eval";
     my $RUN = $inputRun;
     $topics = 0;
     $runid = $RUN;
@@ -157,15 +157,13 @@ while (<RUN>) {
     s/[\r\n]//g;
     my ($topic, $iteration, $docno, $score, $rel, $subtopics) = split ('\s+');
 
-    if($RUN !~ /GU_RUN/){
-       $iteration += 1;
-    }
+    $iteration += 1;
 
-    $doclength = 1; #`./bin/getDocLength $docno $index`;
+    #$doclength = 1; #`./bin/getDocLength $docno $index`;
     #$doclength =~ s/[\r\n]//g;
     $topic =~ s/[\r\n]//;
-    
-    $run[$#run + 1] = "$topic $docno $score $iteration";    
+
+    $run[$#run + 1] = "$topic $docno $score $iteration";
 }
 close(RUN);
 
@@ -176,8 +174,9 @@ close(RUN);
 #}
 
 # Process runs: compute measures for each topic and average
-open($fh, ">$dest");
-print $fh "runid,topic,nsdcg\n";
+#open($fh, ">$dest");
+#print $fh "runid,topic,nsdcg\n";
+print "runid,topic,nsdcg\n";
 $topicCurrent = "-1";
 my $ndcgTotal = 0;
 for ($i = 0; $i <= $#run; $i++) {
@@ -188,8 +187,9 @@ for ($i = 0; $i <= $#run; $i++) {
       my $sdcg = &topicDone ($RUN, $topicCurrent, \@gain, \@iterations);
       $sdcg /= $iterations[-1];
       $ndcgTotal += $sdcg;
-      
-      printf $fh  "$runid,$topicCurrent,%.5f\n",$sdcg;
+
+      #printf $fh  "$runid,$topicCurrent,%.5f\n",$sdcg;
+      printf  "$runid,$topicCurrent,%.5f\n",$sdcg;
       @gain = ();
       @iterations = ();
     }
@@ -202,26 +202,29 @@ for ($i = 0; $i <= $#run; $i++) {
   $gain[$#gain + 1] = $tmpGain;
   $iterations[$#iterations + 1] = $iteration;
 }
-if ($topicCurrent ne "-1") {  
+if ($topicCurrent ne "-1") {
   #printf $fh  "outsider: topic $topicCurrent gain ct: $#gain   iteration ct: $#iterations \n ";
   my $sdcg = &topicDone ($RUN, $topicCurrent, \@gain, \@iterations);
   $sdcg /= $iterations[-1];
   $ndcgTotal += $sdcg;
-  printf $fh  "$runid,$topicCurrent,%.5f\n",$sdcg;
+  #printf $fh  "$runid,$topicCurrent,%.5f\n",$sdcg;
+  printf "$runid,$topicCurrent,%.5f\n",$sdcg;
   @gain = ();
   @iterations = ();
 }
 if ($topics > 0) {
   $ndcgAvg = $ndcgTotal/$topics;
-  printf $fh "$RUN,amean,%.5f\n",$ndcgAvg;
+  #printf $fh "$RUN,amean,%.5f\n",$ndcgAvg;
+  printf "$RUN,amean,%.5f\n",$ndcgAvg;
 } else {
-  print $fh "$RUN,amean,0.00000\n";
+  #print $fh "$RUN,amean,0.00000\n";
+  print "$RUN,amean,0.00000\n";
 }
 
 
-close($fh);
+#close($fh);
 #print($dest);
-system('cat', $dest);
+#system('cat', $dest);
 
 exit 0;
 

@@ -55,7 +55,7 @@ char *helpText =
 #define DEPTH 10000  /* max depth for computing alpha-ndcg, precision-ia, etc. Sufficiently large so it has no impact any more*/
 #define ALPHA 0.5 /* default alpha value for alpha-nDCG and NRBP */
 #define BETA  0.5 /* default beta value for NRBP */
-#define TOPIC_PRE  "DD15-" /* default topic prefix */
+#define TOPIC_PRE  "DD16-" /* default topic prefix */
 
 static char *version = "version 4.4 (Thu 14 Oct 2010 18:34:50 EDT)";
 
@@ -235,14 +235,14 @@ static int parseTopic(char *s)
 
   for (;*s && *s != '-'; s++)
     ;
-    
+
   return naturalNumber (s + 1);
 }
 
 
 /* parseSubTopic:
      subtopic numbers in run files may be prefaced by a string indicating the task and the topic;
-     remove this string (e.g., "DD15-1.") and extract the subtopic number;
+     remove this string (e.g., "DD16-1.") and extract the subtopic number;
      we assume the string ends with a "." character;
 */
 static int parseSubTopic(char *s)
@@ -252,7 +252,7 @@ static int parseSubTopic(char *s)
 
   for (;*s && *s != '.'; s++)
     ;
-    
+
   return naturalNumber (s + 1);
 }
 
@@ -382,7 +382,7 @@ idealResult (struct rList *rl)
   for (rank = 1; rank <= rl->results; rank++)
     {
       int where = -1;
-      double maxScore = 0.0; 
+      double maxScore = 0.0;
 
       for (i = 0; i < rl->results; i++)
 	if (rl->list[i].rank == 0)
@@ -499,7 +499,7 @@ resultSortByScore (struct result *list, int results)
      also computes standard MAP by assuming that a document relevant to any
      subtopic is relevant to the topic as a whole.
 */
-static void    
+static void
 computeMAP (struct rList *rl)
 {
   int i,j;
@@ -598,7 +598,7 @@ discount (int rank)
 	    cache[top] = log(2.0)/log(top + 2.0);
 	    top++;
 	  }
-	while (rank >= top); 
+	while (rank >= top);
 	return cache[rank];
       }
     else
@@ -1271,7 +1271,7 @@ applyJudgments (struct result *q, int qResults, struct result *r, int rResults)
   while (i < qResults && j < rResults)
     {
       int cmp = strcmp (q[i].docno, r[j].docno);
-      
+
       if (cmp < 0)
 	  i++;
       else if (cmp > 0)
@@ -1373,7 +1373,7 @@ outputMeasures (
 
   for (i = 0; i < topics; i++)
     {
-      int per_iteration = -1; 
+      int per_iteration = -1;
 
       int iteration_ct = 0;
       int j = 0;
@@ -1395,17 +1395,17 @@ outputMeasures (
       for(x = 0; x < DEPTH && x < rl[i].results; x++)
       {
          printf("%.6f ", rl[i].ndcg[x]);
-      } 
+      }
       printf("\n");
       for(x = 0; x < DEPTH && x < rl[i].results; x++)
       {
          printf("%.6f ", rl[i].err[x]);
-      } 
+      }
       printf("\n");
       for(x = 0; x < DEPTH && x < rl[i].results; x++)
       {
          printf("%.6f ", rl[i].nerr[x]);
-      } 
+      }
       printf("\n");*/
 
       //print doc list
@@ -1421,7 +1421,7 @@ outputMeasures (
              per_iteration = rl[i].list[j].iteration;
 
              printf (
-               "%s,DD15-%d,iteration_%d"
+               "%s,DD16-%d,iteration_%d"
                ",%.6f,%.6f\n",
                runid, rl[i].topic, ++iteration_ct,
                rl[i].ndcg[j-1], rl[i].nerr[j-1]
@@ -1431,7 +1431,7 @@ outputMeasures (
 
       if(rl[i].results>0){
         printf (
-           "%s,DD15-%d,iteration_%d"
+           "%s,DD16-%d,iteration_%d"
            ",%.6f,%.6f\n",
            runid, rl[i].topic, ++iteration_ct,
            rl[i].ndcg[j-1], rl[i].nerr[j-1]
