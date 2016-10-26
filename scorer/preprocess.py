@@ -2,12 +2,25 @@ from collections import defaultdict
 # used to extract results before (including) certain iteration from a complete run file.
 # sample usage: python preprocess.py -run gu_1.txt -ct 3
 import click
+import re
 
-def preProcess(run, ct):
+def preProcess(run,qrel,ct):
+    topics = {}
+
+    qrelfile = open(qrel)
+    while 1:
+        line = qrelfile.readline()
+        if not line:
+            break
+        else:
+            result = re.split("\s+", line)
+            topics[result[0]]=-1
+
     runfile = open(run)
     output = open(run + '_' + str(ct), 'w')
     cache = []
     line_ct = 0
+    end_line = ""
     while 1:
         line = runfile.readline()
         line_ct += 1
@@ -17,8 +30,20 @@ def preProcess(run, ct):
             result = line.split('\t')
             if int(result[1]) <= int(ct):
                cache.append(`line_ct` + "\t" + line)
+               if result[0] in topics:
+                  topics[result[0]] = 1
+            if not result[0].startswith('DD16') :
+               print('error! it should start with DD16')
+               break
+            end_line = line[-2:]
+    
+    for key in topics:
+        value = topics[key]
+        if value == -1 :
+           line = `line_ct` + "\t" + key + "\t0\tnon-real-document-occupied-for-cubetest-score\t0.1\t0" + end_line
+           cache.append(line)
 
-    if "LDA_Indri73" in run or "UL_" in run:
+    if "LDA_Indri73" in run or "UL_" in run: 
         cache.sort(cmp_items)
     else:
         cache.sort(cmp_items_with_rank)
@@ -37,7 +62,7 @@ def preProcess(run, ct):
            else:
               dup_check[result[1]] = {}
               dup_check[result[1]][result[3]] = 1
-
+            
 
         data = ""
         for number in range(fields_ct):
@@ -45,7 +70,7 @@ def preProcess(run, ct):
                 data += result[number]
             if number > 0 and number < fields_ct - 1:
                 data += '\t'
-
+    
         output.write(data)
 
 def cmp_items(a, b):
@@ -123,10 +148,11 @@ def cmp_items_with_rank(a, b):
 
 @click.command()
 @click.option('-run', type=click.Path(exists=True))
+@click.option('-qrel', type=click.Path(exists=True))
 @click.option('-ct', type=click.INT)
-def main(run, ct):
+def main(run,qrel,ct):
     runfile = open(run, 'r')
-    preProcess(run, ct)
+    preProcess(run, qrel, ct)
 
 if __name__ == '__main__':
     main()
