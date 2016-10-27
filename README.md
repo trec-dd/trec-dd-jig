@@ -169,6 +169,7 @@
     + Alpha-nDCG per iteration and nERR-IA per iteration
 
       ``` shell
+        >$ gcc -o ndeval ndeval_dd_all_iteration_detail.c -lm
         >$ ./ndeval  ../sample_run/qrels.txt ../sample_run/runfile
       ```
 
