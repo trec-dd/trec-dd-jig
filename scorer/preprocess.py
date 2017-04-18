@@ -1,6 +1,6 @@
 from collections import defaultdict
 # used to extract results before (including) certain iteration from a complete run file.
-# sample usage: python preprocess.py -run gu_1.txt -ct 3
+# sample usage: python preprocess.py -run=gu_1.run -ct=3 -qrel="qrel file path"
 import click
 import re
 
