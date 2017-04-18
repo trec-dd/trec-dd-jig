@@ -1,5 +1,10 @@
 from collections import defaultdict
-# used to extract results before (including) certain iteration from a complete run file.
+# This script is used to extract results before (including) certain iteration from a complete run file.
+#
+# It also deals with situations where dupilcated retrieval results are submitted, 
+# some topics are missing, more or less than 5 documents are submitted in one iteration, 
+# documents are not properly sorted, etc.
+#
 # sample usage: python preprocess.py -run=gu_1.run -ct=3 -qrel="qrel file path"
 import click
 import re
