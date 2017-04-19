@@ -158,6 +158,15 @@
     + qrels.txt: a sample qrels file
     + runfile: a sample run file
 - How to run the scorers
+    + Preprocessing
+    
+         `preprocess.py` is used to extract results before (including) certain iteration from a complete run file.
+    
+        ```shell
+          >$ python preprocess.py -run=run_file_path -ct=cutoff -qrel=qrel_file_path
+        ```
+           - where `ct` is the the cutoff value for current evaluation. `ct=3` means only the first 3 iteration will be used for evaluation.
+    
 
     + Average Cube Test (ACT) and Cube Test (CT)
 
