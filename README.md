@@ -24,7 +24,7 @@
 
 #### 2. Download the TREC DD Topics:
 
-- Topics (with ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html)
+- Topics (with ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html, http://trec.nist.gov/act_part/tracks17.html)
 
 
 ### Install the Jig
