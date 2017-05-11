@@ -183,7 +183,7 @@ Alpha-nDCG, Precision and etc.
     + sDCG
     
        ```shell
-        >$ python sDCG.py ../sample_run/runfile ../sample_run/qrels.txt cutoff
+        >$ python sDCG.py ../sample_run/runfile ../sample_run/topic.xml cutoff
        ```
     
     + Alpha-nDCG per iteration and nERR-IA per iteration
