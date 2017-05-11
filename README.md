@@ -24,7 +24,7 @@
 
 #### 2. Download the TREC DD Topics:
 
-- Topics (with ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks16.html, http://trec.nist.gov/act_part/tracks17.html)
+- Topics (with ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks17.html)
 
 
 ### Install the Jig
@@ -152,22 +152,27 @@
 **************************************************************************
 
 
-### Metrics
+### Metrics (Updating)
 - We support a few metrics. The scripts for these metrics can be found at the ./scorer directory.
-- You will need the actual qrels from NIST to evaluate your runs. Here we demonstrate how to use the scorers using a sample qrels file and a sample run file. Both files can be found at the ./sample/ directory.
+- In TREC 2017 Dynamic Domain track, three metrics are mainly used for evaluation, including sDCG,
+Cube Test and Expected Utility.
+- Apart from those three metrics, we also provide metric scripts used in previous years, which provide scores of 
+Alpha-nDCG, Precision and etc.
+- You will need the actual qrels and topic xml file from NIST to evaluate your runs. Here we demonstrate how to use the scorers using a sample qrels file, a sample topic xml file a sample run file. Both files can be found at the ./sample/ directory.
     + qrels.txt: a sample qrels file
     + runfile: a sample run file
+    + topic.xml: a sample topic xml file
 - How to run the scorers
-    + Preprocessing
-    
-        `preprocess.py` is used to extract results before (including) certain iteration from a complete run file.
-    
-        ```shell
-          >$ python preprocess.py -run=run_file_path -ct=cutoff -qrel=qrel_file_path
-        ```
-        - where `ct` is the the cutoff value for current evaluation. `ct=3` means only the first 3 iterations will be used for evaluation.
-    
 
+    
+    + Preprocessing
+        `preprocess.py` is used to extract results before (including) certain iteration from a complete run file.
+      ``` shell
+        >$ python preprocess.py -run=run_file_path -ct=cutoff -qrel=qrel_file_path
+      ```
+        - where `ct` is the the cutoff value for current evaluation. `ct=3` means only the first 3 iterations will be used for evaluation.
+
+    
     + Average Cube Test (ACT) and Cube Test (CT)
 
       ``` shell
@@ -175,6 +180,12 @@
       ```
         - where 50 is the default cutoff value of the number of iterations where you run cubetest over your results. You should try different cutoff values.
 
+    + sDCG
+    
+       ```shell
+        >$ python sDCG.py ../sample_run/runfile ../sample_run/qrels.txt cutoff
+       ```
+    
     + Alpha-nDCG per iteration and nERR-IA per iteration
 
       ``` shell
