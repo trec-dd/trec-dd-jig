@@ -27,7 +27,7 @@ def nDCG(truth, run):
     print 'Calling nDCG'
     # results written into file
     call(["./ndeval", truth, run])
-    # ndeval [options] qrels run (-help for full usage information)
+    # ndeval [options] qrels.txt run (-help for full usage information)
 
 
 def snDCG(truth, run):

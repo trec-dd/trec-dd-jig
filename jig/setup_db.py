@@ -58,7 +58,7 @@ def main():
                 )
             '''
 
-            ]
+    ]
     tree = ET.parse(sys.argv[1])
     root = tree.getroot()
 
@@ -92,7 +92,7 @@ def main():
                     rating = int(passage.find('./rating').text)
                     type = passage.find('./type').text
                     if type == 'MATCHED':
-                        score == float(passage.find('./score').text)
+                        score = float(passage.find('./score').text)
                     else:
                         score = None
                     cur.execute('INSERT INTO passage VALUES(?, ?, ?, ?, ?, ?, ?, ?)',

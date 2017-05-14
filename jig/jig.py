@@ -67,7 +67,7 @@ def step(runid, topic_id, results):
 @click.command()
 @click.option('-runid', type=click.STRING, help='Run Identifier')
 @click.option('-topic', type=click.STRING, help='Topic ID')
-@click.option('-docs', nargs=5, type=click.Tuple([unicode, unicode, unicode, unicode, unicode]),
+@click.option('-docs', nargs=5, type=click.Tuple([str, str, str, str, str]),
               help='Returned document lists')
 def main(runid, topic, docs):
     feedback = step(runid, topic, docs)

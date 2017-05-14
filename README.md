@@ -19,7 +19,7 @@
 
 #### 1. System requirements
 - Works under Mac OS, Windows, and Linux.
-- Python environment. (Works the best under Python 2.7)
+- Python environment. (Works the best under Python 3.5)
 
 
 #### 2. Download the TREC DD Topics:
