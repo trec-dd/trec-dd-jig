@@ -1,9 +1,8 @@
-'''
+"""
     trec_dd_jig provides an evaluation jig for TREC Dynamic Domain systems
 
     Copyright 2016 @ Georgetown University
-'''
-
+"""
 
 from __future__ import absolute_import, print_function
 
@@ -23,7 +22,7 @@ def step(runid, topic_id, results):
     cur = con.cursor()
 
     # iteration count for this run_id
-    cur.execute('SELECT iteration_ct FROM topic_status WHERE run_id=? AND topic_id=?', [str(runid),str(topic_id)])
+    cur.execute('SELECT iteration_ct FROM topic_status WHERE run_id=? AND topic_id=?', [str(runid), str(topic_id)])
     tmp = cur.fetchone()
     if not tmp:
         cur.execute('INSERT INTO topic_status VALUES(?, ?, ?)', [topic_id, runid, 0])
@@ -33,10 +32,11 @@ def step(runid, topic_id, results):
         ct, = tmp
 
     rlist = []
-    f = open(runid+'.txt', 'a')
+    f = open(runid + '.txt', 'a')
     for result_pair in results:
         result = result_pair.split(':')  # result[0]: docno, result[1]: ranking score
-        cur.execute('SELECT subtopic_id, rating, text FROM passage WHERE topic_id=? AND docno=?', [str(topic_id), result[0]])
+        cur.execute('SELECT subtopic_id, rating, text FROM passage WHERE topic_id=? AND docno=?',
+                    [str(topic_id), result[0]])
         rs = cur.fetchall()
         feedback = {'topic_id': topic_id, 'doc_id': result[0], 'ranking_score': result[1]}
         wline = topic_id + '\t' + str(ct) + '\t' + result[0] + '\t' + result[1] + '\t'
@@ -58,7 +58,8 @@ def step(runid, topic_id, results):
         f.write(wline)
         f.write('\n')
     # print(rlist)
-    cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=? AND topic_id=?', [ct+1, str(runid),str(topic_id)])
+    cur.execute('UPDATE topic_status SET iteration_ct=?  WHERE run_id=? AND topic_id=?',
+                [ct + 1, str(runid), str(topic_id)])
     con.commit()
 
     return rlist
