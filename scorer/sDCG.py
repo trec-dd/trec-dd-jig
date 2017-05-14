@@ -1,11 +1,14 @@
 """
 sDCG
-https://pdfs.semanticscholar.org/eaf0/44e9f8fef5f9dacdfc609668f4697842e8e7.pdf
+Copyright 2017 @ Georgetown University
 """
-from reader import *
-from truth import *
+from .reader import *
+from .truth import *
 import math
 import statistics
+import sys
+
+
 
 
 def sDCG(run_file_path, truth_xml_path, bq=4, b=2, cutoff=10, verbose=False):
@@ -67,4 +70,5 @@ def sDCG_per_topic(topic_truth, topic_result, bq, b, cutoff):
 
 
 if __name__ == '__main__':
-    sDCG('data/trec_dd_16/runs/UL_LDA_200', 'data/trec_dd_16/truth/dynamic-domain-2016-truth-data.xml', cutoff=1)
+    sDCG(sys.argv[1], sys.argv[2], int(sys.argv[3]), verbose=True)
+    #sDCG('data/trec_dd_16/runs/UL_LDA_200', 'data/trec_dd_16/truth/dynamic-domain-2016-truth-data.xml', cutoff=1)

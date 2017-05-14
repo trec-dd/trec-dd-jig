@@ -1,5 +1,6 @@
 """
 Read, parse run file
+Copyright 2017 @ Georgetown University
 """
 import os
 

@@ -67,14 +67,17 @@
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
-- Setup database
+- Setup database and compute document length
 
 
   ``` shell
   > cd trec-dd-jig
-  > sh jig/config.sh --topics topics/topic_file.xml
+  > python jig/config.py --topics topics/topic_file.xml --trecdirec ebola_direc nyt_direc
   ```
-  This will set up a sqlite database at ./trec-dd-jig/jig/truth.db
+  `ebola_direc` is the directory of ebola trectext file, 
+  `nyt_direc` is the directory of New York Times trectext file. 
+  This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db` and generate a json file 
+  holding the length of each document at `./trec-dd-jig/jig/doc_len.json`
 
  Congratulations for a successful installation!!
 
@@ -138,15 +141,15 @@
   ``` shell
     > cat ./testrun.txt
 
-    > DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 833.00 1 DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
+    DD15-1 1322120460-d6783cba6ad386f4444dcc2679637e0b 833.00 1 DD15-1.1:3|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.4:2|DD15-1.2:2|DD15-1.2:2
 
-    > DD15-1 1322509200-f67659162ce908cc510881a6b6eabc8b 500.00 1 DD15-1.1:3
+    DD15-1 1322509200-f67659162ce908cc510881a6b6eabc8b 500.00 1 DD15-1.1:3
 
-    > DD15-1 1321860780-f9c69177db43b0f810ce03c822576c5c 123.00 1 DD15-1.1:3
+    DD15-1 1321860780-f9c69177db43b0f810ce03c822576c5c 123.00 1 DD15-1.1:3
 
-    > DD15-1 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 34.00 1 DD15-1.3:2|DD15-1.1:2
+    DD15-1 1327908780-d9ad76f0947e2acd79cba3acd5f449f7 34.00 1 DD15-1.3:2|DD15-1.1:2
 
-    > DD15-1 1321379940-4227a3d1f425b32f9f8595739ef2b8c3 5.00 0
+    DD15-1 1321379940-4227a3d1f425b32f9f8595739ef2b8c3 5.00 0
   ``` 
 
 

@@ -1,5 +1,6 @@
 """
 Ground truth
+Copyright 2017 @ Georgetown University
 """
 import xml.etree.ElementTree as ET
 from collections import defaultdict
