@@ -2,16 +2,19 @@
 Expected Utility
 Copyright 2017 @ Georgetown University
 """
-from .truth import *
-from .reader import *
-from collections import Counter
+from truth import *
+from reader import *
+from collections import Counter, defaultdict
 import statistics
 import sys
+import argparse
+
+
 
 PROB = defaultdict(dict)
 
 
-def eu(run_file_path, truth_xml_path, doc_length_path, cutoff=10, a=0.000005, gamma=0.5, p=0.5, verbose=False):
+def eu(run_file_path, truth_xml_path, doc_length_path, cutoff=10, a=0.001, gamma=0.5, p=0.5, verbose=False):
     """
 
     :param run_file_path:
@@ -35,7 +38,7 @@ def eu(run_file_path, truth_xml_path, doc_length_path, cutoff=10, a=0.000005, ga
 
     utility_list = []
     for topic_id, topic_result in sorted_results:
-        topic_truth = truth.truth_4_EU(topic_id)
+        topic_truth = truth.truth4EU(topic_id)
 
         utility = eu_per_topic(topic_truth, topic_result, a, gamma, p, cutoff)
 
@@ -119,9 +122,9 @@ def expected_cost_per_topic(topic_result, doc_length, cutoff, p):
         expected_len = 0
         for s in range(1, l + 1):
             if doc_list[s - 1] not in doc_length:
-                # print('doc not found: ', doc_list[s-1], file=sys.stderr)
-                pass
-            cumulated_len += doc_length.get(doc_list[s - 1], 949)  # 949 is the average length of trecdd15 documents
+                print(doc_list[s - 1])
+                continue
+            cumulated_len += doc_length[doc_list[s - 1]]
             prob = prob_stop_at_s(p, s, l)
             expected_len += (prob * cumulated_len)
 
@@ -130,64 +133,14 @@ def expected_cost_per_topic(topic_result, doc_length, cutoff, p):
     return total_len
 
 
-def test_a():
-    """test different parameter a"""
-    run_paths, truth_xml, doc_length, max_iter = util.get_data('trec_dd_16')
-
-    truth = DDTruth(truth_xml, doc_length)
-
-    # max_iter = 10
-
-    all_results = {}  # all_results={run_id: topic_id: {cutoff: {metric1:xx, metric2:xx,...}}}
-    for run_file_path in run_paths:
-        run = DDReader(run_file_path).run_result
-
-        run_name = os.path.split(run_file_path)[1]
-
-        print(run_name, file=sys.stderr)
-
-        all_results[run_name] = {}
-
-        # sort by topic id
-        sorted_run = sorted(run.items(), key=lambda x: int(x[0].split('-')[1]))
-
-        for topic_id, topic_result in sorted_run:
-
-            all_results[run_name][topic_id] = {}
-
-            for cutoff in range(1, max_iter + 1):
-
-                eu_1 = eu_per_topic(truth.truth_4_EU(topic_id), topic_result, a=0.0013, gamma=0.5, p=0.5,
-                                    cutoff=cutoff)
-                eu_2 = eu_per_topic(truth.truth_4_EU(topic_id), topic_result, a=0.0011, gamma=0.5, p=0.5,
-                                    cutoff=cutoff)
-                eu_3 = eu_per_topic(truth.truth_4_EU(topic_id), topic_result, a=0.0010, gamma=0.5, p=0.5,
-                                    cutoff=cutoff)
-                eu_4 = eu_per_topic(truth.truth_4_EU(topic_id), topic_result, a=0.0009, gamma=0.5, p=0.5,
-                                    cutoff=cutoff)
-                eu_5 = eu_per_topic(truth.truth_4_EU(topic_id), topic_result, a=0.0007, gamma=0.5, p=0.5,
-                                    cutoff=cutoff)
-
-                all_results[run_name][topic_id][cutoff] ={
-                    'eu_1':eu_1,
-                    'eu_2':eu_2,
-                    'eu_3':eu_3,
-                    'eu_4':eu_4,
-                    'eu_5':eu_5,
-                }
-
-    metric_order = ['eu_1', 'eu_2', 'eu_3', 'eu_4', 'eu_5']
-    util.output(all_results, metric_order=metric_order, output_path='results/eu_a_compare.csv')
-
-
 if __name__ == '__main__':
-    """
-    eu('data/trec_dd_16/runs/ufmgHM2', 'data/trec_dd_16/truth/dynamic-domain-2016-truth-data.xml',
-       'data/trec_dd_16/doc_length.json', cutoff=10, verbose=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--runfile", required=True, help="run file path")
+    parser.add_argument("--topics", required=True, help="topic xml file path")
+    parser.add_argument("--doc-len", required=True, help="document length json file path")
+    parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
+    params = parser.parse_args(sys.argv[1:])
 
-    for p in pattern_generator([5, 5, 5]):
-        print(p)
-    """
-
-    test_a()
+    eu(params.runfile, params.topics, params.doc_len, cutoff=params.cutoff, verbose=True)
+    # eu('../sample_run/runfile', '../sample_run/topic.xml', '../sample_run/doc_len.json', cutoff=10, verbose=True)

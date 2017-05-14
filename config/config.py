@@ -115,8 +115,8 @@ def doc_len_single_file(filepath):
     content = open(filepath).read()
     for doc in re.findall(r"<DOC>.*?</DOC>", content, re.DOTALL | re.IGNORECASE):
         # extract docno and text
-        docno = re.search(r"<DOCNO>.*?</DOCNO>", doc, re.IGNORECASE | re.DOTALL).group()
-        text = re.search(r"<TEXT>.*?</TEXT>", doc, re.DOTALL | re.IGNORECASE).group()
+        docno = re.search(r"<DOCNO>(.*?)</DOCNO>", doc, re.IGNORECASE | re.DOTALL).group(1)
+        text = re.search(r"<TEXT>(.*?)</TEXT>", doc, re.DOTALL | re.IGNORECASE).group(1)
 
         # remove <style> </style> in text
         text = re.sub(r'<style.*?</style>', '', text, re.DOTALL)

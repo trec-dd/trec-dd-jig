@@ -2,14 +2,12 @@
 sDCG
 Copyright 2017 @ Georgetown University
 """
-from .reader import *
-from .truth import *
+from reader import *
+from truth import *
 import math
 import statistics
 import sys
-
-
-
+import argparse
 
 def sDCG(run_file_path, truth_xml_path, bq=4, b=2, cutoff=10, verbose=False):
     """
@@ -17,58 +15,54 @@ def sDCG(run_file_path, truth_xml_path, bq=4, b=2, cutoff=10, verbose=False):
     :param truth_xml_path:
     :param bq: discount base of query in a session
     :param b: discount base of docs returned by a query
-    :param query_pos: the position (in the session) of the query that needs to be calculated (starting from 1)
+    :param cutoff: number of iterations taken into evaluation
+    :param verbose: if print verbose information
     :return: average sDCG and nDCG over all topics
     """
     if verbose:
         print(run_file_path)
-        print('topic-id', 'sDCG', 'nsDCG', sep='\t')
+        print('topic-id', 'sDCG', sep='\t')
     truth = DDTruth(truth_xml_path)
     run_result = DDReader(run_file_path).run_result
+
+    # sort by topic no
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
 
-    sdcg_list, nsdcg_list = [], []
+    sdcg_list = []
     for topic_id, topic_result in sorted_results:
-        topic_truth = truth.truth_4_sDCG(topic_id)
-        sdcg, nsdcg = sDCG_per_topic(topic_truth, topic_result, bq, b, cutoff)
+        topic_truth = truth.truth4SDCG(topic_id)
+        sdcg = sDCG_per_topic(topic_truth, topic_result, bq, b, cutoff)
         sdcg_list.append(sdcg)
-        nsdcg_list.append(nsdcg)
-        """
-        if not math.isnan(sdcg):
-            total_sdcg += sdcg
-        if not math.isnan(nsdcg):
-            total_nsdcg += nsdcg
-        """
+
         if verbose:
-            print(topic_id, sdcg, nsdcg, sep='\t')
+            print(topic_id, sdcg, sep='\t')
 
     if verbose:
-        print('all', statistics.mean(sdcg_list), statistics.mean(nsdcg_list))
-    return sdcg_list, nsdcg_list
+        print('all', statistics.mean(sdcg_list))
 
+    return sdcg_list
 
 def sDCG_per_topic(topic_truth, topic_result, bq, b, cutoff):
-    """return sDCG and nsDCG of one topic"""
+    """return sDCG of one topic"""
 
-    sorted_result = sorted(topic_result.items(), key=lambda x: x[0])
-    sdcg, isdcg = 0, 0
+    sorted_result = sorted(topic_result.items(), key=lambda x: x[0])  # sort by iterations
+    sdcg = 0
     for query_pos, doc_list in sorted_result:  # query position starts from 0
         if query_pos >= cutoff:
             break
-
         query_discount = 1 + math.log(query_pos + 1, bq)
         for doc_pos, doc_no in enumerate(doc_list):  # doc position also starts from 0
             sdcg += topic_truth[doc_no] / (1 + math.log(doc_pos + 1, b)) / query_discount
-        ideal_doclist = sorted(doc_list, key=lambda x: topic_truth[x], reverse=True)
-        for doc_pos, doc_no in enumerate(ideal_doclist):
-            isdcg += topic_truth[doc_no] / (1 + math.log(doc_pos + 1, b)) / query_discount
-    if isdcg <= 0.000000000000001 and isdcg >= -0.000000000000001:  # ideal_sdcg = sdcg =0
-        assert sdcg == isdcg
-        return sdcg, 1
-    else:
-        return sdcg, sdcg / isdcg
+        return sdcg
 
 
 if __name__ == '__main__':
-    sDCG(sys.argv[1], sys.argv[2], int(sys.argv[3]), verbose=True)
-    #sDCG('data/trec_dd_16/runs/UL_LDA_200', 'data/trec_dd_16/truth/dynamic-domain-2016-truth-data.xml', cutoff=1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--runfile", required=True, help="run file path")
+    parser.add_argument("--topics", required=True, help="topic xml file path")
+    parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
+
+    params = parser.parse_args(sys.argv[1:])
+    sDCG(params.runfile, params.topics, cutoff=params.cutoff, verbose=True)
+
+    # sDCG('../sample_run/runfile', '../sample_run/topic.xml', cutoff=10, verbose=True)
