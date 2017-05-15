@@ -79,7 +79,7 @@
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db` and generate a pickle file 
   holding the length of each document and the bounds of different metric at `./trec-dd-jig/topics/dd_info.pkl`
   
-  Computing the document length and bounds of metrics may take several hours in total. You can rest for a bit now.
+  Computing the document length and bounds of metrics may take tens of minutes in total. You can rest for a bit now.
   Once this program finishes running, you will have a successful installation of jig.
 
  
