@@ -67,19 +67,22 @@
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
-- Setup database and compute document length
+- Setup database, compute document length and metric bounds
 
 
   ``` shell
   > cd trec-dd-jig
-  > python jig/config.py --topics topics/topic_file.xml --trecdirec ebola_direc nyt_direc
+  > python jig/config.py --topics topics/topic_file.xml --trecdirec ebola_direc nyt_direc --output topics/dd_info.pkl
   ```
   `ebola_direc` is the directory of ebola trectext file, 
   `nyt_direc` is the directory of New York Times trectext file. 
-  This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db` and generate a json file 
-  holding the length of each document at `./trec-dd-jig/jig/doc_len.json`
+  This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db` and generate a pickle file 
+  holding the length of each document and the bounds of different metric at `./trec-dd-jig/topics/dd_info.pkl`
+  
+  Computing the document length and bounds of metrics may take several hours in total. You can rest for a bit now.
+  Once this program finishes running, you will have a successful installation of jig.
 
- Congratulations for a successful installation!!
+ 
 
 **************************************************************************
 
@@ -168,55 +171,35 @@
 **************************************************************************
 
 
-### Metrics (Updating)
+### Metrics 
 - We support a few metrics. The scripts for these metrics can be found at the ./scorer directory.
 - In TREC 2017 Dynamic Domain track, three metrics are mainly used for evaluation, including sDCG,
 Cube Test and Expected Utility.
-- Apart from those three metrics, we also provide metric scripts used in previous years, which provide scores of 
-Alpha-nDCG, Precision and etc.
+- For those three metrics, we also provide their normalized scores of first 10 iterations of each topic by using the bounds computed during 
+the installation. We do not provide the normalized scores out of the first 10 iterations.
 - You will need the actual qrels and topic xml file from NIST to evaluate your runs. Here we demonstrate how to use the scorers using a sample qrels file, a sample topic xml file a sample run file. Both files can be found at the ./sample/ directory.
-    + qrels.txt: a sample qrels file
     + runfile: a sample run file
     + topic.xml: a sample topic xml file
+    + info.pkl: a sample pickle file that holds the information of document length and metric bounds
 - How to run the scorers
 
     
-    + Preprocessing
-        `preprocess.py` is used to extract results before (including) certain iteration from a complete run file.
-      ``` shell
-        >$ python preprocess.py -run=run_file_path -ct=cutoff -qrel=qrel_file_path
-      ```
-        - where `ct` is the the cutoff value for current evaluation. `ct=3` means only the first 3 iterations will be used for evaluation.
-
-    
-    + Average Cube Test (ACT) and Cube Test (CT)
-
-      ``` shell
-        >$ perl cubeTest_dd.pl  ../sample_run/qrels.txt ../sample_run/runfile 50
-      ```
-        - where 50 is the default cutoff value of the number of iterations where you run cubetest over your results. You should try different cutoff values.
-
     + sDCG
+      ``` shell
+        >$ python scorer/sDCG.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+      ```
+        - where `--cutoff` sets the cutoff value of evaluation. Here, it means only the first 5 
+        iterations are taken into evaluation
+     
+    + Cube Test
+      ``` shell
+        >$ python scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+      ```
+      
+    + Expected Utility
+      ``` shell
+        >$ python scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+      ```
+
     
-       ```shell
-        >$ python sDCG.py ../sample_run/runfile ../sample_run/topic.xml cutoff
-       ```
     
-    + Alpha-nDCG per iteration and nERR-IA per iteration
-
-      ``` shell
-        >$ gcc -o ndeval ndeval_dd_all_iteration_detail.c -lm
-        >$ ./ndeval  ../sample_run/qrels.txt ../sample_run/runfile
-      ```
-
-    + snDCG per iteration
-
-      ``` shell
-        >$ perl snDCG_per_iteration.pl  ../sample_run/qrels.txt ../sample_run/runfile 5
-      ```
-
-    + Precision (up to the current iteration)
-
-      ``` shell
-        >$ python precision.py -qrel ../sample_run/qrels.txt -run ../sample_run/runfile
-      ```

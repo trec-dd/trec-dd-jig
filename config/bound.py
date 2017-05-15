@@ -1,7 +1,7 @@
 from bound_truth import *
 import math
 import json
-
+import pickle
 
 def sDCG(topic_truth, bq, b, cutoff):
     """
@@ -114,6 +114,7 @@ def eu_bound(ground_truth):
 
 def ct(topic_truth, gamma, max_height, cutoff):
     doc_sub_rel, subtopic_num = topic_truth
+    # print(len(doc_sub_rel))
     gain = 0
     subtopic_set = set()
     for doc_no in doc_sub_rel:
@@ -127,14 +128,16 @@ def ct(topic_truth, gamma, max_height, cutoff):
         rels = sorted(rels, reverse=True)
         for i, rel in enumerate(rels):
             h = rel * (gamma ** i)
-            if subtopic_gain + h > max_height:
+            if subtopic_gain + h >= max_height:
                 h = max_height - subtopic_gain
             subtopic_gain += h
             if i >= cutoff * 5:
-                gain += subtopic_gain / subtopic_num
                 break
+        gain += subtopic_gain / subtopic_num
 
-    return gain / max_height / cutoff
+    opt_ct = gain / max_height / cutoff
+
+    return opt_ct
 
 
 def ct_bound(ground_truth):
@@ -161,11 +164,17 @@ def get_bound(topic_xml, doc_len):
     ct = ct_bound(ground_truth)
     print("EU")
     eu = eu_bound(ground_truth)
+    # eu = None
     return sdcg, ct, eu
 
 
 if __name__ == "__main__":
+    """
     sdcg, ct, eu = get_bound('../sample_run/topic.xml', json.load(open('../sample_run/doc_len.json')))
     # data = {'sdcg':sdcg, 'ct': ct, 'eu': eu}
     data = [sdcg, ct, eu]
-    json.dump(data, open('../topics/bound.json', 'w'))
+    # json.dump(data, open('../topics/bound.json', 'w'))
+    pickle.dump(data, open('../topics/bound.pkl', 'wb'))
+    """
+    ground_truth = Truth('../sample_run/topic.xml', json.load(open('../sample_run/doc_len.json')))
+    ct(ground_truth.truth4CT('DD16-5'), 0.5, 5, 1)

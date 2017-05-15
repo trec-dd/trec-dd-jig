@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict
 import math
 import json
+import pickle
 
 
 class DDTruth:
@@ -29,7 +30,7 @@ class DDTruth:
     }
     """
 
-    def __init__(self, truth_xml_path, dd_info_json):
+    def __init__(self, truth_xml_path, dd_info_pkl):
         self.truth = defaultdict(dict)
 
         self.doc_length = {}
@@ -37,7 +38,7 @@ class DDTruth:
         self.ct_bound = {}
         self.eu_bound = {}
 
-        self.doc_length, self.sdcg_bound, self.ct_bound, self.eu_bound = json.load(open(dd_info_json))
+        self.doc_length, self.sdcg_bound, self.ct_bound, self.eu_bound = pickle.load(open(dd_info_pkl, 'rb'))
 
         root = ET.parse(truth_xml_path).getroot()
 
