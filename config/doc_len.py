@@ -1,3 +1,8 @@
+"""
+Computing the document length
+Copyright 2017 @ Georgetown University
+"""
+
 import re
 import os
 

@@ -20,9 +20,9 @@ def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=
     if verbose:
         print(run_file_path)
         if can_normalize:
-            print('topic-id', 'ct@' + str(cutoff), 'normalized_ct@'+str(cutoff), sep='\t')
+            print('topic-id', 'ct@' + str(cutoff), 'normalized_ct@' + str(cutoff), sep='\t')
         else:
-            print('topic-id', 'ct@' + str(cutoff),  sep='\t')
+            print('topic-id', 'ct@' + str(cutoff), sep='\t')
 
     truth = DDTruth(truth_xml_path, dd_info_path)
     run_result = DDReader(run_file_path).run_result
@@ -43,7 +43,7 @@ def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=
         normalized_ct = None
         if can_normalize:
             bound = truth.ct_bound[topic_id][cutoff]
-            normalized_ct = ct/bound
+            normalized_ct = ct / bound
             normalized_ct_list.append(normalized_ct)
 
         if verbose:

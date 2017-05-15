@@ -1,7 +1,12 @@
+"""
+Computing the bounds of metrics
+Copyright 2017 @ Georgetown University
+"""
 from bound_truth import *
 import math
 import json
 import pickle
+
 
 def sDCG(topic_truth, bq, b, cutoff):
     """

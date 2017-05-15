@@ -1,7 +1,7 @@
 """
     trec_dd_jig provides an evaluation jig for TREC Dynamic Domain systems
 
-    Copyright 2016 @ Georgetown University
+    Copyright 2017 @ Georgetown University
 """
 
 from __future__ import absolute_import, print_function

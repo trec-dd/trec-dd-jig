@@ -9,8 +9,6 @@ import statistics
 import sys
 import argparse
 
-
-
 PROB = defaultdict(dict)
 
 
@@ -34,9 +32,9 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
     if verbose:
         print(run_file_path)
         if can_normalize:
-            print('topic_id', 'eu@'+str(cutoff), 'normalized_eu@'+str(cutoff), sep='\t')
+            print('topic_id', 'eu@' + str(cutoff), 'normalized_eu@' + str(cutoff), sep='\t')
         else:
-            print('topic_id', 'eu@'+str(cutoff), sep='\t')
+            print('topic_id', 'eu@' + str(cutoff), sep='\t')
     truth = DDTruth(truth_xml_path, dd_info_path)
     run_result = DDReader(run_file_path).run_result
 
@@ -54,7 +52,7 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
 
         if can_normalize:
             upper, lower = truth.eu_bound[topic_id][cutoff]
-            normalized_eu = (utility-lower) / (upper - lower)
+            normalized_eu = (utility - lower) / (upper - lower)
             normalized_eu_list.append(normalized_eu)
 
         utility_list.append(utility)

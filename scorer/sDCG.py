@@ -31,9 +31,9 @@ def sDCG(run_file_path, truth_xml_path, dd_info_path, bq=4, b=2, cutoff=10, verb
     if verbose:
         print(run_file_path)
         if can_normalize:
-            print('topic-id', 'sDCG@'+str(cutoff), 'normalized sDCG@'+str(cutoff), sep='\t')
+            print('topic-id', 'sDCG@' + str(cutoff), 'normalized sDCG@' + str(cutoff), sep='\t')
         else:
-            print('topic-id', 'sDCG@'+str(cutoff), sep='\t')
+            print('topic-id', 'sDCG@' + str(cutoff), sep='\t')
 
     # sort by topic no
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))

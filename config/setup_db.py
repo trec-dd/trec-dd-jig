@@ -1,7 +1,11 @@
+"""
+Initialize database
+Copyright 2017 @ Georgetown University
+"""
+
 import sqlite3
 import xml.etree.ElementTree as ET
 import os
-
 
 
 def setup_db(topic_xml):

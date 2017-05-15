@@ -72,7 +72,7 @@
 
   ``` shell
   > cd trec-dd-jig
-  > python jig/config.py --topics topics/topic_file.xml --trecdirec ebola_direc nyt_direc --output topics/dd_info.pkl
+  > python config/config.py --topics topics/topic_file.xml --trecdirec ebola_direc nyt_direc --output topics/dd_info.pkl
   ```
   `ebola_direc` is the directory of ebola trectext file, 
   `nyt_direc` is the directory of New York Times trectext file. 
