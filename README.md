@@ -12,6 +12,7 @@
 * **_New metrics_**
 * **_Additional supporting file for evaluation_**
 
+**************************************************************************
 ### What's inside the package:
 
 * the jig (`jig/jig.py`)
