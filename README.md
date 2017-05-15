@@ -177,10 +177,10 @@
 Cube Test and Expected Utility.
 - For those three metrics, we also provide their normalized scores of first 10 iterations of each topic by using the bounds computed during 
 the installation. We do not provide the normalized scores out of the first 10 iterations.
-- You will need the actual qrels and topic xml file from NIST to evaluate your runs. Here we demonstrate how to use the scorers using a sample qrels file, a sample topic xml file a sample run file. Both files can be found at the ./sample/ directory.
+- You will need the actual topic xml file from NIST and the pickle file generated during installation to evaluate your runs. Here we demonstrate how to use the scorers using a sample topic xml file, a sample pickle file and a sample run file. All the files can be found at the `./sample_run/` directory.
     + runfile: a sample run file
     + topic.xml: a sample topic xml file
-    + info.pkl: a sample pickle file that holds the information of document length and metric bounds
+    + dd_info.pkl: a sample pickle file that holds the information of document length and metric bounds
 - How to run the scorers
 
     
