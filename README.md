@@ -9,7 +9,7 @@
 
 ### What's inside the package:
 
-* the jig (jig/jig.py)
+* the jig (`jig/jig.py`)
 * task measure scripts
 * sample run files
 
@@ -59,7 +59,7 @@
   > mv trec-dd-jig your_dd_directory/.
   ```
 
-- Unzip and put the topics (with ground truth) file that you downloaded from NIST, under ~/your_dd_directory/trec-dd-jig/jig/topics/
+- Unzip and put the topics (with ground truth) file that you downloaded from NIST, under `~/your_dd_directory/trec-dd-jig/jig/topics/`
  
   
   ``` shell
@@ -87,7 +87,7 @@
 **************************************************************************
 
 ### Run the Jig
-- Your systems should call python jig/jig.py to get feedback for each iteration of retrieval. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
+- Your systems should call `python jig/jig.py` to get feedback for each iteration of retrieval. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
 
 
   ``` shell
@@ -165,14 +165,14 @@
         - rating: the relevance grade provided by NIST assessors. -1/0/1: marginally relevant (Note that: ratings -1 or 0 or 1 all mean marginally relevant), 2: relevant, 3: highly relevant, 4: key results. The relevance grades refer to the relevance level of your document to the whole topic.
 
 - Note that subtopic_ids are global ids, i.e., a certain topic might contain subtopic with id 12, 45, 101, 103...
-- Everytime when you run 'jig/jig.py' for the same topic id, the run file will be automatically appended and the number of interaction iterations will increase by one. 
+- Everytime when you run `jig/jig.py` for the same topic id, the run file will be automatically appended and the number of interaction iterations will increase by one. 
 
 
 **************************************************************************
 
 
 ### Metrics 
-- We support a few metrics. The scripts for these metrics can be found at the ./scorer directory.
+- We support a few metrics. The scripts for these metrics can be found at the `./scorer` directory.
 - In TREC 2017 Dynamic Domain track, three metrics are mainly used for evaluation, including sDCG,
 Cube Test and Expected Utility.
 - For those three metrics, we also provide their normalized scores of first 10 iterations of each topic by using the bounds computed during 
