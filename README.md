@@ -6,7 +6,7 @@
 ##### For technical questions, please send your request to google group https://groups.google.com/forum/#!forum/trec-dd
 
 **************************************************************************
-### **_Change_ in TREC2017 DD Jig**
+### **_Changes_ in TREC2017 DD Jig**
 
 * **_Python 3 environment_**
 * **_New metrics_**
