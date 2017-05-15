@@ -40,11 +40,11 @@ def sdcg_bound(ground_truth):
     result = {}
     sdcg_bq, sdcg_b = 4, 2
     for topic_id in ground_truth.truth:
-        print(topic_id)
+        # print(topic_id)
         result[topic_id] = {}
         sdcg_truth = ground_truth.truth4SDCG(topic_id)
         for cutoff in range(1, 11):
-            print(cutoff)
+            # print(cutoff)
             opt_sdcg = sDCG(sdcg_truth, sdcg_bq, sdcg_b, cutoff)
             result[topic_id][cutoff] = opt_sdcg
 
@@ -105,11 +105,11 @@ def eu_bound(ground_truth):
     result = {}
     eu_a, eu_p, eu_gamma = 0.001, 0.5, 0.5
     for topic_id in ground_truth.truth:
-        print(topic_id)
+        # print(topic_id)
         result[topic_id] = {}
         eu_truth = ground_truth.truth4EU_bound(topic_id)
         for cutoff in range(1, 11):
-            print(cutoff)
+            # print(cutoff)
             opt_eu = eu(eu_truth, eu_a, eu_gamma, eu_p, cutoff)
             result[topic_id][cutoff] = opt_eu
 
@@ -150,11 +150,11 @@ def ct_bound(ground_truth):
     gamma = 0.5
     max_height = 5
     for topic_id in ground_truth.truth:
-        print(topic_id)
+        # print(topic_id)
         result[topic_id] = {}
         ct_truth = ground_truth.truth4CT(topic_id)
         for cutoff in range(1, 11):
-            print(cutoff)
+            # print(cutoff)
             opt_ct = ct(ct_truth, gamma, max_height, cutoff)
             result[topic_id][cutoff] = opt_ct
     # json.dump(result, fp=open("bound/new_ct.json", "w"))
@@ -163,11 +163,11 @@ def ct_bound(ground_truth):
 
 def get_bound(topic_xml, doc_len):
     ground_truth = Truth(topic_xml, doc_len)
-    print("sDCG")
+    # print("sDCG")
     sdcg = sdcg_bound(ground_truth)
-    print("CT")
+    # print("CT")
     ct = ct_bound(ground_truth)
-    print("EU")
+    # print("EU")
     eu = eu_bound(ground_truth)
     # eu = None
     return sdcg, ct, eu
