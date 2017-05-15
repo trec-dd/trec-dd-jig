@@ -6,11 +6,11 @@
 ##### For technical questions, please send your request to google group https://groups.google.com/forum/#!forum/trec-dd
 
 **************************************************************************
-### <span style="color: 0xFF0000">Change in TREC2017 DD Jig</span>
+### **_Change_ in TREC2017 DD Jig**
 
-* Python 3 environment
-* New metrics
-* Additional supporting file for evaluation
+* **_Python 3 environment_**
+* **_New metrics_**
+* **_Additional supporting file for evaluation_**
 
 ### What's inside the package:
 
