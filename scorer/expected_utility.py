@@ -14,11 +14,12 @@ import argparse
 PROB = defaultdict(dict)
 
 
-def eu(run_file_path, truth_xml_path, doc_length_path, cutoff=10, a=0.001, gamma=0.5, p=0.5, verbose=False):
+def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.5, p=0.5, verbose=False):
     """
 
     :param run_file_path:
     :param truth_xml_path:
+    :param dd_info_path:
     :param cutoff: only the first #cutoff iterations will be calculated (namely, K in the paper)
     :param a: coefficient of cumulative cost
     :param gamma: discount for duplicated nugget
@@ -27,27 +28,47 @@ def eu(run_file_path, truth_xml_path, doc_length_path, cutoff=10, a=0.001, gamma
     :return:
     """
     PROB.clear()
+    can_normalize = False
+    if cutoff <= 10:
+        can_normalize = True
     if verbose:
         print(run_file_path)
-        print('topic_id', 'expected_utility', sep='\t')
-    truth = DDTruth(truth_xml_path, doc_length_path)
+        if can_normalize:
+            print('topic_id', 'eu@'+str(cutoff), 'normalized_eu@'+str(cutoff), sep='\t')
+        else:
+            print('topic_id', 'eu@'+str(cutoff), sep='\t')
+    truth = DDTruth(truth_xml_path, dd_info_path)
     run_result = DDReader(run_file_path).run_result
 
     # sort run result by topic id
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
 
     utility_list = []
+    normalized_eu_list = []
     for topic_id, topic_result in sorted_results:
         topic_truth = truth.truth4EU(topic_id)
 
         utility = eu_per_topic(topic_truth, topic_result, a, gamma, p, cutoff)
 
+        normalized_eu = None
+
+        if can_normalize:
+            upper, lower = truth.eu_bound[topic_id][cutoff]
+            normalized_eu = (utility-lower) / (upper - lower)
+            normalized_eu_list.append(normalized_eu)
+
         utility_list.append(utility)
         if verbose:
-            print(topic_id, utility, sep='\t')
+            if can_normalize:
+                print(topic_id, utility, normalized_eu, sep='\t')
+            else:
+                print(topic_id, utility, sep='\t')
 
     if verbose:
-        print('all', statistics.mean(utility_list), sep='\t')
+        if can_normalize:
+            print(topic_id, statistics.mean(utility_list), statistics.mean(normalized_eu_list), sep='\t')
+        else:
+            print('all', statistics.mean(utility_list), sep='\t')
     return utility_list
 
 
@@ -137,10 +158,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--runfile", required=True, help="run file path")
     parser.add_argument("--topics", required=True, help="topic xml file path")
-    parser.add_argument("--doc-len", required=True, help="document length json file path")
+    parser.add_argument("--dd-info-json", required=True, help="json file containing document length and bounds")
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])
 
-    eu(params.runfile, params.topics, params.doc_len, cutoff=params.cutoff, verbose=True)
+    eu(params.runfile, params.topics, params.dd_info_json, cutoff=params.cutoff, verbose=True)
     # eu('../sample_run/runfile', '../sample_run/topic.xml', '../sample_run/doc_len.json', cutoff=10, verbose=True)

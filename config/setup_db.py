@@ -1,10 +1,10 @@
-import os
 import sqlite3
 import xml.etree.ElementTree as ET
-import sys
+import os
 
 
-def main():
+
+def setup_db(topic_xml):
     dbname = 'jig/truth.db'
     tables = [
         '''
@@ -59,7 +59,7 @@ def main():
             '''
 
     ]
-    tree = ET.parse(sys.argv[1])
+    tree = ET.parse(topic_xml)
     root = tree.getroot()
 
     if os.path.isfile(dbname):
@@ -101,7 +101,3 @@ def main():
 
     con.commit()
     con.close()
-
-
-if __name__ == '__main__':
-    main()

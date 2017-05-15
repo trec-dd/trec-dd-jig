@@ -11,29 +11,52 @@ import argparse
 import sys
 
 
-def cubetest(run_file_path, truth_xml_path, gamma=0.5, max_height=5, cutoff=10, verbose=False):
+def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=5, cutoff=10, verbose=False):
     """return ct, act over all topics"""
+    can_normalize = False
+    if cutoff <= 10:
+        can_normalize = True
+
     if verbose:
         print(run_file_path)
-        print('topic-id', 'ct@' + str(cutoff), 'act@' + str(cutoff), sep='\t')
-    truth = DDTruth(truth_xml_path)
+        if can_normalize:
+            print('topic-id', 'ct@' + str(cutoff), 'normalized_ct@'+str(cutoff), sep='\t')
+        else:
+            print('topic-id', 'ct@' + str(cutoff),  sep='\t')
+
+    truth = DDTruth(truth_xml_path, dd_info_path)
     run_result = DDReader(run_file_path).run_result
 
     ct_list, act_list = [], []
     gain_list = []
+    normalized_ct_list = []
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
     for topic_id, topic_result in sorted_results:
         topic_truth = truth.truth4CT(topic_id)
         gain, ct, act = cubetest_per_topic(topic_truth, topic_result,
                                            gamma, max_height, cutoff)
-        if verbose:
-            print(topic_id, ct, act, sep='\t')
 
         ct_list.append(ct)
         act_list.append(act)
         gain_list.append(gain)
+
+        normalized_ct = None
+        if can_normalize:
+            bound = truth.ct_bound[topic_id][cutoff]
+            normalized_ct = ct/bound
+            normalized_ct_list.append(normalized_ct)
+
+        if verbose:
+            if can_normalize:
+                print(topic_id, ct, normalized_ct, sep='\t')
+            else:
+                print(topic_id, ct, sep='\t')
+
     if verbose:
-        print('all', statistics.mean(ct_list), statistics.mean(act_list), sep='\t')
+        if can_normalize:
+            print('all', statistics.mean(ct_list), statistics.mean(normalized_ct_list), sep='\t')
+        else:
+            print('all', statistics.mean(ct_list), sep='\t')
     return gain_list, ct_list, act_list
 
 
@@ -97,6 +120,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--runfile", required=True, help="run file path")
     parser.add_argument("--topics", required=True, help="topic xml file path")
+    parser.add_argument("--dd-info-json", required=True, help="json file containing document length and bounds")
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])

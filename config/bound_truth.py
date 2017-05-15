@@ -5,10 +5,9 @@ Copyright 2017 @ Georgetown University
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 import math
-import json
 
 
-class DDTruth:
+class Truth:
     """
     truth=
     {
@@ -29,15 +28,12 @@ class DDTruth:
     }
     """
 
-    def __init__(self, truth_xml_path, dd_info_json):
+    def __init__(self, truth_xml_path, doc_length):
         self.truth = defaultdict(dict)
 
         self.doc_length = {}
-        self.sdcg_bound = {}
-        self.ct_bound = {}
-        self.eu_bound = {}
-
-        self.doc_length, self.sdcg_bound, self.ct_bound, self.eu_bound = json.load(open(dd_info_json))
+        if doc_length is not None:
+            self.doc_length = doc_length
 
         root = ET.parse(truth_xml_path).getroot()
 
@@ -102,19 +98,20 @@ class DDTruth:
                     return_data[doc_no] += passage_data['rating']
         return return_data
 
-    def truth4EU(self, topic_id):
-        """return doc_no:[nugget_id1, nugget_id2,....],  nugget_id: rating, doc: length"""
-        doc_nugget = defaultdict(list)  # doc_no -> nugget list
+    def truth4EU_bound(self, topic_id):
+        """return nugget_id:[doc_no1, doc_no2, ... ], nugget_id: rating, doc: length"""
+        nugget_doc = defaultdict(list)  # nugget -> doc_no list
         nugget_rating = defaultdict(int)  # nugget_id -> rating
         for subtopic_id, subtopic_data in self.truth[topic_id].items():
             for doc_no, doc_data in subtopic_data.items():
                 for passage_id, passage_data in doc_data.items():
-                    doc_nugget[doc_no].append(passage_data['nugget_id'])
-                    if passage_data['nugget_id'] in nugget_rating and nugget_rating[passage_data['nugget_id']] != \
-                            passage_data['rating']:
-                        print('failed!')
-                    nugget_rating[passage_data['nugget_id']] = passage_data['rating']
-        return doc_nugget, nugget_rating, self.doc_length
+                    nugget_id = passage_data["nugget_id"]
+                    if doc_no not in nugget_doc[nugget_id]:
+                        nugget_doc[nugget_id].append(doc_no)
+
+                    nugget_rating[nugget_id] = passage_data['rating']
+
+        return nugget_doc, nugget_rating, self.doc_length
 
     def truth4recall(self, topic_id):
         """return subtopic_set, doc_set, nugget_set, doc_subtopic, doc_nugget"""
@@ -163,7 +160,7 @@ class DDTruth:
 
 if __name__ == '__main__':
     # dd_truth = DDTruth('data/trec_dd_15/truth/dynamic-domain-2015-truth-data-v5.xml')
-    dd_truth = DDTruth('data/trec_dd_16/truth/dynamic-domain-2016-truth-data.xml')
+    dd_truth = Truth('data/trec_dd_16/truth/dynamic-domain-2016-truth-data.xml')
     dd_truth.stats()
     # dd_truth.truth_check_4_EU()
     # dd_truth.self_check()
