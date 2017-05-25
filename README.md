@@ -194,12 +194,14 @@ the installation. We do not provide the normalized scores out of the first 10 it
 
     
     + sDCG
+    
       syntax
       ``` shell
         >$ python3 scorer/sDCG.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
       ```
         - where `--cutoff` sets the cutoff value of evaluation. For example `--cutoff 5` means only the first 5 iterations of every topic 
         are taken into evaluation
+       
       To run the example
       ```shell
         >$ python3 scorer/sDCG.py --runfile sample_run/runfile --topics sample_run/topic.xml --dd-info-pkl sample_run/dd_info.pkl --cutoff 5
@@ -207,6 +209,7 @@ the installation. We do not provide the normalized scores out of the first 10 it
       Of course, you can use other cut off value 
      
     + Cube Test
+    
       syntax
       ``` shell
         >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
@@ -217,6 +220,7 @@ the installation. We do not provide the normalized scores out of the first 10 it
       ```
       
     + Expected Utility
+      
       syntax
       ``` shell
         >$ python3 scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
