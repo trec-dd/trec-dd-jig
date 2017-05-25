@@ -3,7 +3,7 @@
 ##### This is the readme file of  the user simulator (jig) package for the TREC 2016-2017 Dynamic Domain (DD) Track.
 ##### The package is for research use only.
 
-##### For technical questions, please send your request to google group https://groups.google.com/forum/#!forum/trec-dd
+##### For technical questions, please send your request to [google group](https://groups.google.com/forum/#!forum/trec-dd).
 
 **************************************************************************
 ### **_Changes_ in TREC2017 DD Jig**
