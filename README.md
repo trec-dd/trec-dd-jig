@@ -195,7 +195,7 @@ the installation. We do not provide the normalized scores out of the first 10 it
     
     + sDCG
     
-      syntax
+      Syntax
       ``` shell
         >$ python3 scorer/sDCG.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
       ```
@@ -210,9 +210,9 @@ the installation. We do not provide the normalized scores out of the first 10 it
      
     + Cube Test
     
-      syntax
+      Syntax
       ``` shell
-        >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+        >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
       ```
       To run the example
       ```shell
@@ -221,9 +221,9 @@ the installation. We do not provide the normalized scores out of the first 10 it
       
     + Expected Utility
       
-      syntax
+      Syntax
       ``` shell
-        >$ python3 scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+        >$ python3 scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
       ```
       To run the example
       ```shell
