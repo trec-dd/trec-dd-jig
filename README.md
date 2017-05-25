@@ -8,7 +8,7 @@
 **************************************************************************
 ### **_Changes_ in TREC2017 DD Jig**
 
-* **_Python 3 environment_**
+* **_Python 3.5 environment_**
 * **_New metrics_**
 * **_Additional supporting file for evaluation_**
 
@@ -24,14 +24,17 @@
 ### Requirements
 
 #### 1. System requirements
-- Works under Mac OS, Windows, and Linux.
-- Python 3 environment.
+- OS: Mac OS, Windows, and Linux.
+- Python 3.5 environment.
 
 
 #### 2. Download the TREC DD Topics:
 
-- Topics (with ground truth) must be the one downloaded from NIST. (http://trec.nist.gov/act_part/tracks17.html)
+- Download the Topics (with ground truth) from [NIST](http://trec.nist.gov/act_part/tracks17.html).
 
+#### 3. Obtain TREC DD Dataset:
+
+- Obtain the TREC DD dataset follow the instructions [here](http://trec-dd.org/dataset.html).
 
 ### Install the Jig
 
@@ -45,8 +48,7 @@
 
   ``` shell
   > cd trec-dd-jig
-  > sudo easy_install pip
-  > sudo pip install -r requirements.txt
+  > pip3 install -r requirements.txt
   ```
         
 
@@ -78,12 +80,12 @@
 
   ``` shell
   > cd trec-dd-jig
-  > python config/config.py --topics topics/topic_file.xml --trecdirec ebola_direc nyt_direc --output topics/dd_info.pkl
+  > python3 config/config.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
   ```
-  `ebola_direc` is the directory of ebola trectext file, 
-  `nyt_direc` is the directory of New York Times trectext file. 
+  Replace `your_ebola_direc` and `your_nyt_direc` with your own path to the directories that holds the 
+  trectext files of Ebola dataset and New York Times dataset respectively. 
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db` and generate a pickle file 
-  holding the length of each document and the bounds of different metric at `./trec-dd-jig/topics/dd_info.pkl`
+  holding the length of each document and the bounds of different metrics at `./trec-dd-jig/topics/dd_info.pkl`
   
   Computing the document length and bounds of metrics may take tens of minutes in total. You can rest for a bit now.
   Once this program finishes running, you will have a successful installation of jig.
@@ -97,7 +99,7 @@
 
 
   ``` shell
-    > python jig/jig.py -runid my_runid -topic topic_id -docs docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
+    > python3 jig/jig.py -runid my_runid -topic topic_id -docs docno1:rankingscore docno2:rankingscore docno3:rankingscore docno4:rankingscore docno5:rankingscore
   ```
 
     + where:
@@ -111,7 +113,7 @@
 
 
     ``` shell
-        > python jig/jig.py -runid testrun -topic DD16-1 -docs ebola-45b78e7ce50b94276a8d46cfe23e0abbcbed606a2841d1ac6e44e263eaf94a93:833.00 ebola-012d04f7dc6af9d1d712df833abc67cd1395c8fe53f3fcfa7082ac4e5614eac6:500.00 ebola-20d0e40dbc6f60c35f581f4025076a4400bd46fa01fa0bc8164de05b286e04f8:123.00 ebola-da1e8bbbb0c543df9be4d59b37558927ed5ee4238c861ce1205ed7b41140ad3a:34.00 ebola-9e501dddd03039fff5c2465896d39fd6913fd8476f23416373a88bc0f32e793c:5.00
+        > python3 jig/jig.py -runid testrun -topic DD16-1 -docs ebola-45b78e7ce50b94276a8d46cfe23e0abbcbed606a2841d1ac6e44e263eaf94a93:833.00 ebola-012d04f7dc6af9d1d712df833abc67cd1395c8fe53f3fcfa7082ac4e5614eac6:500.00 ebola-20d0e40dbc6f60c35f581f4025076a4400bd46fa01fa0bc8164de05b286e04f8:123.00 ebola-da1e8bbbb0c543df9be4d59b37558927ed5ee4238c861ce1205ed7b41140ad3a:34.00 ebola-9e501dddd03039fff5c2465896d39fd6913fd8476f23416373a88bc0f32e793c:5.00
     ```
 
 - The jig will print the feedback on the screen. Each feedback is a json dumped string.
@@ -183,7 +185,8 @@
 Cube Test and Expected Utility.
 - For those three metrics, we also provide their normalized scores of first 10 iterations of each topic by using the bounds computed during 
 the installation. We do not provide the normalized scores out of the first 10 iterations.
-- You will need the actual topic xml file from NIST and the pickle file generated during installation to evaluate your runs. Here we demonstrate how to use the scorers using a sample topic xml file, a sample pickle file and a sample run file. All the files can be found at the `./sample_run/` directory.
+- You will need the actual topic xml file from NIST and the pickle file generated during installation to evaluate your runs. 
+- Here we demonstrate how to use the scorers using a sample topic xml file, a sample pickle file and a sample run file. All the files can be found at the `./sample_run/` directory.
     + runfile: a sample run file
     + topic.xml: a sample topic xml file
     + dd_info.pkl: a sample pickle file that holds the information of document length and metric bounds
@@ -191,20 +194,36 @@ the installation. We do not provide the normalized scores out of the first 10 it
 
     
     + sDCG
+      syntax
       ``` shell
-        >$ python scorer/sDCG.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+        >$ python3 scorer/sDCG.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
       ```
-        - where `--cutoff` sets the cutoff value of evaluation. Here, it means only the first 5 
-        iterations are taken into evaluation
+        - where `--cutoff` sets the cutoff value of evaluation. For example `--cutoff 5` means only the first 5 iterations of every topic 
+        are taken into evaluation
+      To run the example
+      ```shell
+        >$ python3 scorer/sDCG.py --runfile sample_run/runfile --topics sample_run/topic.xml --dd-info-pkl sample_run/dd_info.pkl --cutoff 5
+      ```
+      Of course, you can use other cut off value 
      
     + Cube Test
+      syntax
       ``` shell
-        >$ python scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+        >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+      ```
+      To run the example
+      ```shell
+        >$ python3 scorer/cubetest.py --runfile sample_run/runfile --topics sample_run/topic.xml --dd-info-pkl sample_run/dd_info.pkl --cutoff 5
       ```
       
     + Expected Utility
+      syntax
       ``` shell
-        >$ python scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+        >$ python3 scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff 5
+      ```
+      To run the example
+      ```shell
+        >$ python3 scorer/expected_utility.py --runfile sample_run/runfile --topics sample_run/topic.xml --dd-info-pkl sample_run/dd_info.pkl --cutoff 5
       ```
 
     
