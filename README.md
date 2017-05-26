@@ -78,20 +78,17 @@
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
-- Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT datasets. The following codes can be run on both the sample files and the actual datasets. Remember to replace the input .tgz file with the actual dataset. 
+- Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT datasets. The following codes can be run on both the sample files and the actual datasets. Remember to replace the input .tgz file with the actual dataset. The resulting corpus will be in TRECTEXT format. 
 
 
   ```shell
   > cd trec-dd-jig
   > ./config/process_nyt.sh sample_doc/nyt_sample.tgz sample_doc/nyt_sample
   ```
-  `your_nyt_tgz_file` is the tgz file that your have obtained from LDC, `your_nyt_direc` is the directory that 
-   is used to hold the files after uncompression. 
-   After running the script, `your_nyt_direc` will contain:
+  `The output dirctory will contain the following subdirectories:
       
       - nyt_corpus: a directory that contains the original uncompressed New York Times dataset 
       - nyt_trectext: a directoty that contains the processed text in TRECTEXT format
-  To run the sample:
   
   
  
