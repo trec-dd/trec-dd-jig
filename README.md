@@ -99,7 +99,6 @@ New York Times dataset into TRECTEXT format.
 
 
   ``` shell
-  > cd trec-dd-jig
   > python3 config/config.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
   ```
   Replace `your_ebola_direc` and `your_nyt_direc` with your own path to the directories that holds the 
