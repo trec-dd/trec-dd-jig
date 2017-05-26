@@ -93,9 +93,13 @@ New York Times dataset into TRECTEXT format.
       
       - nyt_corpus: a directory that contains the original uncompressed New York Times dataset 
       - nyt_trectext: a directoty that contains the processed text in TRECTEXT format
-      - filelist: a file that shows the list of files in nyt_trectext
+  To run the sample:
   
-- Setup database, compute document length and metric bounds ...
+  
+  ```shell
+  > ./config/process_nyt.sh sample_doc/nyt_sample.tgz sample_doc/nyt_sample
+  ```
+- Setup database, compute document length and metric bounds
 
 
   ``` shell
@@ -105,6 +109,13 @@ New York Times dataset into TRECTEXT format.
   trectext files of Ebola dataset and New York Times dataset respectively. 
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db` and generate a pickle file 
   holding the length of each document and the bounds of different metrics at `./trec-dd-jig/topics/dd_info.pkl`
+  
+  To run the sample:
+  
+  
+  ```shell
+  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --output sample_doc/mini_info.pkl
+  ```
   
   Computing the document length and bounds of metrics may take tens of minutes in total. You can rest for a bit now.
   Once this program finishes running, you will have a successful installation of jig.

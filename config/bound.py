@@ -82,19 +82,28 @@ def eu(topic_truth, a, gamma, p, cutoff):
     backward_iter = reversed(doc_len)
     min_cost = 0
     max_cost = 0
-
+    # print(doc_len)
     l = min(len(doc_length), 5 * cutoff)
     last = l % 5  # position of the last document in the last ranking list, start from 0
+    ct = 0
     for doc_rank in range(5):
         if doc_rank <= last:
             k = cutoff
         else:
             k = cutoff - 1
+        # print(doc_rank, k)
         for query_rank in range(k):
+            # print(ct)
             _, min_doc_cost = next(forward_iter)
             _, max_doc_cost = next(backward_iter)
             min_cost += (1 - p) ** doc_rank * min_doc_cost
             max_cost += (1 - p) ** doc_rank * max_doc_cost
+            ct += 1
+            # print(ct, l)
+            if ct == l:
+                break
+        if ct == l:
+            break
     upper_bound -= a * min_cost
     lower_bound = - a * max_cost
 
