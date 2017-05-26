@@ -1,8 +1,8 @@
 # uncompress and transform the NYT corpus data into TRECTEXT
 # Copyright 2017 @ Georgetown University
-# usage: setup.sh [nyt corpus tgz file] [destination directory]
+# usage: process_nyt.sh [nyt corpus tgz file] [destination directory]
 
-usage="usage: setup.sh [nyt corpus tgz file] [destination directory]"
+usage="usage: process_nyt.sh [path to input file] [path to output directory]"
 
 if [ $# -ne 2 ]; then
     echo $usage
