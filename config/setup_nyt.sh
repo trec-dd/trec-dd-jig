@@ -29,13 +29,13 @@ build_DEST_direc(){
 }
 
 uncompress(){ # uncompress tgz file, remove the orginal file after uncompressing
-    file=$1
+	file=$1
 	direc=$2
 	if [[ ${file##*.} = "tgz" ]]; then
                 echo tar -xzf $1 -C $direc
                 tar -xzf $file -C $direc
                 rm -f $file
-    fi
+	fi
 }
 
 xml2trectext(){
