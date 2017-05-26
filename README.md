@@ -95,7 +95,7 @@ New York Times dataset into TRECTEXT format.
       - nyt_trectext: a directoty that contains the processed text in TRECTEXT format
       - filelist: a file that shows the list of files in nyt_trectext
   
-- Setup database, compute document length and metric bounds
+- Setup database, compute document length and metric bounds ...
 
 
   ``` shell
