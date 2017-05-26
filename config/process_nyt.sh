@@ -71,10 +71,6 @@ walk_down(){
         done
 }
 
-generate_filelist(){
-	abs_path=$(readlink -f $DEST/nyt_trectext)
-	find $abs_path -type f > $DEST/filelist
-}
 main(){
 	echo build $DEST directory
 	build_DEST_direc
@@ -97,10 +93,7 @@ main(){
 	fi
 	
 	walk_down $DEST/nyt_corpus/data
-	
 
-	# generate file list in $DEST
-	generate_filelist
 }
 
 main
