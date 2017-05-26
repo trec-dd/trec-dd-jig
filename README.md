@@ -101,10 +101,9 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   ```
   
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a pickle file 
-  storing the document lengths which will be used later in the metric calculation.  The pickle file is located at `./trec-dd-jig/topics/dd_info.pkl`
+  storing the document lengths which will be used later in the metric calculation.  The pickle file is located at `sample_doc/mini_info.pkl`
   
-  For complete dataset, replace `sample_doc/ebola_sample` and `sample_doc/nyt_sample/nyt_trectext` with your own path to the directories that holds the 
-  trectext files of Ebola dataset and New York Times dataset respectively. Syntax:
+  Remeber to replace the file paths with the actual datasets. Syntax:
   
   
   ```shell
