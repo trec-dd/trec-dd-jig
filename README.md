@@ -24,7 +24,7 @@
 ### Requirements
 
 #### 1. System requirements
-- OS: Mac OS, Windows, and Linux.
+- OS: Mac OS, Linux.
 - Python 3.5 environment.
 
 
@@ -35,6 +35,11 @@
 #### 3. Obtain TREC DD Dataset:
 
 - Obtain the TREC DD dataset follow the instructions [here](http://trec-dd.org/dataset.html).
+- You can obtain Ebola dataset from us, but you can only obtain the [New York Times dataset](https://catalog.ldc.upenn.edu/ldc2008t19)
+ from [LDC](https://www.ldc.upenn.edu/).
+- The Ebola dataset are released in TRECTEXT format. We provide the shell scripts needed to uncompress and transform the original 
+New York Times dataset into TRECTEXT format.
+
 
 ### Install the Jig
 
@@ -75,6 +80,21 @@
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
+- Uncompress and transform the New York Times dataset
+
+
+  ```shell
+  > cd trec-dd-jig
+  > config/setup_nyt.sh your_nyt_tgz_file your_nyt_direc
+  ```
+  `your_nyt_tgz_file` is the tgz file that your obtained from LDC, `your_nyt_direc` is the directory that 
+   is used to hold the files after uncompression. 
+   After running the script, `your_nyt_direc` contains:
+      
+      - nyt_corpus: the original uncompressed New York Times dataset along with toolkit provided by LDC
+      - nyt_trectext: all the text data in TRECTEXT format
+      - filelist: list of files in nyt_trectext
+  
 - Setup database, compute document length and metric bounds
 
 
