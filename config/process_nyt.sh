@@ -46,6 +46,8 @@ uncompress(){ # uncompress tgz file, remove the orginal file after uncompressing
 
 xml2trectext(){
 	file=$1
+
+	echo transforming $file
 	# transform xml to trectext
 	if [[ ${file##*.} = "xml" ]]; then
 		dest_file=$(basename $file)
