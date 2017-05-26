@@ -80,26 +80,26 @@ New York Times dataset into TRECTEXT format.
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
-- Uncompress and transform the New York Times dataset
+- Uncompress and preprocess the New York Times dataset
 
 
   ```shell
   > cd trec-dd-jig
-  > ./config/setup_nyt.sh your_nyt_tgz_file your_nyt_direc
+  > ./config/process_nyt.sh your_nyt_tgz_file your_nyt_direc
   ```
-  `your_nyt_tgz_file` is the tgz file that your obtained from LDC, `your_nyt_direc` is the directory that 
+  `your_nyt_tgz_file` is the tgz file that your have obtained from LDC, `your_nyt_direc` is the directory that 
    is used to hold the files after uncompression. 
-   After running the script, `your_nyt_direc` contains:
+   After running the script, `your_nyt_direc` will contain:
       
-      - nyt_corpus: the original uncompressed New York Times dataset along with toolkit provided by LDC
-      - nyt_trectext: all the text data in TRECTEXT format
-      - filelist: list of files in nyt_trectext
+      - nyt_corpus: a directory that contains the original uncompressed New York Times dataset 
+      - nyt_trectext: a directoty that contains the processed text in TRECTEXT format
+      - filelist: a file that shows the list of files in nyt_trectext
   
 - Setup database, compute document length and metric bounds
 
 
   ``` shell
-  > python3 config/config.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
+  > python3 config/setup.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
   ```
   Replace `your_ebola_direc` and `your_nyt_direc` with your own path to the directories that holds the 
   trectext files of Ebola dataset and New York Times dataset respectively. 
