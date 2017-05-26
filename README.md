@@ -78,12 +78,12 @@
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
-- Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT datasets. The following codes can be run on both the sample files and the actual datasets that you will need to obtain. 
+- Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT datasets. The following codes can be run on both the sample files and the actual datasets. 
 
 
   ```shell
   > cd trec-dd-jig
-  > ./config/process_nyt.sh your_nyt_tgz_file your_nyt_direc
+  > ./config/process_nyt.sh sample_doc/nyt_sample.tgz sample_doc/nyt_sample
   ```
   `your_nyt_tgz_file` is the tgz file that your have obtained from LDC, `your_nyt_direc` is the directory that 
    is used to hold the files after uncompression. 
@@ -94,9 +94,7 @@
   To run the sample:
   
   
-  ```shell
-  > ./config/process_nyt.sh sample_doc/nyt_sample.tgz sample_doc/nyt_sample
-  ```
+ 
 - Setup database, compute document length and metric bounds
 
 
