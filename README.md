@@ -220,6 +220,7 @@ the installation. We do not provide the normalized scores out of the first 10 it
     + runfile: a sample run file
     + topic.xml: a sample topic xml file
     + dd_info.pkl: a sample pickle file that holds the information of document length and metric bounds
+- In the real evaluation, please **_DO NOT_** use any file we provided in `sample_run` or `sample_doc`
 - How to run the scorers
 
     
