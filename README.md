@@ -85,7 +85,7 @@ New York Times dataset into TRECTEXT format.
 
   ```shell
   > cd trec-dd-jig
-  > config/setup_nyt.sh your_nyt_tgz_file your_nyt_direc
+  > ./config/setup_nyt.sh your_nyt_tgz_file your_nyt_direc
   ```
   `your_nyt_tgz_file` is the tgz file that your obtained from LDC, `your_nyt_direc` is the directory that 
    is used to hold the files after uncompression. 
