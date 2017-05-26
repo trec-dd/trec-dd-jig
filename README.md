@@ -110,7 +110,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   > python3 config/setup.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
   ```
   
-  Congratulations to a successful installation of the jig.
+  Congratulations to a successful installation of the jig!
 
  
 
