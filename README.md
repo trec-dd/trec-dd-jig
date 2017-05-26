@@ -3,7 +3,7 @@
 ##### This is the readme file of  the user simulator (jig) package for the TREC 2016-2017 Dynamic Domain (DD) Track.
 ##### The package is for research use only.
 
-##### For technical questions, please send your request to [google group](https://groups.google.com/forum/#!forum/trec-dd).
+##### If you have any technical question, please send your request to [google group](https://groups.google.com/forum/#!forum/trec-dd).
 
 **************************************************************************
 ### **_Changes_ in TREC2017 DD Jig**
@@ -16,15 +16,15 @@
 ### What's inside the package:
 
 * the jig (`jig/jig.py`)
-* task measure scripts
-* sample run files
+* evaluation metric scripts
+* sample files
 
 **************************************************************************
 
 ### Requirements
 
 #### 1. System requirements
-- OS: Mac OS, Linux.
+- Operation Systems: Mac OS, Windows, Linux.
 - Python 3.5 environment.
 
 
@@ -32,13 +32,11 @@
 
 - Download the Topics (with ground truth) from [NIST](http://trec.nist.gov/act_part/tracks17.html).
 
-#### 3. Obtain TREC DD Dataset:
+#### 3. Obtain TREC DD Datasets:
 
-- Obtain the TREC DD dataset follow the instructions [here](http://trec-dd.org/dataset.html).
-- You can obtain Ebola dataset from us, but you can only obtain the [New York Times dataset](https://catalog.ldc.upenn.edu/ldc2008t19)
+- Obtain the TREC DD datasets following the instructions [here](http://trec-dd.org/dataset.html).
+- You will need to obtain the [New York Times dataset](https://catalog.ldc.upenn.edu/ldc2008t19)
  from [LDC](https://www.ldc.upenn.edu/).
-- The Ebola dataset are released in TRECTEXT format. We provide the shell scripts needed to uncompress and transform the original 
-New York Times dataset into TRECTEXT format.
 
 
 ### Install the Jig
@@ -57,7 +55,7 @@ New York Times dataset into TRECTEXT format.
   ```
         
 
-#### 3. Configuration and Setup
+#### 3. Setup the jig
 - Create your own directory to hold your trec-dd search system.
 
 
@@ -72,7 +70,7 @@ New York Times dataset into TRECTEXT format.
   > mv trec-dd-jig your_dd_directory/.
   ```
 
-- Unzip and put the topics (with ground truth) file that you downloaded from NIST, under `~/your_dd_directory/trec-dd-jig/jig/topics/`
+- Unzip and put the topic (with ground truth) file that you downloaded from NIST, under `~/your_dd_directory/trec-dd-jig/jig/topics/`
  
   
   ``` shell
@@ -80,7 +78,7 @@ New York Times dataset into TRECTEXT format.
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
-- Uncompress and preprocess the New York Times dataset
+- Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT datasets. The following codes can be run on both the sample files and the actual datasets that you will need to obtain. 
 
 
   ```shell
