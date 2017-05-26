@@ -97,18 +97,18 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 
 
   ``` shell
-  > python3 config/setup.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
+  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --output sample_doc/mini_info.pkl
   ```
-  Replace `your_ebola_direc` and `your_nyt_direc` with your own path to the directories that holds the 
+  For complete dataset, replace `sample_doc/ebola_sample` and `sample_doc/nyt_sample/nyt_trectext` with your own path to the directories that holds the 
   trectext files of Ebola dataset and New York Times dataset respectively. 
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db` and generate a pickle file 
   holding the length of each document and the bounds of different metrics at `./trec-dd-jig/topics/dd_info.pkl`
   
-  To run the sample:
+  Syntax:
   
   
   ```shell
-  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --output sample_doc/mini_info.pkl
+  > python3 config/setup.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
   ```
   
   Computing the document length and bounds of metrics may take tens of minutes in total. You can rest for a bit now.
