@@ -78,7 +78,8 @@
   > mv dd_topic_file.xml your_dd_directory/trec-dd-jig/topics/
   ```
 
-- Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT dataset. The following codes are for the NYT dataset. They can be run on both the sample files and the actual datasets. Remember to replace the input .tgz file with the actual dataset. The resulting corpus will be in TRECTEXT format. 
+- Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT dataset. The following codes are for the NYT dataset. 
+They can be run on both the sample files and the actual dataset. Remember to replace the input .tgz file with the actual dataset. The resulting corpus will be in TRECTEXT format. 
 
 
   ```shell
