@@ -2,6 +2,12 @@
 # Copyright 2017 @ Georgetown University
 # usage: setup.sh [nyt corpus tgz file] [destination directory]
 
+usage="usage: setup.sh [nyt corpus tgz file] [destination directory]"
+
+if [ $# -ne 2 ]; then
+    echo $usage
+    exit 1
+fi
 
 SOURCE=$1
 DEST=$2
