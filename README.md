@@ -85,7 +85,7 @@
   > cd trec-dd-jig
   > ./config/process_nyt.sh sample_doc/nyt_sample.tgz sample_doc/nyt_sample
   ```
-  `The output dirctory will contain the following subdirectories:
+  The output dirctory will contain the following subdirectories:
       
       - nyt_corpus: a directory that contains the original uncompressed New York Times dataset 
       - nyt_trectext: a directoty that contains the processed text in TRECTEXT format
