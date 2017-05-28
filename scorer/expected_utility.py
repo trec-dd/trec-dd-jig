@@ -66,7 +66,7 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
 
     if verbose:
         if can_normalize:
-            print(topic_id, statistics.mean(utility_list), statistics.mean(normalized_eu_list), sep='\t')
+            print('all', statistics.mean(utility_list), statistics.mean(normalized_eu_list), sep='\t')
         else:
             print('all', statistics.mean(utility_list), sep='\t')
     return utility_list
