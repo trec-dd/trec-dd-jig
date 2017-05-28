@@ -30,15 +30,9 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
     truth = DDTruth(truth_xml_path, dd_info_path)
     run_result = DDReader(run_file_path).run_result
 
-    can_normalize = False
-    if cutoff <= truth.max_cutoff:
-        can_normalize = True
     if verbose:
         print(run_file_path)
-        if can_normalize:
-            print('topic_id', 'eu@' + str(cutoff), 'normalized_eu@' + str(cutoff), sep='\t')
-        else:
-            print('topic_id', 'eu@' + str(cutoff), sep='\t')
+        print('topic_id', 'eu@' + str(cutoff), 'normalized_eu@' + str(cutoff), sep='\t')
 
     # sort run result by topic id
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
@@ -50,25 +44,18 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
 
         utility = eu_per_topic(topic_truth, topic_result, a, gamma, p, cutoff)
 
-        normalized_eu = None
 
-        if can_normalize:
-            upper, lower = truth.eu_bound[topic_id][cutoff]
-            normalized_eu = (utility - lower) / (upper - lower)
-            normalized_eu_list.append(normalized_eu)
+        upper, lower = eu_bound_per_topic(truth.truth4EU_bound(topic_id), a, gamma, p, cutoff)
+        normalized_eu = (utility - lower) / (upper - lower)
+        normalized_eu_list.append(normalized_eu)
 
         utility_list.append(utility)
         if verbose:
-            if can_normalize:
-                print(topic_id, utility, normalized_eu, sep='\t')
-            else:
-                print(topic_id, utility, sep='\t')
+            print(topic_id, utility, normalized_eu, sep='\t')
 
     if verbose:
-        if can_normalize:
-            print('all', statistics.mean(utility_list), statistics.mean(normalized_eu_list), sep='\t')
-        else:
-            print('all', statistics.mean(utility_list), sep='\t')
+        print('all', statistics.mean(utility_list), statistics.mean(normalized_eu_list), sep='\t')
+
     return utility_list
 
 
@@ -153,6 +140,61 @@ def expected_cost_per_topic(topic_result, doc_length, cutoff, p):
 
     return total_len
 
+def eu_bound_per_topic(topic_truth, a, gamma, p, cutoff):
+    """
+    return the upper bound of expected utility score in the first $(cutoff) iterations
+    :param topic_truth: doc_no : rating
+    :param a: coefficient of cost
+    :param gamma: discount base
+    :param p: probability of stopping at each document
+    :param cutoff: iteration that stops at
+    :return: upper bound and lower bounds for EU score in the first $(cutoff) iterations
+    """
+    M = 1 + (1 - p) + (1 - p) ** 2 + (1 - p) ** 3 + (1 - p) ** 4
+    nugget_doc, nugget_rating, doc_length = topic_truth
+    upper_bound = 0
+    for nugget_id, nugget_rel in nugget_rating.items():
+        l = min(5 * cutoff, len(nugget_doc[nugget_id]))  # max number of docs that can be related to this subtopic
+        s = (l // 5) * M  # gain from complete document ranking list
+        base = 1
+        for _ in range(l % 5):
+            s += base
+            base *= (1 - p)
+
+        upper_bound += nugget_rel * (1 - gamma ** s)
+    upper_bound = upper_bound / (1 - gamma)
+
+    # doc_len = sorted(doc_length.items(), key=lambda x: x[1])  # sort in ascending order
+    forward_iter = iter(doc_length)
+    backward_iter = reversed(doc_length)
+    min_cost = 0
+    max_cost = 0
+    # print(doc_len)
+    l = min(len(doc_length), 5 * cutoff)
+    last = l % 5  # position of the last document in the last ranking list, start from 0
+    ct = 0
+    for doc_rank in range(5):
+        if doc_rank <= last:
+            k = cutoff
+        else:
+            k = cutoff - 1
+        # print(doc_rank, k)
+        for query_rank in range(k):
+            # print(ct)
+            _, min_doc_cost = next(forward_iter)
+            _, max_doc_cost = next(backward_iter)
+            min_cost += (1 - p) ** doc_rank * min_doc_cost
+            max_cost += (1 - p) ** doc_rank * max_doc_cost
+            ct += 1
+            # print(ct, l)
+            if ct == l:
+                break
+        if ct == l:
+            break
+    upper_bound -= a * min_cost
+    lower_bound = - a * max_cost
+
+    return upper_bound, lower_bound
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

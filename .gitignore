@@ -4,3 +4,4 @@
 __pycache__
 *.pyc
 sample_run/doc_len.json
+jig/truth.db

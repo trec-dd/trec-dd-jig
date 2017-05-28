@@ -14,20 +14,12 @@ import sys
 def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=5, cutoff=10, verbose=False):
     """return ct, act over all topics"""
 
-
     truth = DDTruth(truth_xml_path, dd_info_path)
     run_result = DDReader(run_file_path).run_result
 
-    can_normalize = False
-    if cutoff <= truth.max_cutoff:
-        can_normalize = True
-
     if verbose:
         print(run_file_path)
-        if can_normalize:
-            print('topic-id', 'ct@' + str(cutoff), 'normalized_ct@' + str(cutoff), sep='\t')
-        else:
-            print('topic-id', 'ct@' + str(cutoff), sep='\t')
+        print('topic-id', 'ct@' + str(cutoff), 'normalized_ct@' + str(cutoff), sep='\t')
 
     ct_list, act_list = [], []
     gain_list = []
@@ -42,28 +34,21 @@ def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=
         act_list.append(act)
         gain_list.append(gain)
 
-        normalized_ct = None
-        if can_normalize:
-            bound = truth.ct_bound[topic_id][cutoff]
-            normalized_ct = ct / bound
-            normalized_ct_list.append(normalized_ct)
+        bound = ct_bound_per_topic(truth.truth4CT_bound(topic_id), gamma, max_height, cutoff)
+        normalized_ct = ct / bound
+        normalized_ct_list.append(normalized_ct)
 
         if verbose:
-            if can_normalize:
-                print(topic_id, ct, normalized_ct, sep='\t')
-            else:
-                print(topic_id, ct, sep='\t')
+            print(topic_id, ct, normalized_ct, sep='\t')
 
     if verbose:
-        if can_normalize:
-            print('all', statistics.mean(ct_list), statistics.mean(normalized_ct_list), sep='\t')
-        else:
-            print('all', statistics.mean(ct_list), sep='\t')
+        print('all', statistics.mean(ct_list), statistics.mean(normalized_ct_list), sep='\t')
+
     return gain_list, ct_list, act_list
 
 
 def cubetest_per_topic(topic_truth, topic_result, gamma, max_height, cutoff):
-    """return ct and act of one topic"""
+    """return gain, ct and act of one topic"""
     subtopic_num = topic_truth[1]
     topic_truth = topic_truth[0]
 
@@ -118,11 +103,39 @@ def cubetest_per_topic(topic_truth, topic_result, gamma, max_height, cutoff):
     return total_gain / max_height, ct, act
 
 
+def ct_bound_per_topic(topic_truth, gamma, max_height, cutoff):
+    doc_sub_rel, subtopic_num = topic_truth
+    # print(len(doc_sub_rel))
+    gain = 0
+    subtopic_set = set()
+    for doc_no in doc_sub_rel:
+        for subtopic_id in doc_sub_rel[doc_no]:
+            subtopic_set.add(subtopic_id)
+    for subtopic_id in subtopic_set:
+        subtopic_gain = 0
+        rels = [doc_sub_rel[doc_no][subtopic_id] if subtopic_id in doc_sub_rel[doc_no]
+                else 0
+                for doc_no in doc_sub_rel]
+        rels = sorted(rels, reverse=True)
+        for i, rel in enumerate(rels):
+            h = rel * (gamma ** i)
+            if subtopic_gain + h >= max_height:
+                h = max_height - subtopic_gain
+            subtopic_gain += h
+            if i >= cutoff * 5:
+                break
+        gain += subtopic_gain / subtopic_num
+
+    opt_ct = gain / max_height / cutoff
+
+    return opt_ct
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--runfile", required=True, help="run file path")
     parser.add_argument("--topics", required=True, help="topic xml file path")
-    parser.add_argument("--dd-info-pkl", required=True, help="pickle file containing document length and bounds")
+    parser.add_argument("--dd-info-pkl", required=True, help="pickle file containing document length")
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])

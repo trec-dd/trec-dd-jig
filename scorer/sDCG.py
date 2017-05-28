@@ -24,16 +24,9 @@ def sDCG(run_file_path, truth_xml_path, dd_info_path, bq=4, b=2, cutoff=10, verb
     truth = DDTruth(truth_xml_path, dd_info_path)
     run_result = DDReader(run_file_path).run_result
 
-    can_normalize = False
-    if cutoff <= truth.max_cutoff:
-        can_normalize = True
-
     if verbose:
         print(run_file_path)
-        if can_normalize:
-            print('topic-id', 'sDCG@' + str(cutoff), 'normalized sDCG@' + str(cutoff), sep='\t')
-        else:
-            print('topic-id', 'sDCG@' + str(cutoff), sep='\t')
+        print('topic-id', 'sDCG@' + str(cutoff), 'normalized sDCG@' + str(cutoff), sep='\t')
 
     # sort by topic no
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
@@ -42,27 +35,21 @@ def sDCG(run_file_path, truth_xml_path, dd_info_path, bq=4, b=2, cutoff=10, verb
     nsdcg_list = []
     for topic_id, topic_result in sorted_results:
         topic_truth = truth.truth4SDCG(topic_id)
+
         sdcg = sDCG_per_topic(topic_truth, topic_result, bq, b, cutoff)
 
-        normalized_sdcg = None
-        if can_normalize:
-            bound = truth.sdcg_bound[topic_id][cutoff]
-            normalized_sdcg = sdcg / bound
-            nsdcg_list.append(normalized_sdcg)
+        bound = sDCG_bound_per_topic(truth.truth4SDCG_bound(topic_id), bq, b, cutoff)
+
+        normalized_sdcg = sdcg / bound
+        nsdcg_list.append(normalized_sdcg)
 
         sdcg_list.append(sdcg)
 
         if verbose:
-            if can_normalize:
-                print(topic_id, sdcg, normalized_sdcg, sep='\t')
-            else:
-                print(topic_id, sdcg, sep='\t')
+            print(topic_id, sdcg, normalized_sdcg, sep='\t')
 
     if verbose:
-        if can_normalize:
-            print('all', statistics.mean(sdcg_list), statistics.mean(nsdcg_list))
-        else:
-            print('all', statistics.mean(sdcg_list))
+        print('all', statistics.mean(sdcg_list), statistics.mean(nsdcg_list))
 
     return sdcg_list
 
@@ -81,11 +68,39 @@ def sDCG_per_topic(topic_truth, topic_result, bq, b, cutoff):
         return sdcg
 
 
+def sDCG_bound_per_topic(topic_truth, bq, b, cutoff):
+    """
+    return the optimal sDCG value given the iteration cutoff value
+    :param topic_truth: doc_no : rating
+    :param bq: discounting base for the query
+    :param b: discounting base for the document within each query
+    :param cutoff: iteration that stops at
+    :return: optimal sDCG score in the first $(cutoff) iterations
+    """
+    pos_list = []
+    for query_rank in range(cutoff):
+        for doc_rank in range(5):
+            pos_list.append((query_rank + 1, doc_rank + 1))
+
+    pos_list = sorted(pos_list, key=lambda x: 1 / ((1 + math.log(x[1], b)) * (1 + math.log(x[0], bq))), reverse=True)
+    dis_list = map(lambda x: 1 / ((1 + math.log(x[1], b)) * (1 + math.log(x[0], bq))), pos_list)
+
+    # sort in desc by relevance scores of each document
+    doc_rels = sorted(topic_truth.items(), key=lambda x: x[1], reverse=True)
+
+    optimal_score = 0
+
+    for pos, doc_rel, discount in zip(pos_list, doc_rels, dis_list):
+        optimal_score += doc_rel[1] * discount
+
+    return optimal_score
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--runfile", required=True, help="run file path")
     parser.add_argument("--topics", required=True, help="topic xml file path")
-    parser.add_argument("--dd-info-pkl", required=True, help="pickle file containing document length and bounds")
+    parser.add_argument("--dd-info-pkl", required=True, help="pickle file containing document length")
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])

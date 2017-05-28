@@ -8,7 +8,6 @@ import sys
 import argparse
 from setup_db import *
 from doc_len import *
-from bound import get_bound
 import pickle
 import json
 
@@ -22,17 +21,10 @@ def main():
     # trectext directories
     parser.add_argument("--trecdirec", nargs='+', required=True, help="directories of trectext files")
 
-    # max cutoff value
-    parser.add_argument("--max-cutoff", required=True, type=int,
-                        help="max cutoff value within which normalized scores are provided")
-
     # info.pkl path
-    parser.add_argument("--output", required=True, help="pickle file containing document length and bounds")
+    parser.add_argument("--doc-len", required=True, help="file containing document length")
 
     params = parser.parse_args(sys.argv[1:])
-
-    if params.max_cutoff <= 0:
-        parser.error("max-cutoff value must be greater than 0")
 
     print("Setting up the databse ... ")
     setup_db(params.topics)
@@ -41,11 +33,8 @@ def main():
     doc_length = doc_len(params.trecdirec)
     # doc_length = json.load(open("sample_run/doc_len.json"))
 
-    print("Computing the bounds ... ")
-    sdcg, ct, eu = get_bound(params.topics, doc_length, params.max_cutoff)
-
     print("Dumping ...")
-    pickle.dump([doc_length, params.max_cutoff, sdcg, ct, eu], file=open(params.output, 'wb'))
+    pickle.dump(doc_length, file=open(params.doc_len, 'wb'))
 
     print("Done!")
 

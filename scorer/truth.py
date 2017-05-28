@@ -33,12 +33,9 @@ class DDTruth:
     def __init__(self, truth_xml_path, dd_info_pkl):
         self.truth = defaultdict(dict)
 
-        self.doc_length = {}
-        self.sdcg_bound = {}
-        self.ct_bound = {}
-        self.eu_bound = {}
+        self.doc_length = pickle.load(open(dd_info_pkl, 'rb'))
 
-        self.doc_length, self.max_cutoff, self.sdcg_bound, self.ct_bound, self.eu_bound = pickle.load(open(dd_info_pkl, 'rb'))
+        self.sorted_doc_len = sorted(self.doc_length.items(), key=lambda x: x[1])  # sort in ascending order
 
         root = ET.parse(truth_xml_path).getroot()
 
@@ -74,6 +71,15 @@ class DDTruth:
 
                         self.truth[topic_id][subtopic_id] = subtopic_data
 
+    def truth4SDCG(self, topic_id):
+        """return doc_no: rating"""
+        return_data = defaultdict(int)
+        for subtopic_id, subtopic_data in self.truth[topic_id].items():
+            for doc_no, doc_data in subtopic_data.items():
+                for _, passage_data in doc_data.items():
+                    return_data[doc_no] += passage_data['rating']
+        return return_data
+
     def truth4CT(self, topic_id):
         """return doc_no: {subtopic_id: rating}, subtopic_num"""
 
@@ -94,14 +100,6 @@ class DDTruth:
 
         return return_data, len(self.truth[topic_id])
 
-    def truth4SDCG(self, topic_id):
-        """return doc_no: rating"""
-        return_data = defaultdict(int)
-        for subtopic_id, subtopic_data in self.truth[topic_id].items():
-            for doc_no, doc_data in subtopic_data.items():
-                for _, passage_data in doc_data.items():
-                    return_data[doc_no] += passage_data['rating']
-        return return_data
 
     def truth4EU(self, topic_id):
         """return doc_no:[nugget_id1, nugget_id2,....],  nugget_id: rating, doc: length"""
@@ -117,24 +115,26 @@ class DDTruth:
                     nugget_rating[passage_data['nugget_id']] = passage_data['rating']
         return doc_nugget, nugget_rating, self.doc_length
 
-    def truth4recall(self, topic_id):
-        """return subtopic_set, doc_set, nugget_set, doc_subtopic, doc_nugget"""
-        subtopics = set()
-        docs = set()
-        nuggets = set()
-        doc_nugget = defaultdict(list)  # doc_no -> nugget list
-        doc_subtopic = defaultdict(set)  # doc_no -> subtopic set
+    def truth4SDCG_bound(self, topic_id):
+        return self.truth4SDCG(topic_id)
 
+    def truth4CT_bound(self, topic_id):
+        return self.truth4CT(topic_id)
+
+    def truth4EU_bound(self, topic_id):
+        """return nugget_id:[doc_no1, doc_no2, ... ], nugget_id: rating, sorted (doc, length)"""
+        nugget_doc = defaultdict(list)  # nugget -> doc_no list
+        nugget_rating = defaultdict(int)  # nugget_id -> rating
         for subtopic_id, subtopic_data in self.truth[topic_id].items():
-            subtopics.add(subtopic_id)
             for doc_no, doc_data in subtopic_data.items():
-                docs.add(doc_no)
-                doc_subtopic[doc_no].add(subtopic_id)
                 for passage_id, passage_data in doc_data.items():
-                    nuggets.add(passage_data['nugget_id'])
-                    doc_nugget[doc_no].append(passage_data['nugget_id'])
+                    nugget_id = passage_data["nugget_id"]
+                    if doc_no not in nugget_doc[nugget_id]:
+                        nugget_doc[nugget_id].append(doc_no)
 
-        return subtopics, docs, nuggets, doc_subtopic, doc_nugget
+                    nugget_rating[nugget_id] = passage_data['rating']
+
+        return nugget_doc, nugget_rating, self.sorted_doc_len
 
     def stats(self):
         """print the statistic information about the ground truth"""
