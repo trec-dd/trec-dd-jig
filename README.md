@@ -106,6 +106,8 @@ They can be run on both the sample files and the actual dataset. Remember to rep
         - trecdirec: the directory that holds the Ebola and New York Times dataset in TRECTEXT format
         - max-cutoff: in evaluation, the number of iterations within which normalized scores will be provided 
         - output: the output parameter file that will be used in evaluation
+  
+  
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
   storing the document lengths which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_info.pkl`
   
