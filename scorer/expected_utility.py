@@ -26,8 +26,12 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
     :return:
     """
     PROB.clear()
+
+    truth = DDTruth(truth_xml_path, dd_info_path)
+    run_result = DDReader(run_file_path).run_result
+
     can_normalize = False
-    if cutoff <= 10:
+    if cutoff <= truth.max_cutoff:
         can_normalize = True
     if verbose:
         print(run_file_path)
@@ -35,8 +39,6 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
             print('topic_id', 'eu@' + str(cutoff), 'normalized_eu@' + str(cutoff), sep='\t')
         else:
             print('topic_id', 'eu@' + str(cutoff), sep='\t')
-    truth = DDTruth(truth_xml_path, dd_info_path)
-    run_result = DDReader(run_file_path).run_result
 
     # sort run result by topic id
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
@@ -160,6 +162,9 @@ if __name__ == '__main__':
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])
+
+    if params.cutoff <= 0:
+        parser.error("cutoff value must be greater than 0")
 
     eu(params.runfile, params.topics, params.dd_info_pkl, cutoff=params.cutoff, verbose=True)
     # eu('../sample_run/runfile', '../sample_run/topic.xml', '../sample_run/doc_len.json', cutoff=10, verbose=True)

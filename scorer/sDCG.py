@@ -25,7 +25,7 @@ def sDCG(run_file_path, truth_xml_path, dd_info_path, bq=4, b=2, cutoff=10, verb
     run_result = DDReader(run_file_path).run_result
 
     can_normalize = False
-    if cutoff <= 10:
+    if cutoff <= truth.max_cutoff:
         can_normalize = True
 
     if verbose:
@@ -89,6 +89,10 @@ if __name__ == '__main__':
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])
+
+    if params.cutoff <= 0:
+        parser.error("cutoff value must be greater than 0")
+
     sDCG(params.runfile, params.topics, params.dd_info_pkl, cutoff=params.cutoff, verbose=True)
 
     # sDCG('../sample_run/runfile', '../sample_run/topic.xml', cutoff=10, verbose=True)

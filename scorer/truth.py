@@ -38,7 +38,7 @@ class DDTruth:
         self.ct_bound = {}
         self.eu_bound = {}
 
-        self.doc_length, self.sdcg_bound, self.ct_bound, self.eu_bound = pickle.load(open(dd_info_pkl, 'rb'))
+        self.doc_length, self.max_cutoff, self.sdcg_bound, self.ct_bound, self.eu_bound = pickle.load(open(dd_info_pkl, 'rb'))
 
         root = ET.parse(truth_xml_path).getroot()
 

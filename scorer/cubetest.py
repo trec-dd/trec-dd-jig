@@ -13,8 +13,13 @@ import sys
 
 def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=5, cutoff=10, verbose=False):
     """return ct, act over all topics"""
+
+
+    truth = DDTruth(truth_xml_path, dd_info_path)
+    run_result = DDReader(run_file_path).run_result
+
     can_normalize = False
-    if cutoff <= 10:
+    if cutoff <= truth.max_cutoff:
         can_normalize = True
 
     if verbose:
@@ -23,9 +28,6 @@ def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=
             print('topic-id', 'ct@' + str(cutoff), 'normalized_ct@' + str(cutoff), sep='\t')
         else:
             print('topic-id', 'ct@' + str(cutoff), sep='\t')
-
-    truth = DDTruth(truth_xml_path, dd_info_path)
-    run_result = DDReader(run_file_path).run_result
 
     ct_list, act_list = [], []
     gain_list = []
@@ -124,5 +126,8 @@ if __name__ == '__main__':
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])
+
+    if params.cutoff <= 0:
+        parser.error("cutoff value must be greater than 0")
 
     cubetest(params.runfile, params.topics, params.dd_info_pkl, cutoff=params.cutoff, verbose=True)
