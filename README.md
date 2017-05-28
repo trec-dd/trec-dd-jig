@@ -117,7 +117,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 **************************************************************************
 
 ### Run the Jig
-- Your systems should call `python jig/jig.py` to get feedback for each iteration of retrieval. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
+- Your systems should call `python jig/jig.py` to get feedback for each search iteration. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
 
 
   ``` shell
@@ -203,10 +203,8 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 
 ### Metrics 
 - We support a few metrics. The scripts for these metrics can be found at the `./scorer` directory.
-- In TREC 2017 Dynamic Domain track, three metrics are mainly used for evaluation, including sDCG,
+- In 2017, the Track mainly uses three metrics.  They are Session DCG (sDCG),
 Cube Test and Expected Utility.
-- For those three metrics, we also provide their normalized scores of first 10 iterations of each topic by using the bounds computed during 
-the installation. We do not provide the normalized scores out of the first 10 iterations.
 - You will need the actual topic xml file from NIST and the pickle file generated during installation to evaluate your runs. 
 - Here we demonstrate how to use the scorers using a sample topic xml file, a sample pickle file and a sample run file. All the files can be found at the `./sample_run/` directory.
     + runfile: a sample run file
