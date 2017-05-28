@@ -200,7 +200,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--runfile", required=True, help="run file path")
     parser.add_argument("--topics", required=True, help="topic xml file path")
-    parser.add_argument("--dd-info-pkl", required=True, help="pickle file containing document length and bounds")
+    parser.add_argument("--doc-len", required=True, help="file containing document length and bounds")
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])
@@ -208,5 +208,5 @@ if __name__ == '__main__':
     if params.cutoff <= 0:
         parser.error("cutoff value must be greater than 0")
 
-    eu(params.runfile, params.topics, params.dd_info_pkl, cutoff=params.cutoff, verbose=True)
+    eu(params.runfile, params.topics, params.doc_len, cutoff=params.cutoff, verbose=True)
     # eu('../sample_run/runfile', '../sample_run/topic.xml', '../sample_run/doc_len.json', cutoff=10, verbose=True)

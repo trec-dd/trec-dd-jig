@@ -11,10 +11,10 @@ import argparse
 import sys
 
 
-def cubetest(run_file_path, truth_xml_path, dd_info_path, gamma=0.5, max_height=5, cutoff=10, verbose=False):
+def cubetest(run_file_path, truth_xml_path, doc_len_path, gamma=0.5, max_height=5, cutoff=10, verbose=False):
     """return ct, act over all topics"""
 
-    truth = DDTruth(truth_xml_path, dd_info_path)
+    truth = DDTruth(truth_xml_path, doc_len_path)
     run_result = DDReader(run_file_path).run_result
 
     if verbose:
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--runfile", required=True, help="run file path")
     parser.add_argument("--topics", required=True, help="topic xml file path")
-    parser.add_argument("--dd-info-pkl", required=True, help="pickle file containing document length")
+    parser.add_argument("--doc-len", required=True, help="file containing document length")
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])
@@ -143,4 +143,4 @@ if __name__ == '__main__':
     if params.cutoff <= 0:
         parser.error("cutoff value must be greater than 0")
 
-    cubetest(params.runfile, params.topics, params.dd_info_pkl, cutoff=params.cutoff, verbose=True)
+    cubetest(params.runfile, params.topics, params.doc_len, cutoff=params.cutoff, verbose=True)

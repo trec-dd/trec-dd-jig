@@ -5,7 +5,6 @@ Copyright 2017 @ Georgetown University
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 import math
-import json
 import pickle
 
 
@@ -30,10 +29,10 @@ class DDTruth:
     }
     """
 
-    def __init__(self, truth_xml_path, dd_info_pkl):
+    def __init__(self, truth_xml_path, doc_len_pkl):
         self.truth = defaultdict(dict)
 
-        self.doc_length = pickle.load(open(dd_info_pkl, 'rb'))
+        self.doc_length = pickle.load(open(doc_len_pkl, 'rb'))
 
         self.sorted_doc_len = sorted(self.doc_length.items(), key=lambda x: x[1])  # sort in ascending order
 
