@@ -77,9 +77,9 @@ def eu(topic_truth, a, gamma, p, cutoff):
         upper_bound += nugget_rel * (1 - gamma ** s)
     upper_bound = upper_bound / (1 - gamma)
 
-    doc_len = sorted(doc_length.items(), key=lambda x: x[1])  # sort in ascending order
-    forward_iter = iter(doc_len)
-    backward_iter = reversed(doc_len)
+    # doc_len = sorted(doc_length.items(), key=lambda x: x[1])  # sort in ascending order
+    forward_iter = iter(doc_length)
+    backward_iter = reversed(doc_length)
     min_cost = 0
     max_cost = 0
     # print(doc_len)

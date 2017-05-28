@@ -35,6 +35,8 @@ class Truth:
         if doc_length is not None:
             self.doc_length = doc_length
 
+        self.sorted_doc_len = sorted(doc_length.items(), key=lambda x: x[1])  # sort in ascending order
+
         root = ET.parse(truth_xml_path).getroot()
 
         for domain in list(root):
@@ -99,7 +101,7 @@ class Truth:
         return return_data
 
     def truth4EU_bound(self, topic_id):
-        """return nugget_id:[doc_no1, doc_no2, ... ], nugget_id: rating, doc: length"""
+        """return nugget_id:[doc_no1, doc_no2, ... ], nugget_id: rating, sorted (doc, length)"""
         nugget_doc = defaultdict(list)  # nugget -> doc_no list
         nugget_rating = defaultdict(int)  # nugget_id -> rating
         for subtopic_id, subtopic_data in self.truth[topic_id].items():
@@ -111,7 +113,7 @@ class Truth:
 
                     nugget_rating[nugget_id] = passage_data['rating']
 
-        return nugget_doc, nugget_rating, self.doc_length
+        return nugget_doc, nugget_rating, self.sorted_doc_len
 
     def truth4recall(self, topic_id):
         """return subtopic_set, doc_set, nugget_set, doc_subtopic, doc_nugget"""

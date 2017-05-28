@@ -37,15 +37,15 @@ def main():
     print("Setting up the databse ... ")
     setup_db(params.topics)
 
-    print("Computing the document length")
+    print("Computing the document length ... ")
     doc_length = doc_len(params.trecdirec)
     # doc_length = json.load(open("sample_run/doc_len.json"))
 
-    print("Computing the bounds")
+    print("Computing the bounds ... ")
     sdcg, ct, eu = get_bound(params.topics, doc_length)
 
     print("Dumping ...")
-    pickle.dump([doc_length, params.max_cutoff, sdcg, ct, eu], file=open(params['output'], 'wb'))
+    pickle.dump([doc_length, params.max_cutoff, sdcg, ct, eu], file=open(params.output, 'wb'))
 
     print("Done!")
 
