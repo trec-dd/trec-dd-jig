@@ -114,11 +114,11 @@ def eu_bound(ground_truth, max_cutoff=10):
     result = {}
     eu_a, eu_p, eu_gamma = 0.001, 0.5, 0.5
     for topic_id in ground_truth.truth:
-        print(topic_id)
+        # print(topic_id)
         result[topic_id] = {}
         eu_truth = ground_truth.truth4EU_bound(topic_id)
         for cutoff in range(1, max_cutoff+1):
-            print(cutoff)
+            # print(cutoff)
             opt_eu = eu(eu_truth, eu_a, eu_gamma, eu_p, cutoff)
             result[topic_id][cutoff] = opt_eu
 
@@ -172,11 +172,11 @@ def ct_bound(ground_truth, max_cutoff=10):
 
 def get_bound(topic_xml, doc_len, max_cutoff=10):
     ground_truth = Truth(topic_xml, doc_len)
-    print("sDCG")
+    # print("sDCG")
     sdcg = sdcg_bound(ground_truth, max_cutoff)
-    print("CT")
+    # print("CT")
     ct = ct_bound(ground_truth, max_cutoff)
-    print("EU")
+    # print("EU")
     eu = eu_bound(ground_truth, max_cutoff)
     # eu = None
     return sdcg, ct, eu

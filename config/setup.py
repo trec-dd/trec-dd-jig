@@ -42,7 +42,7 @@ def main():
     # doc_length = json.load(open("sample_run/doc_len.json"))
 
     print("Computing the bounds ... ")
-    sdcg, ct, eu = get_bound(params.topics, doc_length)
+    sdcg, ct, eu = get_bound(params.topics, doc_length, params.max_cutoff)
 
     print("Dumping ...")
     pickle.dump([doc_length, params.max_cutoff, sdcg, ct, eu], file=open(params.output, 'wb'))
