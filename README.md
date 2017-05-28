@@ -209,12 +209,14 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 - We support a few metrics. The scripts for these metrics can be found at the `./scorer` directory.
 - In 2017, the Track mainly uses three metrics.  They are Session DCG (sDCG),
 Cube Test and Expected Utility.
-- You will need the actual topic xml file from NIST and the pickle file generated during installation to evaluate your runs. 
+- You will need the actual topic xml file from NIST and the parameter file generated during installation to evaluate your runs. 
+- In evaluation, if the `cutoff` value no greater than the `max-cutoff` value you set during installation, our scripts will provide
+ both raw scores and normalized scores for your runs. Otherwise, only the raw score will be provided.
 - Here we demonstrate how to use the scorers using a sample topic xml file, a sample pickle file and a sample run file. All the files can be found at the `./sample_run/` directory.
     + runfile: a sample run file
     + topic.xml: a sample topic xml file
-    + dd_info.pkl: a sample pickle file that holds the information of document length and metric bounds
-- In the real evaluation, please **_DO NOT_** use any file we provided in `sample_run` or `sample_doc`
+    + dd_info.pkl: a sample parameter file that holds the information of document length and metric bounds
+- In the real evaluation, please use files of **_REAL_** datasets instead of sample files we provided in `sample_run` or `sample_doc`
 - How to run the scorers
 
     
