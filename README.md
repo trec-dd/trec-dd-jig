@@ -95,21 +95,20 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   
   
  
-- Setup database, compute document length and metric bounds
+- Setup database, compute document length
 
 
   ``` shell
-  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --max-cutoff 100 --output sample_doc/mini_info.pkl
+  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --doc-len sample_doc/mini_doc_len
   ```
     + where:
         - topics: the topic xml file you download from NIST
         - trecdirec: the directory that holds the Ebola and New York Times dataset in TRECTEXT format
-        - max-cutoff: in evaluation, the number of iterations within which normalized scores will be provided 
-        - output: the output parameter file that will be used in evaluation
+        - doc-len: the file that containing each document's length that will be used in evaluation 
   
   
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
-  storing the document lengths which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_info.pkl`
+  storing the document lengths which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_doc_len`
   
   Remeber to replace the file paths with the actual datasets. 
   
@@ -121,7 +120,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 **************************************************************************
 
 ### Run the Jig
-- Your systems should call `python jig/jig.py` to get feedback for each search iteration. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
+- Your systems should call `python3 jig/jig.py` to get feedback for each search iteration. The jig outputs a json dumped string. It provides feedback to your returned documents. Use the following command to call the Jig:
 
 
   ``` shell
@@ -208,30 +207,29 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 ### Metrics 
 - We support a few metrics. The scripts for these metrics can be found at the `./scorer` directory.
 - In 2017, the Track mainly uses three metrics.  They are Session DCG (sDCG),
-Cube Test and Expected Utility.
+Cube Test and Expected Utility. 
+- We will provide both raw scores and normalized scores for your run. 
 - You will need the actual topic xml file from NIST and the parameter file generated during installation to evaluate your runs. 
-- In evaluation, if the `cutoff` value no greater than the `max-cutoff` value you set during installation, our scripts will provide
- both raw scores and normalized scores for your runs. Otherwise, only the raw score will be provided.
 - Here we demonstrate how to use the scorers using a sample topic xml file, a sample pickle file and a sample run file. All the files can be found at the `./sample_run/` directory.
     + runfile: a sample run file
     + topic.xml: a sample topic xml file
-    + dd_info.pkl: a sample parameter file that holds the information of document length and metric bounds
+    + doc_len: a sample file that holds the information of document length 
 - In the real evaluation, please use files of **_REAL_** datasets instead of sample files we provided in `sample_run` or `sample_doc`
 - How to run the scorers
 
     
-    + sDCG
+    + Session DCG (sDCG)
     
       Syntax
       ``` shell
-        >$ python3 scorer/sDCG.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
+        >$ python3 scorer/sDCG.py --runfile your_runfile --topics your_topic.xml --doc-len your_doc_len --cutoff your_cut_off_value
       ```
         - where `--cutoff` sets the cutoff value of evaluation. For example `--cutoff 5` means only the first 5 iterations of every topic 
         are taken into evaluation
        
       To run the example
       ```shell
-        >$ python3 scorer/sDCG.py --runfile sample_run/runfile --topics sample_run/topic.xml --dd-info-pkl sample_run/dd_info.pkl --cutoff 5
+        >$ python3 scorer/sDCG.py --runfile sample_run/runfile --topics sample_run/topic.xml --doc-len sample_run/doc_len --cutoff 5
       ```
       Of course, you can use other cut off value 
      
@@ -239,22 +237,22 @@ Cube Test and Expected Utility.
     
       Syntax
       ``` shell
-        >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
+        >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --doc-len your_doc_len --cutoff your_cut_off_value
       ```
       To run the example
       ```shell
-        >$ python3 scorer/cubetest.py --runfile sample_run/runfile --topics sample_run/topic.xml --dd-info-pkl sample_run/dd_info.pkl --cutoff 5
+        >$ python3 scorer/cubetest.py --runfile sample_run/runfile --topics sample_run/topic.xml --doc-len sample_run/doc_len --cutoff 5
       ```
       
     + Expected Utility
       
       Syntax
       ``` shell
-        >$ python3 scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --dd-info-pkl your_info.pkl --cutoff your_cut_off_value
+        >$ python3 scorer/expected_utility.py --runfile your_runfile --topics your_topic.xml --doc-len your_doc_len --cutoff your_cut_off_value
       ```
       To run the example
       ```shell
-        >$ python3 scorer/expected_utility.py --runfile sample_run/runfile --topics sample_run/topic.xml --dd-info-pkl sample_run/dd_info.pkl --cutoff 5
+        >$ python3 scorer/expected_utility.py --runfile sample_run/runfile --topics sample_run/topic.xml --doc-len sample_run/doc_len --cutoff 5
       ```
 
     
