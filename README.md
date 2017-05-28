@@ -104,7 +104,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
     + where:
         - topics: the topic xml file you download from NIST
         - trecdirec: the directory that holds the Ebola and New York Times dataset in TRECTEXT format
-        - doc-len: the parameter file that containing each document's length that will be used in evaluation 
+        - doc-len: the parameter file containing each document's length, which will be used in evaluation 
   
   
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
