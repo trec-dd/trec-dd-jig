@@ -86,6 +86,8 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   > cd trec-dd-jig
   > ./config/process_nyt.sh sample_doc/nyt_sample.tgz sample_doc/nyt_sample
   ```
+  The first parameter is the `.tgz` file that you obtained from LDC, the second parameter is the output directory 
+  
   The output directory will contain the following subdirectories:
       
       - nyt_corpus: a directory that contains the uncompressed New York Times dataset 
@@ -97,18 +99,18 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 
 
   ``` shell
-  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --output sample_doc/mini_info.pkl
+  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --max-cutoff 100 --output sample_doc/mini_info.pkl
   ```
+    + where:
+        - topics: the topic xml file you download from NIST
+        - trecdirec: the directory that holds the Ebola and New York Times dataset in TRECTEXT format
+        - max-cutoff: in evaluation, the number of iterations within which normalized scores will be provided 
+        - output: the output parameter file that will be used in evaluation
+  This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
+  storing the document lengths which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_info.pkl`
   
-  This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a pickle file 
-  storing the document lengths which will be used later in the metric calculation.  The pickle file is located at `sample_doc/mini_info.pkl`
+  Remeber to replace the file paths with the actual datasets. 
   
-  Remeber to replace the file paths with the actual datasets. Syntax:
-  
-  
-  ```shell
-  > python3 config/setup.py --topics topics/dd_topic_file.xml --trecdirec your_ebola_direc your_nyt_direc --output topics/dd_info.pkl
-  ```
   
   Congratulations to a successful installation of the jig!
 
