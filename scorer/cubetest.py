@@ -19,7 +19,8 @@ def cubetest(run_file_path, truth_xml_path, doc_len_path, gamma=0.5, max_height=
 
     if verbose:
         print(run_file_path)
-        print('topic-id', 'ct@' + str(cutoff), 'normalized_ct@' + str(cutoff), sep='\t')
+        print('%8s' % 'topic-id', '%10s' % ('ct@' + str(cutoff)), '%10s' % ('normalized_ct@' + str(cutoff)),
+              sep='\t')
 
     ct_list, act_list = [], []
     gain_list = []
@@ -39,10 +40,11 @@ def cubetest(run_file_path, truth_xml_path, doc_len_path, gamma=0.5, max_height=
         normalized_ct_list.append(normalized_ct)
 
         if verbose:
-            print(topic_id, ct, normalized_ct, sep='\t')
+            print('%8s' % topic_id, '%10.7f' % ct, '%10.7f' % normalized_ct, sep='\t')
 
     if verbose:
-        print('all', statistics.mean(ct_list), statistics.mean(normalized_ct_list), sep='\t')
+        print('%8s' % 'all', '%10.7f' % statistics.mean(ct_list), '%10.7f' % statistics.mean(normalized_ct_list),
+              sep='\t')
 
     return gain_list, ct_list, act_list
 

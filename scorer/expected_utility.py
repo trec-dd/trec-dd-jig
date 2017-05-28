@@ -32,7 +32,8 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
 
     if verbose:
         print(run_file_path)
-        print('topic_id', 'eu@' + str(cutoff), 'normalized_eu@' + str(cutoff), sep='\t')
+        print('%8s' % 'topic-id', '%10s' % ('eu@' + str(cutoff)), '%10s' % ('normalized_eu@' + str(cutoff)),
+              sep='\t')
 
     # sort run result by topic id
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
@@ -51,10 +52,11 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
 
         utility_list.append(utility)
         if verbose:
-            print(topic_id, utility, normalized_eu, sep='\t')
+            print('%8s' % topic_id, '%10.7f' % utility, '%10.7f' % normalized_eu, sep='\t')
 
     if verbose:
-        print('all', statistics.mean(utility_list), statistics.mean(normalized_eu_list), sep='\t')
+        print('%8s' % 'all', '%10.7f' % statistics.mean(utility_list), '%10.7f' % statistics.mean(normalized_eu_list),
+              sep='\t')
 
     return utility_list
 

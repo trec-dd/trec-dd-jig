@@ -26,7 +26,7 @@ def sDCG(run_file_path, truth_xml_path, dd_info_path, bq=4, b=2, cutoff=10, verb
 
     if verbose:
         print(run_file_path)
-        print('topic-id', 'sDCG@' + str(cutoff), 'normalized sDCG@' + str(cutoff), sep='\t')
+        print('%8s' % 'topic-id', '%10s' % ('sDCG@' + str(cutoff)), '%10s' % ('normalized_sDCG@' + str(cutoff)), sep='\t')
 
     # sort by topic no
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))
@@ -46,10 +46,10 @@ def sDCG(run_file_path, truth_xml_path, dd_info_path, bq=4, b=2, cutoff=10, verb
         sdcg_list.append(sdcg)
 
         if verbose:
-            print(topic_id, sdcg, normalized_sdcg, sep='\t')
+            print('%8s' % topic_id, '%10.7f' % sdcg, '%10.7f' % normalized_sdcg, sep='\t')
 
     if verbose:
-        print('all', statistics.mean(sdcg_list), statistics.mean(nsdcg_list))
+        print('%8s' % 'all', '%10.7f' % statistics.mean(sdcg_list), '%10.7f' % statistics.mean(nsdcg_list), sep='\t')
 
     return sdcg_list
 
