@@ -235,8 +235,7 @@ Cube Test and Expected Utility.
       To run the example
       ```shell
         >$ python3 scorer/sDCG.py --runfile sample_run/runfile --topics sample_run/topic.xml --doc-len sample_run/doc_len --cutoff 5
-      ```
-      Of course, you can use other cut off value 
+      ``` 
      
     + Cube Test
     
