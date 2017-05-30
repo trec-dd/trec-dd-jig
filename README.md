@@ -79,7 +79,7 @@
   ```
 
 - Uncompress and preprocess the datasets. In this jig package, we release sample files from both the Ebola and the NYT datasets. The following codes are for the NYT dataset. 
-They can be run on both the sample files and the actual dataset. Remember to replace the input .tgz file with the actual dataset. The resulting corpus will be in TRECTEXT format. 
+They can be run on both the sample files and the actual dataset. Remember to replace the input `.tgz` file with the actual dataset. The resulting corpus will be in TRECTEXT format. 
 
 
   ```shell
