@@ -108,7 +108,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   
   
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
-  which will be used later in the metric calculation.  The parameter file is located at `sample_run/params`
+  which will be used later in the metric calculation.  The parameter file for the sample is located at `sample_run/params`
   
   Remember to replace the file paths with the actual datasets. 
   
