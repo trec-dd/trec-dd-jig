@@ -6,10 +6,10 @@
 ##### If you have any technical question, please send your request to [google group](https://groups.google.com/forum/#!forum/trec-dd).
 
 **************************************************************************
-### **_Changes_ in TREC2017 DD Jig**
+### **_What's New_ in TREC 2017 DD Jig**
 
 * **_Python 3.5 environment_**
-* **_New metrics_**
+* **_Updates on CubeTest and new metrics: sDCG and Expected Utility_**
 * **_Additional supporting file for evaluation_**
 
 **************************************************************************
@@ -95,7 +95,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   
   
  
-- Setup database, compute document length
+- Setup database and prepare parameter files
 
 
   ``` shell
@@ -110,7 +110,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
   storing the document lengths which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_doc_len`
   
-  Remeber to replace the file paths with the actual datasets. 
+  Remember to replace the file paths with the actual datasets. 
   
   
   Congratulations to a successful installation of the jig!
