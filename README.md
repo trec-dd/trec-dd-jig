@@ -173,11 +173,11 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   
   ``` shell
     > cat ./testrun.txt
-    DD16-1  0       ebola-45b78e7ce50b94276a8d46cfe23e0abbcbed606a2841d1ac6e44e263eaf94a93  833.00  1       DD16-1.1:2|DD16-1.1:2|DD16-1.2:3|DD16-1.2:3|DD16-1.2:2
-    DD16-1  0       ebola-012d04f7dc6af9d1d712df833abc67cd1395c8fe53f3fcfa7082ac4e5614eac6  500.00  1       DD16-1.1:3
-    DD16-1  0       ebola-20d0e40dbc6f60c35f581f4025076a4400bd46fa01fa0bc8164de05b286e04f8  123.00  1       DD16-1.1:2|DD16-1.3:3
-    DD16-1  0       ebola-da1e8bbbb0c543df9be4d59b37558927ed5ee4238c861ce1205ed7b41140ad3a  34.00   1       DD16-1.1:1|DD16-1.1:1
-    DD16-1  0       ebola-9e501dddd03039fff5c2465896d39fd6913fd8476f23416373a88bc0f32e793c  5.00    1       DD16-1.1:2
+    DD16-1	0	ebola-45b78e7ce50b94276a8d46cfe23e0abbcbed606a2841d1ac6e44e263eaf94a93	833.00	1	DD16-1.1:2|DD16-1.1:2|DD16-1.2:3|DD16-1.2:3|DD16-1.2:2
+    DD16-1	0	ebola-0000e6cdb20573a838a34023268fe9e2c883b6bcf7538ebf68decd41b95ae747	500.00	0
+    DD16-1	0	ebola-012d04f7dc6af9d1d712df833abc67cd1395c8fe53f3fcfa7082ac4e5614eac6	123.00	1	DD16-1.1:3
+    DD16-1	0	ebola-0002c69c8c89c82fea43da8322333d4f78d48367cc8d8672dd8a919e8359e150	34.00	0
+    DD16-1	0	ebola-9e501dddd03039fff5c2465896d39fd6913fd8476f23416373a88bc0f32e793c	5.00	1	DD16-1.1:2
   ``` 
 
 
@@ -203,8 +203,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 Cube Test and Expected Utility. 
 - We will provide both raw scores and normalized scores for your run. 
 - You will need the actual topic xml file from NIST and the parameter file generated during installation to evaluate your runs. 
-- Here we demonstrate how to use the scorers using a sample topic xml file, a sample parameter file and a sample run file. All the files can be found at the `./sample_run/` directory.
-    + `runfile`: a sample run file
+- Here we demonstrate how to use the scorers to evaluate the `testrun` using a sample topic xml file, a sample parameter file. All the files can be found at the `./sample_run/` directory.
     + `topic.xml`: a sample topic xml file
     + `params`: a sample file that holds the parameters needed in evaluation, generated during installation 
 - In the real evaluation, please use files of **_REAL_** datasets instead of sample files we provided in `sample_run` or `sample_doc`
@@ -227,7 +226,7 @@ Cube Test and Expected Utility.
        
       To run the example
       ```shell
-        >$ python3 scorer/sDCG.py --runfile sample_run/runfile --topics sample_run/topic.xml --params sample_run/params --cutoff 5
+        >$ python3 scorer/sDCG.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
       ``` 
      
     + Cube Test
@@ -238,7 +237,7 @@ Cube Test and Expected Utility.
       ```
       To run the example
       ```shell
-        >$ python3 scorer/cubetest.py --runfile sample_run/runfile --topics sample_run/topic.xml --params sample_run/params --cutoff 5
+        >$ python3 scorer/cubetest.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
       ```
       
     + Expected Utility
@@ -249,7 +248,7 @@ Cube Test and Expected Utility.
       ```
       To run the example
       ```shell
-        >$ python3 scorer/expected_utility.py --runfile sample_run/runfile --topics sample_run/topic.xml --params sample_run/params --cutoff 5
+        >$ python3 scorer/expected_utility.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
       ```
 
     
