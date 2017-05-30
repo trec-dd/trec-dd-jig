@@ -108,7 +108,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   
   
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
-  storing the document lengths which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_params`
+  which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_params`
   
   Remember to replace the file paths with the actual datasets. 
   
@@ -210,7 +210,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 Cube Test and Expected Utility. 
 - We will provide both raw scores and normalized scores for your run. 
 - You will need the actual topic xml file from NIST and the parameter file generated during installation to evaluate your runs. 
-- Here we demonstrate how to use the scorers using a sample topic xml file, a sample pickle file and a sample run file. All the files can be found at the `./sample_run/` directory.
+- Here we demonstrate how to use the scorers using a sample topic xml file, a sample parameter file and a sample run file. All the files can be found at the `./sample_run/` directory.
     + `runfile`: a sample run file
     + `topic.xml`: a sample topic xml file
     + `params`: a sample file that holds the parameters needed in evaluation 
