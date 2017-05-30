@@ -132,7 +132,7 @@ def expected_cost_per_topic(topic_result, doc_length, cutoff, p):
         expected_len = 0
         for s in range(1, l + 1):
             if doc_list[s - 1] not in doc_length:
-                print(doc_list[s - 1])
+                # print(doc_list[s - 1])
                 continue
             cumulated_len += doc_length[doc_list[s - 1]]
             prob = prob_stop_at_s(p, s, l)
