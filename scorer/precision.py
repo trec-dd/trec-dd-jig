@@ -1,3 +1,8 @@
+"""
+Precision
+Copyright 2017 @ Georgetown University
+"""
+
 from collections import defaultdict
 import click
 
