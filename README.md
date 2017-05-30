@@ -99,7 +99,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 
 
   ``` shell
-  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --params sample_doc/mini_params
+  > python3 config/setup.py --topics sample_run/topic.xml --trecdirec sample_doc/ebola_sample sample_doc/nyt_sample/nyt_trectext --params sample_run/params
   ```
     + where:
         - `topics`: the topic xml file you download from NIST
@@ -108,7 +108,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
   
   
   This script will set up a sqlite database at `./trec-dd-jig/jig/truth.db`. It will also generate a parameter file 
-  which will be used later in the metric calculation.  The parameter file is located at `sample_doc/mini_params`
+  which will be used later in the metric calculation.  The parameter file is located at `sample_run/params`
   
   Remember to replace the file paths with the actual datasets. 
   
@@ -206,7 +206,7 @@ Cube Test and Expected Utility.
 - Here we demonstrate how to use the scorers using a sample topic xml file, a sample parameter file and a sample run file. All the files can be found at the `./sample_run/` directory.
     + `runfile`: a sample run file
     + `topic.xml`: a sample topic xml file
-    + `params`: a sample file that holds the parameters needed in evaluation 
+    + `params`: a sample file that holds the parameters needed in evaluation, generated during installation 
 - In the real evaluation, please use files of **_REAL_** datasets instead of sample files we provided in `sample_run` or `sample_doc`
 - How to run the scorers
     
