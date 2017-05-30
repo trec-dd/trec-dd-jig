@@ -26,7 +26,7 @@ def sDCG(run_file_path, truth_xml_path, dd_info_path, bq=4, b=2, cutoff=10, verb
 
     if verbose:
         print(run_file_path)
-        print('%8s' % 'topic-id', '%10s' % ('sDCG@' + str(cutoff)), '%10s' % ('normalized_sDCG@' + str(cutoff)), sep='\t')
+        print('%8s' % 'topic-id', '%10s' % ('sDCG@' + str(cutoff)), '%10s' % ('nsDCG@' + str(cutoff)), sep='\t')
 
     # sort by topic no
     sorted_results = sorted(run_result.items(), key=lambda x: int(x[0].split('-')[1]))

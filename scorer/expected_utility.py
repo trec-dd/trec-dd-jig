@@ -32,7 +32,7 @@ def eu(run_file_path, truth_xml_path, dd_info_path, cutoff=10, a=0.001, gamma=0.
 
     if verbose:
         print(run_file_path)
-        print('%8s' % 'topic-id', '%10s' % ('eu@' + str(cutoff)), '%10s' % ('normalized_eu@' + str(cutoff)),
+        print('%8s' % 'topic-id', '%10s' % ('EU@' + str(cutoff)), '%10s' % ('nEU@' + str(cutoff)),
               sep='\t')
 
     # sort run result by topic id
