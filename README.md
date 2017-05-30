@@ -224,7 +224,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
       ```
       To run the example
       ```shell
-        >$ python3 scorer/cubetest.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 1
+        >$ python3 scorer/cubetest.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
       ```    
         
     + Session DCG (sDCG)
@@ -236,7 +236,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
        
       To run the example
       ```shell
-        >$ python3 scorer/sDCG.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 1
+        >$ python3 scorer/sDCG.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
       ``` 
            
     + Expected Utility
@@ -247,10 +247,11 @@ They can be run on both the sample files and the actual dataset. Remember to rep
       ```
       To run the example
       ```shell
-        >$ python3 scorer/expected_utility.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 1
+        >$ python3 scorer/expected_utility.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
       ```
     
     + Precision
+    
       Syntax
       ```bash
         >$ python3 scorer/precision.py -run your_run_file -qrel your_qrel_file
