@@ -199,8 +199,7 @@ They can be run on both the sample files and the actual dataset. Remember to rep
 
 ### Metrics 
 - We support a few metrics. The scripts for these metrics can be found at the `./scorer` directory.
-- In 2017, the Track mainly uses three metrics.  They are Session DCG (sDCG),
-Cube Test and Expected Utility. 
+- In 2017, the Track mainly uses three metrics.  They are Cube Test, Session DCG (sDCG) and Expected Utility. 
 - We will provide both raw scores and normalized scores for your run. 
 - You will need the actual topic xml file from NIST and the parameter file generated during installation to evaluate your runs. 
 - Here we demonstrate how to use the scorers to evaluate the `testrun` using a sample topic xml file, a sample parameter file. All the files can be found at the `./sample_run/` directory.
