@@ -216,6 +216,17 @@ Cube Test and Expected Utility.
         - `params`: the parameter file generated in installation
         - `cutoff`: the number of iterations taken into evaluation, eg. `--cutoff 5` means only the first 5 iterations of every topic 
         are taken into evaluation.
+    
+    + Cube Test
+    
+      Syntax
+      ``` shell
+        >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --params your_params_file --cutoff your_cut_off_value
+      ```
+      To run the example
+      ```shell
+        >$ python3 scorer/cubetest.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
+      ```    
         
     + Session DCG (sDCG)
     
@@ -228,18 +239,7 @@ Cube Test and Expected Utility.
       ```shell
         >$ python3 scorer/sDCG.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
       ``` 
-     
-    + Cube Test
-    
-      Syntax
-      ``` shell
-        >$ python3 scorer/cubetest.py --runfile your_runfile --topics your_topic.xml --params your_params_file --cutoff your_cut_off_value
-      ```
-      To run the example
-      ```shell
-        >$ python3 scorer/cubetest.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
-      ```
-      
+           
     + Expected Utility
       
       Syntax
