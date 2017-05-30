@@ -225,7 +225,7 @@ Cube Test and Expected Utility.
       ```
       To run the example
       ```shell
-        >$ python3 scorer/cubetest.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
+        >$ python3 scorer/cubetest.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 1
       ```    
         
     + Session DCG (sDCG)
@@ -237,7 +237,7 @@ Cube Test and Expected Utility.
        
       To run the example
       ```shell
-        >$ python3 scorer/sDCG.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
+        >$ python3 scorer/sDCG.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 1
       ``` 
            
     + Expected Utility
@@ -248,7 +248,7 @@ Cube Test and Expected Utility.
       ```
       To run the example
       ```shell
-        >$ python3 scorer/expected_utility.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 5
+        >$ python3 scorer/expected_utility.py --runfile testrun.txt --topics sample_run/topic.xml --params sample_run/params --cutoff 1
       ```
 
     
