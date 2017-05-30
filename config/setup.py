@@ -22,7 +22,7 @@ def main():
     parser.add_argument("--trecdirec", nargs='+', required=True, help="directories of trectext files")
 
     # info.pkl path
-    parser.add_argument("--doc-len", required=True, help="file containing document length")
+    parser.add_argument("--params", required=True, help="file containing parameters for evaluation")
 
     params = parser.parse_args(sys.argv[1:])
 
@@ -34,7 +34,7 @@ def main():
     # doc_length = json.load(open("sample_run/doc_len.json"))
 
     print("Dumping ...")
-    pickle.dump(doc_length, file=open(params.doc_len, 'wb'))
+    pickle.dump(doc_length, file=open(params.params, 'wb'))
 
     print("Done!")
 

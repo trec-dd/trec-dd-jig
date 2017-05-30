@@ -137,7 +137,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--runfile", required=True, help="run file path")
     parser.add_argument("--topics", required=True, help="topic xml file path")
-    parser.add_argument("--doc-len", required=True, help="file containing document length")
+    parser.add_argument("--params", required=True, help="file containing parameters for evaluation")
     parser.add_argument("--cutoff", required=True, type=int, help="first # iterations are taken into evaluation")
 
     params = parser.parse_args(sys.argv[1:])
@@ -145,4 +145,4 @@ if __name__ == '__main__':
     if params.cutoff <= 0:
         parser.error("cutoff value must be greater than 0")
 
-    cubetest(params.runfile, params.topics, params.doc_len, cutoff=params.cutoff, verbose=True)
+    cubetest(params.runfile, params.topics, params.params, cutoff=params.cutoff, verbose=True)
