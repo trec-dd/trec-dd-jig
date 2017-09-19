@@ -65,7 +65,7 @@ def sDCG_per_topic(topic_truth, topic_result, bq, b, cutoff):
         query_discount = 1 + math.log(query_pos + 1, bq)
         for doc_pos, doc_no in enumerate(doc_list):  # doc position also starts from 0
             sdcg += topic_truth[doc_no] / (1 + math.log(doc_pos + 1, b)) / query_discount
-        return sdcg
+    return sdcg
 
 
 def sDCG_bound_per_topic(topic_truth, bq, b, cutoff):
