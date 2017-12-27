@@ -252,5 +252,10 @@ They can be run on both the sample files and the actual dataset. Remember to rep
       ```bash
         >$ python3 scorer/precision.py -run testrun.txt -qrel sample_run/qrels.txt
       ```
-    
+  
+  **************************************************************************  
+  
+  ### For previous TREC DD datasets
+  You can find the parameter file for TRECDD 2015, TRECDD 2016 [here](https://drive.google.com/drive/folders/12JxuNxst93kke_exH99pQuC5hMR12W1Q?usp=sharing).
+  
     
